@@ -6,12 +6,16 @@
 // ###########
 // ## TO DO ##
 // ###########
-// [x] Add sm timer for each individual user
-// []  Make each individual user sm timer cancelable
+// [X] Add sm timer for each individual user
+// [X] Make each individual user sm timer cancelable
+// []  Add Component help
+// []  Add alchemy help
+// []  Add crafting help 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
+var userID = [];
 
 var myArgs = process.argv.slice(2);
 var flag = myArgs[0];
@@ -33,35 +37,45 @@ console.log('Ready!');
 client.login(token);
 
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (!message.content.startsWith(prefix)) return;
 	const args = message.content.slice(prefix.length).split(' ');
 	const command = args.shift().toLowerCase();
-	if (command === 'ping') {
-		console.log('incomming ping!');
-		message.channel.send('Pong.');
-		console.log('Arguments: ' + args[0]);
-		console.log('Time converter to miliseconds: ' + args[0] * 1000);
+	if (command === 'greet') {
+		message.channel.send('Hello and welcome to the RRF!');
 	} else if (command == 'sm') {
-		if (args[0] >= 1 && args[0] <= 65) {
+		if (args[0] >= 0 && args[0] <= 65) {
 			smTimer(message, args[0]);
-		} else if (args[0] == 0) {
-			talkedRecently.delete(message.author.id);
-			message.channel.send('Removed Sorcerer\'s Might timer');
-		}	else {
-			message.channel.send('You must enter a real positive number of minutes between 1 and 65.');
+		} else {
+			message.reply('you must enter a real positive number of minutes between 1 and 65.');
 		}
+	} else if (command== 'test') {
+		let RoleObject = Guild.roles;
+		console.log(RoleObject);
 	}
 });
 
-function smTimer(msg, time) {
-	if (talkedRecently.has(msg.author.id)) {
-  	msg.channel.send('@' + msg.member.user.tag + ' you already have a Sorcerer\'s Might timer running. Use "!sm 0" to cancel it.');
+function smTimer(message, time) {
+	var smUser = message.author.tag;
+	smUser = smUser.substring(0, smUser.indexOf('#'));
+	if (time == 0) {
+		if (!talkedRecently.has(message.author.id)) {
+	  	message.channel.send(smUser + ' you don\'t have a Sorcerer\'s Might timer running. Use "!sm #" to start one.');
+		} else {
+			message.channel.send(smUser + ' canceled Sorcerer\'s Might.');
+	 		clearTimeout(userID[message.author.id]);
+			talkedRecently.delete(message.author.id);
+		}
 	} else {
-		msg.channel.send('Started SM timer for ' + time + ' minutes.');
-		talkedRecently.add(msg.author.id);
-		setTimeout(() => {
-			msg.channel.send('Sorecerer\' Might will wear off of @' + msg.member.user.tag + ' in about one minute!');
-			talkedRecently.delete(msg.author.id);
-		}, time * 60000 - 60000);
+		if (talkedRecently.has(message.author.id)) {
+	  	message.reply('you already have a Sorcerer\'s Might timer running. Use "!sm 0" to cancel it.');
+		} else {
+			message.channel.send(smUser + ' started a Sorcerer\'s Might timer for ' + time + ' minutes.');
+			talkedRecently.add(message.author.id);
+			userID[message.author.id] = setTimeout(() => {
+				var medic = message.guild.roles.find(role => role.name === "Medic");
+				message.channel.send('<@&' + medic + '> Sorecerer\'s Might will wear off of ' + smUser + ' in about one minute!');
+				talkedRecently.delete(message.author.id);
+			}, time * 60000 - 60000);
+		}
 	}
 }

@@ -41,7 +41,7 @@ def parse():
     token = args.token
     return token
     # Now I kinda know what I'm doing???
-    
+
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -49,6 +49,14 @@ async def on_ready():
     print(bot.user.id)
     print('------------------')
     print('Doing RRFBot stuff')
+
+@bot.command()
+async def set(ctx):
+    await ctx.send("!sm 4")
+
+@bot.command()
+async def clear(ctx):
+    await ctx.send("!sm 0")
 
 @bot.command()
 async def alch(ctx, *, potion='list'):
@@ -145,7 +153,7 @@ async def alch(ctx, *, potion='list'):
         await ctx.send(embed=embed)
     else:
         await ctx.send(f'Potion **{potion}** not recognozed.')
-    
+
 @bot.command()
 async def mats(ctx, *, comp='list'):
     comp = comp.lower()
@@ -266,10 +274,10 @@ async def mats(ctx, *, comp='list'):
         rare = [rarity for rarity,value in materials.items() if value == 'Rarity: Rare']
         shortlist = '\n• '.join(rare)
         embed = discord.Embed(title='Rare Components:', description=f'• {shortlist}', color=0x00BFFF)
-        await ctx.send(embed=embed)    
+        await ctx.send(embed=embed)
     else:
         await ctx.send(f'Item **{comp}** not recognozed.')
-    
+
 @bot.command()
 async def craft(ctx, *, item='list'):
     item = item.lower()
@@ -359,7 +367,7 @@ async def craft(ctx, *, item='list'):
         await ctx.send(embed=embed)
     else:
         await ctx.send(f'Item **{item}** not recognozed as craftable')
-        
+
 @bot.command()
 async def echo(ctx, *, arg):
     await ctx.send(arg)
@@ -408,7 +416,7 @@ async def my_background_task():
 @bot.command()
 async def bgtask(ctx):
     client.loop.create_task(my_background_task())
-        
+
 @bot.command()
 async def greet(ctx):
     await ctx.send(":thonk: Why hello, there! <:kitty:491077122434138124>")
@@ -420,10 +428,10 @@ async def cat(ctx):
 @bot.command()
 async def info(ctx):
     embed = discord.Embed(title="RRFBot", description="A work in progress. Gives different useful info about Nexus Clash", color=0xeee657)
-    
+
     # give info about you here
     embed.add_field(name="Author", value="plscks")
-    
+
     # Shows the number of servers the bot is member of.
     embed.add_field(name="Server count", value=f"{len(bot.guilds)}")
 
