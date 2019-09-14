@@ -83,7 +83,7 @@ function smTimer(message, time) {
 }
 
 function updateBot() {
-	message.channel.send('Initiating self update')
+	message.channel.send('Initiating self update');
 	if (shell.exec('./update.sh').code !== 0) {
   	console.log('Failed to update and restart');
   	shell.exit(1)
