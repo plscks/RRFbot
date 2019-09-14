@@ -52,11 +52,12 @@ client.on('message', message => {
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
 		message.reply('Initiating self update.....');
+		console.log("Shutting down RRFbot for self update.....");
 		setTimeout(() => {
 			updateBot();
 		}, 5000);
 	} else if (command== 'test') {
-		message.channel.send('I\'ve pulled the update correctly');
+		message.channel.send('This hasn\'t worked at all.');
 	}
 });
 
@@ -91,7 +92,6 @@ function updateBot() {
   	shell.exit(1)
 		return;
 	} else {
-		console.log("Shutting down RRFbot.");
 		process.exit();
 	}
 }
