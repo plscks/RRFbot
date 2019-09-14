@@ -91,6 +91,7 @@ function updateBot() {
   	shell.exit(1)
 		return;
 	} else {
+		console.log("Shutting down RRFbot.");
 		process.exit();
 	}
 }
