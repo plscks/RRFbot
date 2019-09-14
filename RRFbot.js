@@ -10,7 +10,7 @@
 // [X] Make each individual user sm timer cancelable
 // []  Add Component help
 // []  Add alchemy help
-// []  Add crafting help 
+// []  Add crafting help
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const talkedRecently = new Set();
@@ -73,7 +73,7 @@ function smTimer(message, time) {
 			talkedRecently.add(message.author.id);
 			userID[message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
-				message.channel.send('<@&' + medic + '> Sorecerer\'s Might will wear off of ' + smUser + ' in about one minute!');
+				message.channel.send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
 				talkedRecently.delete(message.author.id);
 			}, time * 60000 - 60000);
 		}
