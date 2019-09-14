@@ -12,6 +12,7 @@
 // []  Add alchemy help
 // []  Add crafting help
 const Discord = require('discord.js');
+const shell = require('shelljs');
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
@@ -48,15 +49,14 @@ client.on('message', message => {
 		} else {
 			message.reply('you must enter a real positive number of minutes between 1 and 65.');
 		}
-	} else if (command== 'test') {
-		let RoleObject = Guild.roles;
-		console.log(RoleObject);
+	} else if (command == 'update') {
+		if (message.author.id !== '407383313335189515') return;
+		updateBot();
 	}
 });
 
 function smTimer(message, time) {
-	var smUser = message.author.tag;
-	smUser = smUser.substring(0, smUser.indexOf('#'));
+	var smUser = message.member.displayName;
 	if (time == 0) {
 		if (!talkedRecently.has(message.author.id)) {
 	  	message.channel.send(smUser + ' you don\'t have a Sorcerer\'s Might timer running. Use "!sm #" to start one.');
@@ -77,5 +77,14 @@ function smTimer(message, time) {
 				talkedRecently.delete(message.author.id);
 			}, time * 60000 - 60000);
 		}
+	}
+}
+
+function updateBot() {
+	if (shell.exec('./update.sh').code !== 0) {
+  	console.log('Failed to update and restart');
+  	shell.exit(1)
+	} else {
+		process.exit();
 	}
 }

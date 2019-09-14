@@ -27,6 +27,7 @@
     "bufferutil": "^4.0.1",
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",
+    "shelljs": "^0.8.3",
     "zlib-sync": "^0.1.5",
     "zucc": "^0.1.2"
   }
