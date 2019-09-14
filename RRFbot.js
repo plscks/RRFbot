@@ -56,7 +56,7 @@ client.on('message', message => {
 			updateBot();
 		}, 5000);
 	} else if (command== 'test') {
-		message.channel.send('The update test worked and everything is up to date!');
+		message.channel.send('I\'ve pulled the update correctly');
 	}
 });
 
