@@ -51,7 +51,8 @@ client.on('message', message => {
 		}
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
-		updateBot(message);
+		message.channel.send('Initiating self update');
+		updateBot();
 	} else if (command== 'test') {
 		message.channel.send('The update test worked and everything is up to date!');
 	}
@@ -82,8 +83,7 @@ function smTimer(message, time) {
 	}
 }
 
-function updateBot(message) {
-	message.channel.send('Initiating self update');
+function updateBot() {
 	if (shell.exec('./update.sh').code !== 0) {
   	console.log('Failed to update and restart');
   	shell.exit(1)
