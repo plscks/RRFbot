@@ -51,7 +51,7 @@ client.on('message', message => {
 		}
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
-		message.reply('Initiating self update.....');
+		message.reply('Initiating self update.....!');
 		setTimeout(() => {
 			updateBot();
 		}, 5000);
