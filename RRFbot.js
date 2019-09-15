@@ -62,7 +62,8 @@ client.on('message', message => {
 			updateBot();
 		}, 5000);
 	} else if (command== 'test') {
-		message.channel.send('Perhaps this will ping <@407383313335189515> ?');
+		var admin = message.guild.roles.find(role => role.name === "Admin?");
+		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
 	}
 });
 
