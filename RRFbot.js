@@ -37,6 +37,11 @@ console.log('Ready!');
 
 client.login(token);
 
+bot.on('guildMemberAdd', member => {
+	var leader = message.guild.roles.find(role => role.name === "Leader");
+  member.guild.channels.get('481613088794083357').send('Welcome to the RRF! A <@&' + leader + '> will be with you shourtly to get you access.');
+});
+
 client.on('message', message => {
 	if (!message.content.startsWith(prefix)) return;
 	const args = message.content.slice(prefix.length).split(' ');
@@ -57,7 +62,7 @@ client.on('message', message => {
 			updateBot();
 		}, 5000);
 	} else if (command== 'test') {
-		message.channel.send('This hasn\'t worked at all.');
+		message.channel.send('Perhaps this will ping <@407383313335189515> ?');
 	}
 });
 
