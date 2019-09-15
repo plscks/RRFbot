@@ -37,7 +37,7 @@ console.log('Ready!');
 
 client.login(token);
 
-bot.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', member => {
 	var leader = message.guild.roles.find(role => role.name === "Leader");
   member.guild.channels.get('481613088794083357').send('Welcome to the RRF! A <@&' + leader + '> will be with you shourtly to get you access.');
 });
