@@ -175,8 +175,9 @@ function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 		messageText1 += itemsStartingWith[i] + '\n';
-		if (messageText1.length > 1999) messageText2 += itemsStartingWith[i] + '\n';
-
+		if (messageText1.length > 1980) {
+			messageText2 += itemsStartingWith[i] + '\n';
+		}
 	}
 	message.channel.send({embed: {
       color: 3447003,
