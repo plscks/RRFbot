@@ -19,6 +19,7 @@ const talkedRecently = new Set();
 const prefix = '!';
 let jsonData = require('./searchRates.json');
 jsonData = convertKeysToLowerCase(jsonData);
+var sortedItems = getNames(jsonData);
 var userID = [];
 
 var myArgs = process.argv.slice(2);
@@ -127,7 +128,6 @@ function itemRates(args, message) {
 		}
 		itemList(args[1].toLowerCase(), message);
 	} else {
-		var sortedItems = getNames(jsonData);
 		if (!sortedItems.includes(args[0])) {
 		  message.channel.send(args[0] + ' not found in database, check for a spelling error?');
 		  return;
@@ -164,7 +164,7 @@ function getNames(items) {
   return itemNames.sort()
 }
 
-function itemList(letterToList) {
+function itemList(letterToList, message) {
 	messageText = '';
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	for (i = 0; i < itemsStartingWith.length; ++i) messageText += itemsStartingWith[i] + '\n';
