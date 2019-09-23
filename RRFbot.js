@@ -119,8 +119,8 @@ function itemRates(args, message) {
       color: 3447003,
       title: "Item Search Rates Lookup Usage:",
       fields: [
-        { name: "Command", value: "!items list [LETTER]\n!items [ITEM NAME]", inline: true},
-        { name: "Description", value: "Lists searchable items starting with [LETTER(S)] (more than one letter prefered please)\nReturns search rate and locations of [ITEM NAME]", inline: true}
+        { name: "!items list [LETTER]", value: "Lists all searchable items starting with [LETTER(S)] (more than one letter prefered please)", inline: true},
+        { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME]", inline: true}
       ]
     }
   	});
