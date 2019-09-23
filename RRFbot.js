@@ -111,6 +111,7 @@ function updateBot() {
 
 function itemRates(args, message) {
 	if (args[0] === undefined) {
+		message.channel.send({embed: {
       color: 3447003,
       title: "Item Search Rates Lookup",
       fields: [
