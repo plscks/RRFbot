@@ -8,6 +8,7 @@
 // ###########
 // [X] Add sm timer for each individual user
 // [X] Make each individual user sm timer cancelable
+// []  Implement search rates lookup
 // []  Add Component help
 // []  Add alchemy help
 // []  Add crafting help
@@ -16,6 +17,8 @@ const shell = require('shelljs');
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
+let jsonData = require('./searchRates.json');
+jsonData = convertKeysToLowerCase(jsonData);
 var userID = [];
 
 var myArgs = process.argv.slice(2);
@@ -54,6 +57,8 @@ client.on('message', message => {
 		} else {
 			message.reply('you must enter a real positive number of minutes between 1 and 65.');
 		}
+	} else if (command == 'items') {
+		itemRates(args);
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
 		message.reply('Initiating self update.....');
@@ -100,4 +105,86 @@ function updateBot() {
 	} else {
 		process.exit();
 	}
+}
+
+function itemRates(args) {
+	if (args == None) {
+		message.channel.send('Item search rate module, view search rates for items by rate descending: location. Basic usage: `!items [item name]` To see list of searchable items by starting letter do `!items list [letter]`');
+	} else if (args[0] == 'list') {
+		itemList(args[1].toLowerCase());
+	} else {
+		var sortedItems = getNames(jsonData);
+		if (!sortedItems.includes(args[0])) {
+		  message.channel.send(args[0] + ' not found in database, check for a spelling error?');
+		  return;
+		} else {
+			var itemData = jsonData[args[0].toLowerCase()];
+			var sorted = sortResults(itemData);
+			var percentText = ''
+			var locationText = ''
+			for (var i = 0; i < sorted.length; ++i) {
+			  var percent = sorted[i][1];
+			  if (percent < 1) percent = percent.toFixed(3);
+			  else percent = percent.toPrecision(4)
+				percentText += percent + '%\n'
+				locationText += sorted[i] + '\n'
+			}
+			message.channel.send({embed: {
+      color: 3447003,
+      title: "Search odds for " + args[0],
+      fields: [
+        { name: "Search Odds", value: percentText, inline: true},
+        { name: "Location", value: locationText, inline: true}
+      ]
+    	}
+  		});
+		}
+	}
+}
+
+function getNames(items) {
+  var itemNames = [];
+  for (var itemName in items) {
+    itemNames.push(itemName);
+  }
+  return itemNames.sort()
+}
+
+function itemList(letterToList) {
+	messageText = '';
+	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
+	for (i = 0; i < itemsStartingWith.length; ++i) messageText += itemsStartingWith[i] + '\n';
+	message.channel.send({embed: {
+      color: 3447003,
+      title: "Items starting with " + letterToList.toUpperCase(),
+      fields: [
+        { name: "ITEMS:", value: messageText, inline: true}
+      ]
+    }
+  });
+}
+
+function itemsStartWith(masterList, letter) {
+  var letterList = [];
+  for (i = 0; i < masterList.length; ++i) {
+    if (masterList[i].startsWith(letter)) {
+      letterList.push(masterList[i]);
+    }
+  }
+  return letterList
+}
+
+function convertKeysToLowerCase(obj) {
+    var output = {};
+    for (i in obj) {
+        if (Object.prototype.toString.apply(obj[i]) === '[object Object]') {
+           output[i.toLowerCase()] = convertKeysToLowerCase(obj[i]);
+        }else if(Object.prototype.toString.apply(obj[i]) === '[object Array]'){
+            output[i.toLowerCase()]=[];
+             output[i.toLowerCase()].push(convertKeysToLowerCase(obj[i][0]));
+        } else {
+            output[i.toLowerCase()] = obj[i];
+        }
+    }
+    return output;
 }
