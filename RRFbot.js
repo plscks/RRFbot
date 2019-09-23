@@ -184,7 +184,14 @@ function itemList(letterToList, message) {
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
 		}
-		console.log(messageText);
+		message.channel.send({embed: {
+	      color: 3447003,
+	      title: "Items starting with " + letterToList.toUpperCase(),
+	      fields: [
+	        { name: "ITEMS:", value: messageText, inline: true}
+	      ]
+	    }
+	  });
 	}
 }
 
