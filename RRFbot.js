@@ -120,13 +120,13 @@ function itemRates(args, message) {
       title: "Item Search Rates Lookup Usage:",
       fields: [
         { name: "Command", value: "!items list [LETTER]\n!items [ITEM NAME]", inline: true},
-        { name: "Description", value: "Lists searchable items starting with [LETTER(S)]\nReturns search rate and locations of [ITEM NAME]", inline: true}
+        { name: "Description", value: "Lists searchable items starting with [LETTER(S)] (more than one letter prefered please)\nReturns search rate and locations of [ITEM NAME]", inline: true}
       ]
     }
   	});
 	} else if (args[0] == 'list') {
 		if (args[1] === undefined) {
-			message.channel.send('Please enter a letter or letters.');
+			message.channel.send('Please enter the first few letters of the item you\'re searching for. More than 1 letter prefered please.');
 			return;
 		}
 		itemList(args[1].toLowerCase(), message);
