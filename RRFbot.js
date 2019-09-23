@@ -146,11 +146,11 @@ function itemRates(args, message) {
 			  if (percent < 1) percent = percent.toFixed(3);
 			  else percent = percent.toPrecision(4)
 				percentText += percent + '%\n'
-				locationText += sorted[i] + '\n'
+				locationText += sorted[i][0] + '\n'
 			}
 			message.channel.send({embed: {
       	color: 3447003,
-      	title: "Search odds for " + args[0],
+      	title: "Search odds for " + itemIn,
       	fields: [
         	{ name: "Search Odds", value: percentText, inline: true},
         	{ name: "Location", value: locationText, inline: true}
