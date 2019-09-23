@@ -132,8 +132,9 @@ function itemRates(args, message) {
 		for (i = 0; i < args.length; ++i) {
 			itemIn += args[i] + ' ';
 		}
+		itemIn = itemIn.substring(0, itemIn.length - 1);
 		if (!sortedItems.includes(itemIn)) {
-		  message.channel.send(itemIn + 'not found in database, check for a spelling error?');
+		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
 		  return;
 		} else {
 			var itemData = jsonData[itemIn.toLowerCase()];
