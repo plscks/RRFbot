@@ -113,7 +113,7 @@ function itemRates(args, message) {
 	if (args[0] === undefined) {
 		message.channel.send({embed: {
       color: 3447003,
-      title: "Item Search Rates Lookup",
+      title: "Item Search Rates Lookup Usage:",
       fields: [
         { name: "Command", value: "!items list [LETTER]\n!items [ITEM NAME]", inline: true},
         { name: "Description", value: "Lists searchable items starting with [LETTER]\nReturns search rate and locations of [ITEM NAME]", inline: true}
@@ -140,12 +140,12 @@ function itemRates(args, message) {
 				locationText += sorted[i] + '\n'
 			}
 			message.channel.send({embed: {
-      color: 3447003,
-      title: "Search odds for " + args[0],
-      fields: [
-        { name: "Search Odds", value: percentText, inline: true},
-        { name: "Location", value: locationText, inline: true}
-      ]
+      	color: 3447003,
+      	title: "Search odds for " + args[0],
+      	fields: [
+        	{ name: "Search Odds", value: percentText, inline: true},
+        	{ name: "Location", value: locationText, inline: true}
+      	]
     	}
   		});
 		}
