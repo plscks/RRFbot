@@ -144,21 +144,22 @@ function itemRates(args, message) {
 		} else {
 			var itemData = jsonData[itemIn.toLowerCase()];
 			var sorted = sortResults(itemData);
-			var percentText = ''
-			var locationText = ''
+			var percentText = '';
+			var locationText = '';
+			var oddsText = '';
 			for (var i = 0; i < sorted.length; ++i) {
 			  var percent = sorted[i][1];
 			  if (percent < 1) percent = percent.toFixed(3);
 			  else percent = percent.toPrecision(4)
-				percentText += percent + '%\n'
-				locationText += sorted[i][0] + '\n'
+				percentText += percent + '    ';
+				locationText += sorted[i][0] + '\n';
+				oddsText = percentText + locationText;
 			}
 			message.channel.send({embed: {
       	color: 3447003,
       	title: "Search odds for " + itemIn,
       	fields: [
-        	{ name: "Search Odds", value: percentText, inline: true},
-        	{ name: "Location", value: locationText, inline: true}
+        	{ name: "", value: oddsText, inline: true},
       	]
     	}
   		});
@@ -188,7 +189,7 @@ function itemList(letterToList, message) {
 				}
 			}
 			while (messageText[i].length <= 1000);
-			message.channel.send(messageText[i]);
+			console.log(messageText[i]);
 		}
 	}
 }
