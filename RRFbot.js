@@ -179,7 +179,7 @@ function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	while (itemsStartingWith.length) {
 		//message.channel.send(itemsStartingWith.splice(0, 100));
-		smallList = itemsStartingWith.splice(0, 100);
+		smallList = itemsStartingWith.splice(0, 40);
 		messageText = '';
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
