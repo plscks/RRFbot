@@ -182,11 +182,11 @@ function itemList(letterToList, message) {
 	}
 	for (var i = 0; i < messageText.length; ++i) {
 		do {
-				messageText[i] += itemsStartingWith[i] + '\n';
+			for (var j = 0; j < itemsStartingWith.length; ++j) {
+				messageText[i] += itemsStartingWith[j] + '\n';
+			}
 		}
 		while (messageText[i] <= 1000);
-	}
-	for (var i = 0; i < messageText.length; ++i) {
 		message.channel.send(messageText[i]);
 	}
 }
