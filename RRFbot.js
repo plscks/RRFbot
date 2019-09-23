@@ -58,7 +58,7 @@ client.on('message', message => {
 			message.reply('you must enter a real positive number of minutes between 1 and 65.');
 		}
 	} else if (command == 'items') {
-		itemRates(args);
+		itemRates(args, message);
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
 		message.reply('Initiating self update.....');
@@ -109,11 +109,11 @@ function updateBot() {
 	}
 }
 
-function itemRates(args) {
+function itemRates(args, message) {
 	if (args === undefined) {
 		message.channel.send('Item search rate module, view search rates for items by rate descending: location. Basic usage: `!items [item name]` To see list of searchable items by starting letter do `!items list [letter]`');
 	} else if (args[0] == 'list') {
-		itemList(args[1].toLowerCase());
+		itemList(args[1].toLowerCase(), message);
 	} else {
 		var sortedItems = getNames(jsonData);
 		if (!sortedItems.includes(args[0])) {
