@@ -190,6 +190,8 @@ function itemList(letterToList, message) {
 			while (messageText[i].length <= 1000);
 			message.channel.send(messageText[i]);
 		}
+	}
+}
 
 	/*
 	for (var i = 0; i < messageText.length; ++i) {
