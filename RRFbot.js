@@ -117,7 +117,7 @@ function itemRates(args, message) {
       title: "Item Search Rates Lookup Usage:",
       fields: [
         { name: "Command", value: "!items list [LETTER]\n!items [ITEM NAME]", inline: true},
-        { name: "Description", value: "Lists searchable items starting with [LETTER]\nReturns search rate and locations of [ITEM NAME]", inline: true}
+        { name: "Description", value: "Lists searchable items starting with [LETTER(S)]\nReturns search rate and locations of [ITEM NAME]", inline: true}
       ]
     }
   	});
@@ -128,11 +128,15 @@ function itemRates(args, message) {
 		}
 		itemList(args[1].toLowerCase(), message);
 	} else {
-		if (!sortedItems.includes(args[0])) {
-		  message.channel.send(args[0] + ' not found in database, check for a spelling error?');
+		itemIn = ''
+		for (var i = 0, i < args.length; ++i) {
+			itemIn += args[i] + ' ';
+		}
+		if (!sortedItems.includes(itemIn)) {
+		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
 		  return;
 		} else {
-			var itemData = jsonData[args[0].toLowerCase()];
+			var itemData = jsonData[itemIn.toLowerCase()];
 			var sorted = sortResults(itemData);
 			var percentText = ''
 			var locationText = ''
