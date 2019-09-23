@@ -110,7 +110,7 @@ function updateBot() {
 }
 
 function itemRates(args) {
-	if (args == None) {
+	if (args === undefined) {
 		message.channel.send('Item search rate module, view search rates for items by rate descending: location. Basic usage: `!items [item name]` To see list of searchable items by starting letter do `!items list [letter]`');
 	} else if (args[0] == 'list') {
 		itemList(args[1].toLowerCase());
