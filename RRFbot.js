@@ -185,7 +185,7 @@ function itemList(letterToList, message) {
 				messageText[i] += itemsStartingWith[i] + '\n';
 		}
 		while (messageText[i] <= 1000);
-		console.log(messageText[i]);
+		message.channel.send(messageText[i]);
 	}
 
 }
