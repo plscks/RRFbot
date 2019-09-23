@@ -172,11 +172,15 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	messageText1 = '';
 	messageText2 = '';
+	messageText3 = '';
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 		messageText1 += itemsStartingWith[i] + '\n';
 		if (messageText1.length > 1980) {
 			messageText2 += itemsStartingWith[i] + '\n';
+			if (messageText2.length < 1980) {
+				messageText3 += itemsStartingWith[i] + '\n';
+			}
 		}
 	}
 	console.log(messageText1);
@@ -189,9 +193,9 @@ function itemList(letterToList, message) {
     }
   });
 	console.log(messageText2);
-	if (messageText2 == '') {
+	if (messageText2 != '' && messageText3 == '') {
 		return
-	} else {
+	} else if (messageText3 = '' && messageText2 != '') {
 		message.channel.send({embed: {
 	      color: 3447003,
 	      title: "Items starting with " + letterToList.toUpperCase() + " (continued)",
@@ -200,6 +204,15 @@ function itemList(letterToList, message) {
 	      ]
 	    }
 	  });
+	} else if (messageText3 != '') {
+			message.channel.send({embed: {
+		      color: 3447003,
+		      title: "Items starting with " + letterToList.toUpperCase() + " (continued)",
+		      fields: [
+		        { name: "ITEMS:", value: messageText3, inline: true}
+		      ]
+		    }
+		  });
 	}
 }
 
