@@ -177,9 +177,12 @@ function itemList(letterToList, message) {
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 		messageText1 += itemsStartingWith[i] + '\n';
 		if (messageText1.length > 1000) {
+			console.log(messageText1.length);
 			messageText2 += itemsStartingWith[i] + '\n';
-			if (messageText2.length < 1000) {
+			if (messageText2.length > 1000) {
+				console.log(messageText2.length);
 				messageText3 += itemsStartingWith[i] + '\n';
+				console.log(messageText3.length);
 			}
 		}
 	}
