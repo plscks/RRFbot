@@ -110,9 +110,15 @@ function updateBot() {
 }
 
 function itemRates(args, message) {
-	console.log('args[0]: ' + args[0] + ' args[1] ' + args[1] + ' args[2] ' + args[2] + ' void(0) ' + void(0));
 	if (args[0] === undefined) {
-		message.channel.send('Item search rate module, view search rates for items by rate descending: location. Basic usage: `!items [item name]` To see list of searchable items by starting letter do `!items list [letter]`');
+      color: 3447003,
+      title: "Item Search Rates Lookup",
+      fields: [
+        { name: "Command", value: "!items list [LETTER]\n!items [ITEM NAME]", inline: true},
+        { name: "Description", value: "Lists searchable items starting with [LETTER]\nReturns search rate and locations of [ITEM NAME]", inline: true}
+      ]
+    }
+  	});
 	} else if (args[0] == 'list') {
 		itemList(args[1].toLowerCase(), message);
 	} else {
