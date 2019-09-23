@@ -207,3 +207,16 @@ function convertKeysToLowerCase(obj) {
     }
     return output;
 }
+
+function sortResults(input) {
+  var sortable = [];
+  for (var location in input) {
+    sortable.push([location, input[location]]);
+  }
+
+  var sortedItems = sortable.sort(function(a, b) {
+    return b[1] - a[1];
+  });
+
+  return sortedItems
+}
