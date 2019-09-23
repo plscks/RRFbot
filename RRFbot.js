@@ -170,17 +170,34 @@ function getNames(items) {
 }
 
 function itemList(letterToList, message) {
-	messageText = '';
+	messageText1 = '';
+	messageText2 = '';
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
-	for (i = 0; i < itemsStartingWith.length; ++i) messageText += itemsStartingWith[i] + '\n';
+	for (i = 0; i < itemsStartingWith.length; ++i) {
+		messageText1 += itemsStartingWith[i] + '\n';
+		if (messageText1.length > 1999) messageText2 += itemsStartingWith[i] + '\n';
+
+	}
 	message.channel.send({embed: {
       color: 3447003,
       title: "Items starting with " + letterToList.toUpperCase(),
       fields: [
-        { name: "ITEMS:", value: messageText, inline: true}
+        { name: "ITEMS:", value: messageText1, inline: true}
       ]
     }
   });
+	if (messageText2 == '') {
+		return
+	} else {
+		message.channel.send({embed: {
+	      color: 3447003,
+	      title: "Items starting with " + letterToList.toUpperCase() + " (continued)",
+	      fields: [
+	        { name: "ITEMS:", value: messageText2, inline: true}
+	      ]
+	    }
+	  });
+	}
 }
 
 function itemsStartWith(masterList, letter) {
