@@ -178,7 +178,7 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	while (itemsStartingWith.length) {
-		message.channel.send(itemsStartingWith.splice(0, 100));
+		//message.channel.send(itemsStartingWith.splice(0, 100));
 		console.log(itemsStartingWith.splice(0, 100));
 	}
 }
