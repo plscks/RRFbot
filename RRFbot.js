@@ -179,6 +179,7 @@ function itemList(letterToList, message) {
 			messageText2 += itemsStartingWith[i] + '\n';
 		}
 	}
+	console.log(messageText1);
 	message.channel.send({embed: {
       color: 3447003,
       title: "Items starting with " + letterToList.toUpperCase(),
@@ -187,6 +188,7 @@ function itemList(letterToList, message) {
       ]
     }
   });
+	console.log(messageText2);
 	if (messageText2 == '') {
 		return
 	} else {
