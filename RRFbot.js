@@ -177,20 +177,9 @@ function getNames(items) {
 
 function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
-	var messageText = new Array(6);
-	for (var i = 0; i < messageText.length; ++i) {
-		messageText[i] = '';
-	}
-	for (var j = 0; j < itemsStartingWith.length; ++j) {
-		for (var i = 0; i < messageText.length; ++i) {
-			do {
-				for (var j = 0; j < itemsStartingWith.length; ++j) {
-					messageText[i] += itemsStartingWith[j] + '\n';
-				}
-			}
-			while (messageText[i].length <= 1000);
-			console.log(messageText[i]);
-		}
+	while (itemsStartingWith.length) {
+		message.channel.send(itemsStartingWith.splice(0, 100));
+		console.log(itemsStartingWith.splice(0, 100));
 	}
 }
 
