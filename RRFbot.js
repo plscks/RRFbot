@@ -69,6 +69,8 @@ client.on('message', message => {
 	} else if (command== 'test') {
 		var admin = message.guild.roles.find(role => role.name === "Admin?");
 		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
+		console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
+		console.log(typeof(args[0]));
 	}
 });
 
