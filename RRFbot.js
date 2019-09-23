@@ -180,6 +180,18 @@ function itemList(letterToList, message) {
 	for (var i = 0; i < messageText.length; ++i) {
 		messageText[i] = '';
 	}
+	for (var j = 0; j < itemsStartingWith.length; ++j) {
+		for (var i = 0; i < messageText.length; ++i) {
+			do {
+				for (var j = 0; j < itemsStartingWith.length; ++j) {
+					messageText[i] += itemsStartingWith[j] + '\n';
+				}
+			}
+			while (messageText[i].length <= 1000);
+			message.channel.send(messageText[i]);
+		}
+
+	/*
 	for (var i = 0; i < messageText.length; ++i) {
 		do {
 			for (var j = 0; j < itemsStartingWith.length; ++j) {
@@ -189,8 +201,8 @@ function itemList(letterToList, message) {
 		while (messageText[i].length <= 1000);
 		message.channel.send(messageText[i]);
 	}
-}
-	/*
+
+
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 
 		// This loop needs to be a for i=1 i < 6 ++i that changes variable messageTexti
