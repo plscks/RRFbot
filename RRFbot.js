@@ -176,9 +176,9 @@ function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 		messageText1 += itemsStartingWith[i] + '\n';
-		if (messageText1.length > 1980) {
+		if (messageText1.length > 1000) {
 			messageText2 += itemsStartingWith[i] + '\n';
-			if (messageText2.length < 1980) {
+			if (messageText2.length < 1000) {
 				messageText3 += itemsStartingWith[i] + '\n';
 			}
 		}
