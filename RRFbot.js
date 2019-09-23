@@ -8,6 +8,8 @@
 // ###########
 // [X] Add sm timer for each individual user
 // [X] Make each individual user sm timer cancelable
+// [x] Add search rates lookup
+// []  Add global commands embed if line starts with ! and isn't recognized
 // []  Implement search rates lookup
 // []  Add Component help
 // []  Add alchemy help
