@@ -10,7 +10,8 @@
 // [X] Make each individual user sm timer cancelable
 // [x] Add search rates lookup
 // []  Add global commands embed if line starts with ! and isn't recognized
-// []  Implement search rates lookup
+// [x] Implement search rates lookup
+// []  Change search rates results to one row
 // []  Add Component help
 // []  Add alchemy help
 // []  Add crafting help
@@ -174,16 +175,26 @@ function getNames(items) {
 }
 
 function itemList(letterToList, message) {
-	messageText1 = '';
-	messageText2 = '';
-	messageText3 = '';
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
+	var messageText = new Array(6);
+	for (var i = 0; i < messageText.length; ++i) {
+		messageText[i] = '';
+	}
+	for (var i = 0; i < messageText.length; ++i) {
+		do {
+				messageText[i] += itemsStartingWith[i] + '\n';
+		}
+		while (messageText[i] <= 1000);
+		console.log(messageText[i]);
+	}
+
+}
+	/*
 	for (i = 0; i < itemsStartingWith.length; ++i) {
 
 		// This loop needs to be a for i=1 i < 6 ++i that changes variable messageTexti
 		// then does a do/while loop until messageText is 1000 chracters
 		// then finish the loop and change the variable
-
 		messageText1 += itemsStartingWith[i] + '\n';
 		if (messageText1.length > 1000) {
 			console.log('messageText1: ' + messageText1.length);
@@ -226,7 +237,8 @@ function itemList(letterToList, message) {
 		    }
 		  });
 	}
-}
+*/
+
 
 function itemsStartWith(masterList, letter) {
   var letterList = [];
