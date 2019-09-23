@@ -159,7 +159,7 @@ function itemRates(args, message) {
       	color: 3447003,
       	title: "Search odds for " + itemIn,
       	fields: [
-        	{ name: "", value: oddsText, inline: true},
+        	{ name: "Search odds              Location", value: oddsText, inline: true},
       	]
     	}
   		});
@@ -178,7 +178,6 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	while (itemsStartingWith.length) {
-		//message.channel.send(itemsStartingWith.splice(0, 100));
 		smallList = itemsStartingWith.splice(0, 40);
 		messageText = '';
 		for (var i = 0; i < smallList.length; ++i) {
@@ -194,68 +193,6 @@ function itemList(letterToList, message) {
 	  });
 	}
 }
-
-	/*
-	for (var i = 0; i < messageText.length; ++i) {
-		do {
-			for (var j = 0; j < itemsStartingWith.length; ++j) {
-				messageText[i] += itemsStartingWith[j] + '\n';
-			}
-		}
-		while (messageText[i].length <= 1000);
-		message.channel.send(messageText[i]);
-	}
-
-
-	for (i = 0; i < itemsStartingWith.length; ++i) {
-
-		// This loop needs to be a for i=1 i < 6 ++i that changes variable messageTexti
-		// then does a do/while loop until messageText is 1000 chracters
-		// then finish the loop and change the variable
-		messageText1 += itemsStartingWith[i] + '\n';
-		if (messageText1.length > 1000) {
-			console.log('messageText1: ' + messageText1.length);
-			messageText2 += itemsStartingWith[i] + '\n';
-			if (messageText2.length > 1000) {
-				console.log('messageText2: ' + messageText2.length);
-				messageText3 += itemsStartingWith[i] + '\n';
-				console.log('messageText3: ' + messageText3.length);
-			}
-		}
-	}
-	console.log(messageText1);
-	message.channel.send({embed: {
-      color: 3447003,
-      title: "Items starting with " + letterToList.toUpperCase(),
-      fields: [
-        { name: "ITEMS:", value: messageText1, inline: true}
-      ]
-    }
-  });
-	console.log(messageText2);
-	if (messageText2 != '' && messageText3 == '') {
-		return
-	} else if (messageText3 = '' && messageText2 != '') {
-		message.channel.send({embed: {
-	      color: 3447003,
-	      title: "Items starting with " + letterToList.toUpperCase() + " (continued)",
-	      fields: [
-	        { name: "ITEMS:", value: messageText2, inline: true}
-	      ]
-	    }
-	  });
-	} else if (messageText3 != '') {
-			message.channel.send({embed: {
-		      color: 3447003,
-		      title: "Items starting with " + letterToList.toUpperCase() + " (continued)",
-		      fields: [
-		        { name: "ITEMS:", value: messageText3, inline: true}
-		      ]
-		    }
-		  });
-	}
-*/
-
 
 function itemsStartWith(masterList, letter) {
   var letterList = [];
