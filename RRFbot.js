@@ -121,7 +121,10 @@ function itemRates(args, message) {
     }
   	});
 	} else if (args[0] == 'list') {
-		if (args[1] === undefined) message.channel.send('Please enter a letter or letters.');
+		if (args[1] === undefined) {
+			message.channel.send('Please enter a letter or letters.');
+			return;
+		}
 		itemList(args[1].toLowerCase(), message);
 	} else {
 		var sortedItems = getNames(jsonData);
