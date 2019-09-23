@@ -129,7 +129,7 @@ function itemRates(args, message) {
 		itemList(args[1].toLowerCase(), message);
 	} else {
 		itemIn = ''
-		for (var i = 0, i < args.length; ++i) {
+		for (i = 0; i < args.length; ++i;) {
 			itemIn += args[i] + ' ';
 		}
 		if (!sortedItems.includes(itemIn)) {
@@ -184,7 +184,7 @@ function itemList(letterToList, message) {
 
 function itemsStartWith(masterList, letter) {
   var letterList = [];
-  for (i = 0; i < masterList.length; ++i) {
+  for (i = 0; i < masterList.length; ++i;) {
     if (masterList[i].startsWith(letter)) {
       letterList.push(masterList[i]);
     }
