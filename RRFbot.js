@@ -133,7 +133,9 @@ function itemRates(args, message) {
 			itemIn += args[i] + ' ';
 		}
 		itemIn = itemIn.substring(0, itemIn.length - 1);
+		itemIn = itemIn.toLowerCase();
 		if (!sortedItems.includes(itemIn)) {
+			console.log('itemIn: ' + itemIn);
 		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
 		  return;
 		} else {
@@ -175,6 +177,11 @@ function itemList(letterToList, message) {
 	messageText3 = '';
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	for (i = 0; i < itemsStartingWith.length; ++i) {
+
+		// This loop needs to be a for i=1 i < 6 ++i that changes variable messageTexti
+		// then does a do/while loop until messageText is 1000 chracters
+		// then finish the loop and change the variable
+
 		messageText1 += itemsStartingWith[i] + '\n';
 		if (messageText1.length > 1000) {
 			console.log('messageText1: ' + messageText1.length);
