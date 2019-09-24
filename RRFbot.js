@@ -153,7 +153,7 @@ function itemRates(args, message) {
 			  else percent = percent.toPrecision(4)
 				percentText += percent + '    ';
 				locationText += sorted[i][0] + '\n';
-				oddsText += percent + '\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9\&#9' + sorted[i][0] + '\n';
+				oddsText += percent + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + sorted[i][0] + '\n';
 			}
 			message.channel.send({embed: {
       	color: 3447003,
