@@ -120,7 +120,7 @@ function itemRates(args, message) {
       title: "Item Search Rates Lookup Usage:",
       fields: [
         { name: "!items list [LETTER]", value: "Lists all searchable items starting with [LETTER(S)] (more than one letter prefered please)", inline: true},
-        { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME]", inline: true}
+        { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME] (rates account for location rate and NO OTHER bunuses or penalties)", inline: true}
       ]
     }
   	});
