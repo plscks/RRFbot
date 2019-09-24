@@ -65,7 +65,7 @@ client.on('message', message => {
 		itemRates(args, message);
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
-		message.reply('Initiating self update.....');
+		message.reply('TESTbot is initiating self update.....');
 		console.log("Shutting down RRFbot for self update.....");
 		setTimeout(() => {
 			updateBot();
