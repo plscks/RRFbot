@@ -151,7 +151,7 @@ function itemRates(args, message) {
 			  var percent = sorted[i][1];
 			  if (percent < 1) percent = percent.toFixed(3);
 			  else percent = percent.toPrecision(4)
-				percentText += percent + '    ';
+				percentText += percent + '%';
 				locationText += sorted[i][0] + '\n';
 				oddsText += percent + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + sorted[i][0] + '\n';
 			}
