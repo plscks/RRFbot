@@ -15,6 +15,9 @@
 // []  Add Component help
 // []  Add alchemy help
 // []  Add crafting help
+//////////////////////
+// GLOBAL VAR SETUP //
+//////////////////////
 const Discord = require('discord.js');
 const shell = require('shelljs');
 const client = new Discord.Client();
@@ -24,7 +27,21 @@ let jsonData = require('./searchRates.json');
 jsonData = convertKeysToLowerCase(jsonData);
 var sortedItems = getNames(jsonData);
 var userID = [];
+//////////////////////////
+// SIMPLE DEBUGGING LOG //
+//////////////////////////
+var fs = require('fs');
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
 
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
+///////////////////////////////////
+// COMMAND LINE ARGUMENT PARSING //
+///////////////////////////////////
 var myArgs = process.argv.slice(2);
 var flag = myArgs[0];
 if (flag == '-t') {
@@ -37,22 +54,32 @@ else {
 	console.log('        -t        Use auth token "-t [TOKEN-NUMBER]"');
 	process.exit();
 }
-
+//////////////////////////
+// BOT ONLINE AND READY //
+//////////////////////////
 client.once('ready', () => {
 console.log(getDateTime() + '> Ready!');
 });
-
 client.login(token);
-
+///////////////////
+// BOT FUNCTIONS //
+/////////////////////////////
+// NEW MEMBER JOIN MESSAGE //
+/////////////////////////////
 client.on('guildMemberAdd', member => {
 	var leader = message.guild.roles.find(role => role.name === "Leader");
   member.guild.channels.get('481613088794083357').send('Welcome to the RRF! A <@&' + leader + '> will be with you shortly to get you access.');
 });
-
+///////////////////
+// BASE COMMANDS //
+///////////////////
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(' ');
 	const command = args.shift().toLowerCase();
+	///////////////////
+	// GREET MESSAGE //
+	///////////////////
 	if (command === 'greet') {
 		message.channel.send('Hello and welcome to the RRF!');
 	} else if (command == 'sm' && message.channel.id === '481612600149540881') {
@@ -61,8 +88,14 @@ client.on('message', message => {
 		} else {
 			message.reply('you must enter a real positive number of minutes between 1 and 65.');
 		}
+	///////////////////////
+	// ITEM SEARCH RATES //
+	///////////////////////
 	} else if (command == 'items') {
 		itemRates(args, message);
+	/////////////////
+	// SELF UPDATE //
+	/////////////////
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
 		message.reply('TESTbot is initiating self update.....');
@@ -70,11 +103,17 @@ client.on('message', message => {
 		setTimeout(() => {
 			updateBot();
 		}, 5000);
+	//////////////////
+	// TEST COMMAND //
+	//////////////////
 	} else if (command == 'test') {
 		var admin = message.guild.roles.find(role => role.name === "Admin?");
 		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
 		console.log(getDateTime() + '> first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
 		console.log(getDateTime() + '> ' + typeof(args[0]));
+	///////////////////
+	// COMMANDS LIST //
+	///////////////////
 	} else if (command == 'help') {
 		message.channel.send({embed: {
       color: 3447003,
@@ -88,7 +127,9 @@ client.on('message', message => {
   	});
 	}
 });
-
+////////////////////////////
+// SORCERER'S MIGHT TIMER //
+////////////////////////////
 function smTimer(message, time) {
 	var smUser = message.member.displayName;
 	if (time == 0) {
@@ -113,7 +154,9 @@ function smTimer(message, time) {
 		}
 	}
 }
-
+//////////////////////////////////
+// SUPER SECRET BOT SELF UPDATE //
+//////////////////////////////////
 function updateBot() {
 	if (shell.exec('./update.sh').code !== 0) {
   	console.log(getDateTime() + '> Failed to update and restart');
@@ -123,8 +166,13 @@ function updateBot() {
 		process.exit();
 	}
 }
-
+///////////////////////
+// SEARCH RATES INFO //
+///////////////////////
 function itemRates(args, message) {
+	///////////
+	// USAGE //
+	///////////
 	if (args[0] === undefined) {
 		message.channel.send({embed: {
       color: 3447003,
@@ -135,9 +183,15 @@ function itemRates(args, message) {
       ]
     }
   	});
+	/////////////////
+	// OLD COMMAND //
+	/////////////////
 	} else if (args[0] == 'list') {
 		message.channel.send('!items list has depreciated, please use `!items search [KEYWORD]` to search for items in database.');
 		return;
+	/////////////////
+	// ITEM SEARCH //
+	/////////////////
 	} else if (args[0] == 'search') {
 		if (args[1] === undefined) {
 			message.channel.send('Please enter a keyword to search for.');
@@ -153,7 +207,6 @@ function itemRates(args, message) {
 		itemIn = itemIn.toLowerCase();
 		if (!sortedItems.includes(itemIn)) {
 			console.log(getDateTime() + '> Item not found: ' + itemIn);
-
 		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
 		  return;
 		} else {
@@ -183,7 +236,9 @@ function itemRates(args, message) {
 		}
 	}
 }
-
+////////////////////////////////////////
+// READ ITEM DATABASE FROM LOCAL JSON //
+////////////////////////////////////////
 function getNames(items) {
   var itemNames = [];
   for (var itemName in items) {
@@ -191,7 +246,9 @@ function getNames(items) {
   }
   return itemNames.sort()
 }
-
+/////////////////////////////
+// ITEM SEARCH AND RESULTS //
+/////////////////////////////
 function itemList(letterToList, message) {
 	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
@@ -226,7 +283,9 @@ function itemList(letterToList, message) {
 		}
 	}
 }
-
+/////////////////////////////
+// GET SEARCHED ITEMS LIST //
+/////////////////////////////
 function itemsStartWith(masterList, letter) {
   var letterList = [];
   for (i = 0; i < masterList.length; ++i) {
@@ -236,7 +295,9 @@ function itemsStartWith(masterList, letter) {
   }
   return letterList
 }
-
+//////////////////////////////////////////////////
+// CONVERT LIST DATA TO LOWER CASE FOR MATCHING //
+//////////////////////////////////////////////////
 function convertKeysToLowerCase(obj) {
     var output = {};
     for (i in obj) {
@@ -251,20 +312,22 @@ function convertKeysToLowerCase(obj) {
     }
     return output;
 }
-
+/////////////////////////////
+// SORTS ITEM RATE RESULTS //
+/////////////////////////////
 function sortResults(input) {
   var sortable = [];
   for (var location in input) {
     sortable.push([location, input[location]]);
   }
-
   var sortedItems = sortable.sort(function(a, b) {
     return b[1] - a[1];
   });
-
   return sortedItems
 }
-
+////////////////////////////////////////////
+// GET DATE AND TIME FOR EASY LOG DISPLAY //
+////////////////////////////////////////////
 function getDateTime() {
   var date = new Date();
   var hour = date.getHours();
