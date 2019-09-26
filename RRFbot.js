@@ -148,18 +148,19 @@ function itemRates(args, message) {
 			var percentText = '';
 			var locationText = '';
 			var oddsText = '';
-			for (var i = 0; i < sorted.length; ++i) {
-			  var percent = sorted[i][1];
+			var shortSorted = sorted.splice(0, 40);
+			for (var i = 0; i < shortSorted.length; ++i) {
+			  var percent = shortSorted[i][1];
 			  if (percent < 1) percent = percent.toFixed(3);
 			  else percent = percent.toPrecision(4)
 				percentText += percent
-				locationText += sorted[i][0] + '\n';
-				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + sorted[i][0] + '\n';
+				locationText += shortSorted[i][0] + '\n';
+				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
 			}
 			console.log(getDateTime() + '> Search rates requested for: ' + itemIn);
 			message.channel.send({embed: {
       	color: 3447003,
-      	title: "Search odds for " + itemIn,
+      	title: "Top search odds for " + itemIn,
       	fields: [
         	{ name: "Search odds              Location", value: oddsText, inline: true},
       	]
@@ -186,7 +187,7 @@ function itemList(letterToList, message) {
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
 		}
-		message.channel.send({embed: {
+		message.author.send({embed: {
 	      color: 3447003,
 	      title: "Items starting with " + letterToList.toUpperCase(),
 	      fields: [
@@ -200,7 +201,7 @@ function itemList(letterToList, message) {
 function itemsStartWith(masterList, letter) {
   var letterList = [];
   for (i = 0; i < masterList.length; ++i) {
-    if (masterList[i].startsWith(letter)) {
+    if (masterList[i].includes(letter)) {
       letterList.push(masterList[i]);
     }
   }
