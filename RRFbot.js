@@ -119,14 +119,17 @@ function itemRates(args, message) {
       color: 3447003,
       title: "Item Search Rates Lookup Usage:",
       fields: [
-        { name: "!items list [LETTER(S)]", value: "Lists all searchable items starting with [LETTER(S)] (more than one letter prefered please)", inline: true},
+        { name: "!items search [KEYWORD]", value: "Searches for items and returns all matches to the search for [KEYWORD].", inline: true},
         { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME] (rates account for location rate and NO OTHER bunuses or penalties)", inline: true}
       ]
     }
   	});
 	} else if (args[0] == 'list') {
+		message.channel.send('!items list has depreciated, please use `!items search [KEYWORD]` to search for items in database.');
+		return;
+	} else if (args[0] == 'search') {
 		if (args[1] === undefined) {
-			message.channel.send('Please enter an item to search for.');
+			message.channel.send('Please enter a keyword to search for.');
 			return;
 		}
 		itemList(args[1].toLowerCase(), message);
