@@ -151,7 +151,7 @@ function itemRates(args, message) {
 			var percentText = '';
 			var locationText = '';
 			var oddsText = '';
-			var shortSorted = sorted.splice(0, 40);
+			var shortSorted = sorted.splice(0, 19);
 			for (var i = 0; i < shortSorted.length; ++i) {
 			  var percent = shortSorted[i][1];
 			  if (percent < 1) percent = percent.toFixed(3);
