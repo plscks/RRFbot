@@ -151,7 +151,7 @@ function itemRates(args, message) {
 			var percentText = '';
 			var locationText = '';
 			var oddsText = '';
-			var shortSorted = sorted.splice(0, 19);
+			var shortSorted = sorted.splice(0, 20);
 			for (var i = 0; i < shortSorted.length; ++i) {
 			  var percent = shortSorted[i][1];
 			  if (percent < 1) percent = percent.toFixed(3);
@@ -186,8 +186,7 @@ function itemList(letterToList, message) {
 	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	if (itemsStartingWith === undefined || itemsStartingWith.length == 0) {
-		console.log('not found');
-		message.channel.send(letterToList + ' Not found in the item database.');
+		message.channel.send(letterToList + ' not found in the item database.');
 		return;
 	}
 	while (itemsStartingWith.length) {
