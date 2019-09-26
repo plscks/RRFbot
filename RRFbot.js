@@ -185,6 +185,7 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
+	console.log(itemsStartingWith);
 	while (itemsStartingWith.length) {
 		smallList = itemsStartingWith.splice(0, 40);
 		messageText = '';
