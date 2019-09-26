@@ -187,7 +187,7 @@ function itemList(letterToList, message) {
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
 		}
-		if (letterToList.length <= 3 || letterToList == 'white' || letterToList == 'black') {
+		if (letterToList.length <= 2 || letterToList == 'white' || letterToList == 'black' || letterToList == 'pair') {
 			message.author.send({embed: {
 		      color: 3447003,
 		      title: "Items starting with " + letterToList.toUpperCase(),
