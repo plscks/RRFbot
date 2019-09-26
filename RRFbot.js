@@ -186,6 +186,7 @@ function itemList(letterToList, message) {
 	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	if (itemsStartingWith == []) {
+		console.log('not found');
 		message.channel.send(letterToList + ' Not found in the item database.');
 		return;
 	}
