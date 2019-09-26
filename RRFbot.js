@@ -39,7 +39,7 @@ else {
 }
 
 client.once('ready', () => {
-console.log('Ready!');
+console.log(getDateTime() + '> Ready!');
 });
 
 client.login(token);
@@ -66,15 +66,15 @@ client.on('message', message => {
 	} else if (command == 'update') {
 		if (message.author.id !== '407383313335189515') return;
 		message.reply('TESTbot is initiating self update.....');
-		console.log("Shutting down RRFbot for self update.....");
+		console.log(getDateTime() + "> Shutting down RRFbot for self update.....");
 		setTimeout(() => {
 			updateBot();
 		}, 5000);
 	} else if (command== 'test') {
 		var admin = message.guild.roles.find(role => role.name === "Admin?");
 		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
-		console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
-		console.log(typeof(args[0]));
+		console.log(getDateTime() + '> first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
+		console.log(getDateTime() + '> ' + typeof(args[0]));
 	}
 });
 
@@ -105,7 +105,7 @@ function smTimer(message, time) {
 
 function updateBot() {
 	if (shell.exec('./update.sh').code !== 0) {
-  	console.log('Failed to update and restart');
+  	console.log(getDateTime() + '> Failed to update and restart');
   	shell.exit(1)
 		return;
 	} else {
@@ -138,7 +138,8 @@ function itemRates(args, message) {
 		itemIn = itemIn.substring(0, itemIn.length - 1);
 		itemIn = itemIn.toLowerCase();
 		if (!sortedItems.includes(itemIn)) {
-			console.log('itemIn: ' + itemIn);
+			console.log(getDateTime() + '> Item not found: ' + itemIn);
+
 		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
 		  return;
 		} else {
@@ -155,6 +156,7 @@ function itemRates(args, message) {
 				locationText += sorted[i][0] + '\n';
 				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + sorted[i][0] + '\n';
 			}
+			console.log(getDateTime() + '> Search rates requested for: ' + itemIn);
 			message.channel.send({embed: {
       	color: 3447003,
       	title: "Search odds for " + itemIn,
@@ -176,6 +178,7 @@ function getNames(items) {
 }
 
 function itemList(letterToList, message) {
+	console.log(getDateTime() + '> Letters input to list: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	while (itemsStartingWith.length) {
 		smallList = itemsStartingWith.splice(0, 40);
@@ -230,4 +233,20 @@ function sortResults(input) {
   });
 
   return sortedItems
+}
+
+function getDateTime() {
+  var date = new Date();
+  var hour = date.getHours();
+  hour = (hour < 10 ? "0" : "") + hour;
+  var min  = date.getMinutes();
+  min = (min < 10 ? "0" : "") + min;
+  var sec  = date.getSeconds();
+  sec = (sec < 10 ? "0" : "") + sec;
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  month = (month < 10 ? "0" : "") + month;
+  var day  = date.getDate();
+  day = (day < 10 ? "0" : "") + day;
+  return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
 }
