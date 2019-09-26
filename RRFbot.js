@@ -126,7 +126,7 @@ function itemRates(args, message) {
   	});
 	} else if (args[0] == 'list') {
 		if (args[1] === undefined) {
-			message.channel.send('Please enter the first few letters of the item you\'re searching for. More than 1 letter prefered please.');
+			message.channel.send('Please enter an item to search for.';
 			return;
 		}
 		itemList(args[1].toLowerCase(), message);
@@ -155,8 +155,7 @@ function itemRates(args, message) {
 			  else percent = percent.toPrecision(4)
 				percentText += percent
 				locationText += shortSorted[i][0] + '\n';
-				//oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
-				oddsText += percent + '					' + shortSorted[i][0] + '\n';
+				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
 			}
 			console.log(getDateTime() + '> Search rates requested for: ' + itemIn);
 			message.channel.send({embed: {
@@ -180,7 +179,7 @@ function getNames(items) {
 }
 
 function itemList(letterToList, message) {
-	console.log(getDateTime() + '> Letters input to list: ' + letterToList);
+	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
 	while (itemsStartingWith.length) {
 		smallList = itemsStartingWith.splice(0, 40);
@@ -188,14 +187,25 @@ function itemList(letterToList, message) {
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
 		}
-		message.author.send({embed: {
-	      color: 3447003,
-	      title: "Items starting with " + letterToList.toUpperCase(),
-	      fields: [
-	        { name: "ITEMS:", value: messageText, inline: true}
-	      ]
-	    }
-	  });
+		if (letterToList.length <= 3 || letterToList == 'white' || letterToList == 'black') {
+			message.author.send({embed: {
+		      color: 3447003,
+		      title: "Items starting with " + letterToList.toUpperCase(),
+		      fields: [
+		        { name: "ITEMS:", value: messageText, inline: true}
+		      ]
+		    }
+		  });
+		} else {
+			message.channel.send({embed: {
+		      color: 3447003,
+		      title: "Items starting with " + letterToList.toUpperCase(),
+		      fields: [
+		        { name: "ITEMS:", value: messageText, inline: true}
+		      ]
+		    }
+		  });
+		}
 	}
 }
 
