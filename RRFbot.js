@@ -155,7 +155,8 @@ function itemRates(args, message) {
 			  else percent = percent.toPrecision(4)
 				percentText += percent
 				locationText += shortSorted[i][0] + '\n';
-				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
+				//oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
+				oddsText += percent + '					' + shortSorted[i][0] + '\n';
 			}
 			console.log(getDateTime() + '> Search rates requested for: ' + itemIn);
 			message.channel.send({embed: {
