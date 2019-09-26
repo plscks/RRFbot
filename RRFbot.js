@@ -119,7 +119,7 @@ function itemRates(args, message) {
       color: 3447003,
       title: "Item Search Rates Lookup Usage:",
       fields: [
-        { name: "!items search [KEYWORD]", value: "Searches for items and returns all matches to the search for [KEYWORD].", inline: true},
+        { name: "!items search [KEYWORD]", value: "Searches for items and returns all matches to the search for [KEYWORD]. Note that extremely long lists will be DMed to you instead of displayed in channel.", inline: true},
         { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME] (rates account for location rate and NO OTHER bunuses or penalties)", inline: true}
       ]
     }
