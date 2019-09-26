@@ -24,6 +24,7 @@ const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
 let jsonData = require('./searchRates.json');
+let masterListData = require('./masterList.json');
 jsonData = convertKeysToLowerCase(jsonData);
 var sortedItems = getNames(jsonData);
 var userID = [];
@@ -93,6 +94,11 @@ client.on('message', message => {
 	///////////////////////
 	} else if (command == 'items') {
 		itemRates(args, message);
+	//////////////////////
+	// CRAFTING RECIPES //
+	//////////////////////
+	} else if (command =='craft') {
+		
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
