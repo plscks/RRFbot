@@ -126,7 +126,7 @@ function itemRates(args, message) {
   	});
 	} else if (args[0] == 'list') {
 		if (args[1] === undefined) {
-			message.channel.send('Please enter an item to search for.';
+			message.channel.send('Please enter an item to search for.');
 			return;
 		}
 		itemList(args[1].toLowerCase(), message);
