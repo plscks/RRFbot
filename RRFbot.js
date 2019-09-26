@@ -55,7 +55,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	if (command === 'greet') {
 		message.channel.send('Hello and welcome to the RRF!');
-	} else if (command == 'sm') {
+	} else if (command == 'sm' || msg.channel.id === '481612600149540881') {
 		if (args[0] >= 0 && args[0] <= 65) {
 			smTimer(message, args[0]);
 		} else {
