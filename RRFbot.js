@@ -55,7 +55,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	if (command === 'greet') {
 		message.channel.send('Hello and welcome to the RRF!');
-	} else if (command == 'sm' && msg.channel.id === '481612600149540881') {
+	} else if (command == 'sm' && message.channel.id === '481612600149540881') {
 		if (args[0] >= 0 && args[0] <= 65) {
 			smTimer(message, args[0]);
 		} else {
@@ -70,11 +70,22 @@ client.on('message', message => {
 		setTimeout(() => {
 			updateBot();
 		}, 5000);
-	} else if (command== 'test') {
+	} else if (command == 'test') {
 		var admin = message.guild.roles.find(role => role.name === "Admin?");
 		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
 		console.log(getDateTime() + '> first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
 		console.log(getDateTime() + '> ' + typeof(args[0]));
+	} else if (command == 'help') {
+		message.channel.send({embed: {
+      color: 3447003,
+      title: "Available Commands:",
+      fields: [
+				{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
+        { name: "!sm [# OF MINUTES 0-65]", value: "Sets a sorcere's might timer will go off one minute beforehand and toss a ping out to @Medic for healing.", inline: true},
+        { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true}
+      ]
+    }
+  	});
 	}
 });
 
