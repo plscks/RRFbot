@@ -185,7 +185,7 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	console.log(getDateTime() + '> Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
-	if (itemsStartingWith == []) {
+	if (itemsStartingWith === undefined || itemsStartingWith.length == 0) {
 		console.log('not found');
 		message.channel.send(letterToList + ' Not found in the item database.');
 		return;
