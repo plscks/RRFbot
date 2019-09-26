@@ -160,6 +160,7 @@ function itemRates(args, message) {
 				locationText += shortSorted[i][0] + '\n';
 				oddsText += percent + '\%\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + shortSorted[i][0] + '\n';
 			}
+			console.log(oddsText);
 			console.log(getDateTime() + '> Search rates requested for: ' + itemIn);
 			message.channel.send({embed: {
       	color: 3447003,
