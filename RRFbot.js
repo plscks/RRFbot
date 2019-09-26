@@ -94,11 +94,11 @@ client.on('message', message => {
 	///////////////////////
 	} else if (command == 'items') {
 		itemRates(args, message);
-	//////////////////////
-	// CRAFTING RECIPES //
-	//////////////////////
-	} else if (command =='craft') {
-		
+	/////////////////////////////////////////////////
+	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
+	/////////////////////////////////////////////////
+} else if (command =='craft' || command == 'components' || command == 'alch') {
+		listParse(args, message);
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
@@ -330,6 +330,12 @@ function sortResults(input) {
     return b[1] - a[1];
   });
   return sortedItems
+}
+/////////////////////////////////////
+// MASTER LIST PARSING AND DISPLAY //
+/////////////////////////////////////
+function listParse(args, message) {
+	message.channel.send(`arg 0 passed: ${args[0]}   arg 1 passed: ${args[1]}`);
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
