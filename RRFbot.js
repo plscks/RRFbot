@@ -35,7 +35,7 @@ var fs = require('fs');
 var util = require('util');
 var log_path = './debug.log'
 if (fs.existsSync(log_path)) {
-	var log_file = fs.open(__dirname + '/debug.log', {flags : 'w'});
+	var log_file = fs.open(__dirname + '/debug.log', 'a', 666,);
 } else {
 	var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 }
