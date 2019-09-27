@@ -339,6 +339,7 @@ function listParse(args, command, message) {
 	console.log(`Running master list display for ${command}`);
 	if (command == 'craft' && args[0] === undefined) {
 		for (var i = 0; i < masterListData.length; ++i) {
+			console.log('List stuff!')
 			console.log(`Item #${i}: ${masterListData[i]}`);
 		}
 	}
