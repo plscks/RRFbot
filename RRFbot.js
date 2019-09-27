@@ -338,7 +338,7 @@ function sortResults(input) {
 function listParse(args, command, message) {
 	console.log(`Running master list display for ${command}`);
 	for (var i = 0; i < masterListData.length; ++i) {
-		console.log(`Item #${i}: ${masterListData[i]}`);
+		console.log('Item: ' + masterListData[i] + ' i: ' + i);
 	}
 }
 ////////////////////////////////////////////
