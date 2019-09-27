@@ -38,7 +38,7 @@ var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'a+'});
 var log_stdout = process.stdout;
 
 console.log = function(d) { //
-  log_file.write(util.format(getDateTime() + '> ' + d) + '\n');
+  log_file.append(util.format(getDateTime() + '> ' + d) + '\n');
   log_stdout.write(util.format(getDateTime() + '> ' + d) + '\n');
 };
 ///////////////////////////////////
