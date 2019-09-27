@@ -98,7 +98,7 @@ client.on('message', message => {
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
-} else if (command =='craft' || command == 'components' || command == 'alch') {
+} else if (command =='craft' || command == 'alch' || command == 'components') {
 		listParse(args, command, message);
 	/////////////////
 	// SELF UPDATE //
@@ -337,7 +337,11 @@ function sortResults(input) {
 /////////////////////////////////////
 function listParse(args, command, message) {
 	console.log(`Running master list display for ${command}`);
-	message.channel.send(`arg[0]: ${args[0]}   arg[1]: ${args[1]}   command: ${command}`);
+	if (command == 'craft' && args[0] === undefined) {
+		for (var i = 0; i < masterListData.length; ++i) {
+			console.log(`Item #${i}: ${masterListData[i]}`);
+		}
+	}
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
