@@ -336,7 +336,7 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
-	console.log('Running master list display.');
+	console.log(`Running master list display for ${command}`);
 	message.channel.send(`arg[0]: ${args[0]}   arg[1]: ${args[1]}   command: ${command}`);
 }
 ////////////////////////////////////////////
