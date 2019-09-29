@@ -338,6 +338,8 @@ function sortResults(input) {
 /////////////////////////////////////
 function listParse(args, command, message) {
   var requestedData = masterListArray[command];
+  console.log(requestedData);
+  console.log(masterListArray[command]);
 	console.log(`Running master list display for ${command}`);
 	console.log(`Displaying ${command} data:\n${requestedData}`);
 }
