@@ -447,5 +447,7 @@ function initMasterArray(type) {
   masterList['components']['spool of copper wire'] = ['Rare'];
   masterList['components']['sprig of nightshade'] = ['Rare'];
   masterList['components']['stygian bone leech'] = ['Common'];
+  console.log(masterList);
+  console.log(type);
   return masterList[type];
 }
