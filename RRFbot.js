@@ -362,7 +362,7 @@ function getDateTime() {
 ////////////////////////////////////
 // ADD ALL CRAFTING DATA TO ARRAY //
 ////////////////////////////////////
-function initMasterArray {
+function initMasterArray() {
   var masterList = [];
   masterList['craft'] = [];
   masterList['alch'] = [];
