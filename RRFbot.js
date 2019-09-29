@@ -340,7 +340,6 @@ function listParse(args, command, message) {
   var requestedData = masterListArray[command];
 	console.log(`Running master list display for ${command}`);
 	console.log(`Displaying ${command} data:\n${requestedData}`);
-	}
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
