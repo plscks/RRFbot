@@ -319,8 +319,8 @@ def masterList():
     masterList.setdefault('water breathing', []).append('Uncommon: 1')
     masterList.setdefault('water breathing', []).append('Rare: 0')
     masterList.setdefault('water breathing', []).append('Fixed: Bunch of Lilies')
-    masterList['bag of industrial plastic'] = 'Rarity: Rare'
-    masterList['batch of leather'] = 'Rarity: Rare'
+    masterList['bag of industrial plastic'] = ['Rarity: Rare']
+    masterList['batch of leather'] = ['Rarity', 'Rare']
     masterList['batch of mushrooms'] = 'Rarity: Uncommon'
     masterList['blood ice'] = 'Rarity: Uncommon'
     masterList['bottle of holy water'] = 'Rarity: Common'
@@ -358,6 +358,7 @@ def masterOutput(type):
     masterList = {}
     if type == 'craft':
         masterCraftList = craft()
+
         return masterCraftList
     elif type == 'ratio':
         masterRatio = alch()
@@ -383,5 +384,11 @@ if __name__ == "__main__":
     #with open('craftList.json', 'w') as json_file:
     #    json.dump(craftList, json_file)
     print('Making master json...')
-    with open('masterList.json', 'w') as json_file:
-        json.dump(masterList(), json_file)
+    #with open('masterList.json', 'w') as json_file:
+    #    json.dump(masterList(), json_file)
+    masterList = masterList()
+    print(f'Master Crafting list: {masterList}')
+    for k, v in masterList.items():
+        print(f'masterList Key: {k}    masterList Value: {v}')
+        for i in v:
+            print(f'i: {i}')

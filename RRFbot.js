@@ -69,7 +69,8 @@ client.login(token);
 // NEW MEMBER JOIN MESSAGE //
 /////////////////////////////
 client.on('guildMemberAdd', member => {
-	var leader = message.guild.roles.find(role => role.name === "Leader");
+  console.log(`New member ${member} has joined!`)
+	var leader = guild.roles.find(role => role.name === "Leader");
   member.guild.channels.get('481613088794083357').send('Welcome to the RRF! A <@&' + leader + '> will be with you shortly to get you access.');
 });
 ///////////////////
@@ -335,6 +336,10 @@ function sortResults(input) {
 /////////////////////////////////////
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
+// masterListData
+// crafting: 0-26
+// alch: 27-46
+// components: 47-79
 function listParse(args, command, message) {
 	console.log(`Running master list display for ${command}`);
 	console.log(masterListData);
