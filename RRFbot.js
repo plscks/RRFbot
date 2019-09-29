@@ -26,7 +26,7 @@ const prefix = '!';
 let jsonData = require('./searchRates.json');
 var masterListArray = [];
 var masterListArray = initMasterArray();
-console.log(`TEST1:\n${masterListArray}`);
+console.log(masterListArray);
 jsonData = convertKeysToLowerCase(jsonData);
 var sortedItems = getNames(jsonData);
 var userID = [];
