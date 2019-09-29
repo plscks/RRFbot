@@ -337,9 +337,8 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
-  var requestedData = masterListArray[command];
+  var requestedData = initMasterArray(command);
   console.log(requestedData);
-  console.log(masterListArray[command]);
 	console.log(`Running master list display for ${command}`);
 	console.log(`Displaying ${command} data:\n${requestedData}`);
 }
@@ -364,7 +363,7 @@ function getDateTime() {
 ////////////////////////////////////
 // ADD ALL CRAFTING DATA TO ARRAY //
 ////////////////////////////////////
-function initMasterArray() {
+function initMasterArray(type) {
   var masterList = [];
   masterList['craft'] = [];
   masterList['alch'] = [];
@@ -448,5 +447,5 @@ function initMasterArray() {
   masterList['components']['spool of copper wire'] = ['Rare'];
   masterList['components']['sprig of nightshade'] = ['Rare'];
   masterList['components']['stygian bone leech'] = ['Common'];
-  return masterList;
+  return masterList[type];
 }
