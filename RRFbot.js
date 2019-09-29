@@ -24,8 +24,8 @@ const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
 let jsonData = require('./searchRates.json');
-var masterListArray = [];
-var masterListArray = initMasterArray();
+const MasterListArray = [];
+MasterListArray = initMasterArray();
 jsonData = convertKeysToLowerCase(jsonData);
 var sortedItems = getNames(jsonData);
 var userID = [];
@@ -339,10 +339,10 @@ function sortResults(input) {
 /////////////////////////////////////
 function listParse(args, command, message) {
   console.log('masterListArray:');
-  console.log(masterListArray);
+  console.log(MasterListArray);
   console.log('Command in Array:');
-  console.log(masterListArray[command]);
-  var requestedData = masterListArray[command];
+  console.log(MasterListArray[command]);
+  var requestedData = MasterListArray[command];
 	console.log(`Running master list display for ${command}`);
 	console.log(`Displaying ${command} data:`);
   console.log(requestedData);
