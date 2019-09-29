@@ -26,7 +26,6 @@ const prefix = '!';
 let jsonData = require('./searchRates.json');
 var masterListArray = [];
 var masterListArray = initMasterArray();
-console.log(masterListArray);
 jsonData = convertKeysToLowerCase(jsonData);
 var sortedItems = getNames(jsonData);
 var userID = [];
@@ -339,13 +338,14 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
-  console.log(`masterListArray:\n${masterListArray}`);
-  console.log(`Command in Array:\n${masterListArray[command]}`);
+  console.log('masterListArray:');
+  console.log(masterListArray);
+  console.log('Command in Array:');
+  console.log(masterListArray[command]);
   var requestedData = masterListArray[command];
-
-  console.log(requestedData);
 	console.log(`Running master list display for ${command}`);
-	console.log(`Displaying ${command} data:\n${requestedData}`);
+	console.log(`Displaying ${command} data:`);
+  console.log(requestedData);
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
