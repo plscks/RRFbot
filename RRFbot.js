@@ -24,6 +24,7 @@ const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
 let jsonData = require('./searchRates.json');
+var masterListArray = [];
 var masterListArray = initMasterArray();
 console.log(`TEST1:\n${masterListArray}`);
 jsonData = convertKeysToLowerCase(jsonData);
