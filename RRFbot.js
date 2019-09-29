@@ -99,41 +99,41 @@ client.on('message', message => {
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
-} else if (command =='craft' || command == 'alch' || command == 'components') {
-		listParse(args, command, message);
+  } else if (command =='craft' || command == 'alch' || command == 'components') {
+	  listParse(args, command, message);
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
-	} else if (command == 'update') {
-		if (message.author.id !== '407383313335189515') return;
-		message.reply('TESTbot is initiating self update.....');
-		console.log("Shutting down RRFbot for self update.....");
-		setTimeout(() => {
-			updateBot();
-		}, 5000);
+  } else if (command == 'update') {
+  	if (message.author.id !== '407383313335189515') return;
+  	message.reply('TESTbot is initiating self update.....');
+  	console.log("Shutting down RRFbot for self update.....");
+  	setTimeout(() => {
+  		updateBot();
+  	}, 5000);
 	//////////////////
 	// TEST COMMAND //
 	//////////////////
-	} else if (command == 'test') {
-		var admin = message.guild.roles.find(role => role.name === "Admin?");
-		message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
-		console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
-		console.log(typeof(args[0]));
+  } else if (command == 'test') {
+  	var admin = message.guild.roles.find(role => role.name === "Admin?");
+  	message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
+  	console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
+  	console.log(typeof(args[0]));
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
-	} else if (command == 'help') {
-		message.channel.send({embed: {
+  } else if (command == 'help') {
+  	message.channel.send({embed: {
       color: 3447003,
       title: "Available Commands:",
       fields: [
-				{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
+  			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
         { name: "!sm [# OF MINUTES 0-65]", value: "Sets a sorcere's might timer will go off one minute beforehand and toss a ping out to @Medic for healing.", inline: true},
         { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true}
       ]
     }
   	});
-	}
+  }
 });
 ////////////////////////////
 // SORCERER'S MIGHT TIMER //
@@ -337,7 +337,10 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
-  var requestedData = initMasterArray(command);
+  console.log(`masterListArray:\n${masterListArray}`);
+  console.log(`Command in Array:\n${masterListArray[command]}`);
+  var requestedData = masterListArray[command];
+
   console.log(requestedData);
 	console.log(`Running master list display for ${command}`);
 	console.log(`Displaying ${command} data:\n${requestedData}`);
@@ -363,7 +366,7 @@ function getDateTime() {
 ////////////////////////////////////
 // ADD ALL CRAFTING DATA TO ARRAY //
 ////////////////////////////////////
-function initMasterArray(type) {
+function initMasterArray() {
   var masterList = [];
   masterList['craft'] = [];
   masterList['alch'] = [];
@@ -447,7 +450,5 @@ function initMasterArray(type) {
   masterList['components']['spool of copper wire'] = ['Rare'];
   masterList['components']['sprig of nightshade'] = ['Rare'];
   masterList['components']['stygian bone leech'] = ['Common'];
-  console.log(`master list\n\n${masterList}`);
-  console.log(`\nType: ${type}\n\n`);
-  return masterList[type];
+  return masterList;
 }
