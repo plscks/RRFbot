@@ -100,7 +100,6 @@ client.on('message', message => {
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
   } else if (command =='craft' || command == 'alch' || command == 'components') {
-    message.channel.send('Executing crafting commands');
 	  listParse(args, command, message);
 	/////////////////
 	// SELF UPDATE //
@@ -188,7 +187,7 @@ function itemRates(args, message) {
       title: "Item Search Rates Lookup Usage:",
       fields: [
         { name: "!items search [KEYWORD]", value: "Searches for items and returns all matches to the search for [KEYWORD]. Note that extremely long lists will be DMed to you instead of displayed in channel.", inline: true},
-        { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME] (rates account for location rate and NO OTHER bunuses or penalties)", inline: true}
+        { name: "!items [ITEM NAME]", value: "Returns search rate and locations of [ITEM NAME] (rates account for location rate and NO OTHER bonuses or penalties)", inline: true}
       ]
     }
   	});
@@ -339,7 +338,6 @@ function sortResults(input) {
 /////////////////////////////////////
 function listParse(args, command, message) {
   if (command == 'craft' && args[1] === undefined) {
-    message.channel.send('craft with undefined args[1]');
     var masterCraftArray = masterListArray['craft'];
     var craftableItems = Object.keys(masterCraftArray);
     messageText = '';
@@ -359,7 +357,6 @@ function listParse(args, command, message) {
   } else if (command == 'components') {
     var masterComponentArray = masterListArray['components'];
   }
-  message.channel.send('Testing');
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
