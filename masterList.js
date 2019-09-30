@@ -7,16 +7,18 @@ var masterCraftArray = masterListArray['craft'];
 var masterAlchArray = masterListArray['alch'];
 var masterComponentArray = masterListArray['components'];
 
-var input = 'chainmail shirt';
+var input = 'bag of industrial plastic';
 console.log('Crafable Items List:');
-var keys = Object.keys(masterCraftArray);
+var keys = Object.keys(masterComponentArray);
 console.log();
 for (var i = 0; i < keys.length; ++i) {
   console.log('Item: ' + keys[i]);
 }
-for (var i = 0; i < masterCraftArray[input].length; ++i) {
-  console.log(masterCraftArray[input][i]);
-}
+//for (var i = 0; i < masterAlchArray[input].length; ++i) {
+//  console.log(masterAlchArray[input][i]);
+//}
+console.log('TESTING THE COMPONENTS FUNCTIONS:');
+console.log(masterComponentArray[input]);
 
 doStuff();
 

@@ -99,8 +99,12 @@ client.on('message', message => {
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
-  } else if (command =='craft' || command == 'alch' || command == 'components') {
-	  listParse(args, command, message);
+  } else if (command =='craft') {
+	  crafting(args, message);
+  } else if (command == 'alch') {
+    alchemy(args, message);
+  } else if (command == 'components') {
+    components(args, message);
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
@@ -333,12 +337,12 @@ function sortResults(input) {
   });
   return sortedItems
 }
-/////////////////////////////////////
-// MASTER LIST PARSING AND DISPLAY //
-/////////////////////////////////////
-function listParse(args, command, message) {
-  if (command == 'craft' && args[1] === undefined) {
-    var masterCraftArray = masterListArray['craft'];
+//////////////
+// CRAFTING //
+//////////////
+function craft(args, message) {
+  var masterCraftArray = masterListArray['craft'];
+  if (args[1] === undefined) {
     var craftableItems = Object.keys(masterCraftArray);
     messageText = '';
     for (var i = 0; i < craftableItems.length; ++i) {
@@ -346,16 +350,54 @@ function listParse(args, command, message) {
     }
     message.channel.send({embed: {
         color: 3447003,
-        title: "Craftable Items List ",
+        title: "USAGE: !craft [ITEM]\nLists the required components to craft an item along with the crafting ap cost and xp gains.",
         fields: [
-          { name: "ITEMS:", value: messageText, inline: true}
+          { name: "AVAILABLE ITEMS:", value: messageText, inline: true}
         ]
       }
     });
-  } else if (command == 'alch') {
-    var masterAlchArray = masterListArray['alch'];
-  } else if (command == 'components') {
-    var masterComponentArray = masterListArray['components'];
+  }
+}
+/////////////
+// ALCHEMY //
+/////////////
+function alchemy(args, message) {
+  var masterAlchArray = masterListArray['alch'];
+  if (args[1] === undefined) {
+    var alchemyItems = Object.keys(masterAlchArray);
+    messageText = '';
+    for (var i = 0; i < alchemyItems.length; ++i) {
+      messageText += alchemyItems[i] + '\n';
+    }
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "USAGE: !alch [POTION]\nLists the ratio of common/uncommon/rare items in a potions recipe along with the fixed component.",
+        fields: [
+          { name: "AVAILABLE POTIONS:", value: messageText, inline: true}
+        ]
+      }
+    });
+  }
+}
+////////////////
+// COMPONENTS //
+////////////////
+function components(args, message) {
+  var masterComponentArray = masterListArray['components'];
+  if (args[1] === undefined) {
+    var componentQuality = Object.keys(masterComponentArray);
+    messageText = '';
+    for (var i = 0; i < componentQuality.length; ++i) {
+      messageText += componentQuality[i] + '\n';
+    }
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "USAGE: !components [COMPONENT]\nLists the rarity of the called on component.\n\nUSAGE: !components [QUALITY] where quality is common/uncommon/rare\nLists all components that are of that quality.",
+        fields: [
+          { name: "AVAILABLE COMPONENTS:", value: messageText, inline: true}
+        ]
+      }
+    });
   }
 }
 ////////////////////////////////////////////
