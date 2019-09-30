@@ -338,6 +338,26 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
+  if (command == 'craft' && args === undefined) {
+    var masterCraftArray = masterListArray['craft'];
+    var craftableItems = Object.keys(masterCraftArray);
+    messageText = '';
+    for (var i = 0; i < craftableItems.length; ++i) {
+      messageText += craftableItems[i] + '\n';
+    }
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "Craftable Items List ",
+        fields: [
+          { name: "ITEMS:", value: messageText, inline: true}
+        ]
+      }
+    });
+  } else if (command == 'alch') {
+    var masterAlchArray = masterListArray['alch'];
+  } else if (command == 'components') {
+    var masterComponentArray = masterListArray['components'];
+  }
   message.channel.send('Testing');
   message.channel.send(masterListArray[0]);
 }

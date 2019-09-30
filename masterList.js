@@ -2,15 +2,30 @@
 // Ugh.
 var masterListArray = initMasterArray();
 var pants = ['shirt', 'buttons', 'zipper'];
-console.log(masterListArray);
+console.log(typeof(pants));
+var masterCraftArray = masterListArray['craft'];
+var masterAlchArray = masterListArray['alch'];
+var masterComponentArray = masterListArray['components'];
+
+var input = 'chainmail shirt';
+console.log('Crafable Items List:');
+var keys = Object.keys(masterCraftArray);
+console.log();
+for (var i = 0; i < keys.length; ++i) {
+  console.log('Item: ' + keys[i]);
+}
+for (var i = 0; i < masterCraftArray[input].length; ++i) {
+  console.log(masterCraftArray[input][i]);
+}
 
 doStuff();
 
 function doStuff() {
-  console.log('Doing stuff inside of a function:\n');
-  console.log(masterListArray);
-  console.log(typeof(masterListArray));
-  console.log('Did stuff in the function.');
+  //console.log('Doing stuff inside of a function:\n');
+  //console.log(masterListArray);
+  //console.log(typeof(masterListArray));
+  //console.log('Did stuff in the function.');
+  //console.log(masterListArray);
 }
 
 ////////////////////////////////////
