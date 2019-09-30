@@ -339,6 +339,7 @@ function sortResults(input) {
 /////////////////////////////////////
 function listParse(args, command, message) {
   if (command == 'craft' && args === undefined) {
+    message.channel.send('craft with undefined arg');
     var masterCraftArray = masterListArray['craft'];
     var craftableItems = Object.keys(masterCraftArray);
     messageText = '';
@@ -359,7 +360,6 @@ function listParse(args, command, message) {
     var masterComponentArray = masterListArray['components'];
   }
   message.channel.send('Testing');
-  message.channel.send(masterListArray[0]);
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
