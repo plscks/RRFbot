@@ -338,8 +338,8 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
-  if (command == 'craft' && args === undefined) {
-    message.channel.send('craft with undefined arg');
+  if (command == 'craft' && args[1] === undefined) {
+    message.channel.send('craft with undefined args[1]');
     var masterCraftArray = masterListArray['craft'];
     var craftableItems = Object.keys(masterCraftArray);
     messageText = '';
