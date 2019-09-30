@@ -25,6 +25,7 @@ const talkedRecently = new Set();
 const prefix = '!';
 let jsonData = require('./searchRates.json');
 jsonData = convertKeysToLowerCase(jsonData);
+var masterListArray = initMasterArray();
 var sortedItems = getNames(jsonData);
 var userID = [];
 //////////////////////////
@@ -99,6 +100,7 @@ client.on('message', message => {
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
   } else if (command =='craft' || command == 'alch' || command == 'components') {
+    message.channel.send('Executing crafting commands');
 	  listParse(args, command, message);
 	/////////////////
 	// SELF UPDATE //
@@ -336,6 +338,8 @@ function sortResults(input) {
 // MASTER LIST PARSING AND DISPLAY //
 /////////////////////////////////////
 function listParse(args, command, message) {
+  message.channel.send('Testing');
+  message.channel.send(masterListArray[0]);
 }
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
