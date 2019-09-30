@@ -340,7 +340,7 @@ function sortResults(input) {
 //////////////
 // CRAFTING //
 //////////////
-function craft(args, message) {
+function crafting(args, message) {
   var masterCraftArray = masterListArray['craft'];
   if (args[1] === undefined) {
     var craftableItems = Object.keys(masterCraftArray);
