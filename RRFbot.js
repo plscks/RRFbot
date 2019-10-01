@@ -70,7 +70,7 @@ client.login(token);
 /////////////////////////////
 client.on('guildMemberAdd', member => {
   console.log(`New member ${member} has joined!`)
-	var leader = guild.roles.find(role => role.name === "Leader");
+	var leader = member.guild.roles.find(role => role.name === "Leader");
   member.guild.channels.get('481613088794083357').send('Welcome to the RRF! A <@&' + leader + '> will be with you shortly to get you access.');
 });
 ///////////////////

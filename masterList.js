@@ -8,28 +8,27 @@ var masterAlchArray = masterListArray['alch'];
 var masterComponentArray = masterListArray['components'];
 
 var input = 'bag of industrial plastic';
+console.log('!craft');
 console.log('Crafable Items List:');
 var keys = Object.keys(masterComponentArray);
 console.log();
 for (var i = 0; i < keys.length; ++i) {
   console.log('Item: ' + keys[i]);
 }
+console.log('');
+console.log('!craft rare');
+console.log('Rare Items:');
+for (var i = 0; i < keys.length; ++i) {
+  if (masterComponentArray[keys[i]] == 'Rare') {
+    console.log(keys[i]);
+  }
+}
+console.log('');
+console.log('!craft bag of industrial plastic');
+console.log(masterComponentArray[input]);
 //for (var i = 0; i < masterAlchArray[input].length; ++i) {
 //  console.log(masterAlchArray[input][i]);
 //}
-console.log('TESTING THE COMPONENTS FUNCTIONS:');
-console.log(masterComponentArray[input]);
-
-doStuff();
-
-function doStuff() {
-  //console.log('Doing stuff inside of a function:\n');
-  //console.log(masterListArray);
-  //console.log(typeof(masterListArray));
-  //console.log('Did stuff in the function.');
-  //console.log(masterListArray);
-}
-
 ////////////////////////////////////
 // ADD ALL CRAFTING DATA TO ARRAY //
 ////////////////////////////////////
