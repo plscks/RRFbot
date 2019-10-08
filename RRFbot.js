@@ -219,7 +219,7 @@ function itemRates(args, message) {
 		itemIn = itemIn.toLowerCase();
 		if (!sortedItems.includes(itemIn)) {
 			console.log('Item not found: ' + itemIn);
-		  message.channel.send(itemIn + ' not found in database, check for a spelling error?');
+		  message.channel.send(itemIn + ' not found in database, check for a spelling error or try !items search [KEYWORD] to search available items. !items for usage information.');
 		  return;
 		} else {
 			var itemData = jsonData[itemIn.toLowerCase()];
