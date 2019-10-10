@@ -368,21 +368,22 @@ function crafting(args, message) {
 			console.log('Crafting item not found: ' + itemIn);
 		  message.channel.send(itemIn + ' not found in database, check for a spelling error or try !craft for a list of available items.');
 		  return;
-  } else {
-    var itemRecipe = masterCraftArray[itemIn];
-    recipeText = '';
-    for (var i = 0; i < itemRecipe.length; ++i) {
-      recipeText += itemRecipe[i] + '\n';
-    }
-    console.log('Recipe requested for ' + itemIn);
-    message.channel.send({embed: {
-        color: 3447003,
-        title: "Recipe for " + itemIn,
-        fields: [
-          { name: "RECIPE:", value: recipeText, inline: true}
-        ]
+    } else {
+      var itemRecipe = masterCraftArray[itemIn];
+      recipeText = '';
+      for (var i = 0; i < itemRecipe.length; ++i) {
+        recipeText += itemRecipe[i] + '\n';
       }
-    });
+      console.log('Recipe requested for ' + itemIn);
+      message.channel.send({embed: {
+          color: 3447003,
+          title: "Recipe for " + itemIn,
+          fields: [
+            { name: "RECIPE:", value: recipeText, inline: true}
+            ]
+          }
+      });
+    }
   }
 }
 /////////////
