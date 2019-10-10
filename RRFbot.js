@@ -342,6 +342,9 @@ function sortResults(input) {
 //////////////
 function crafting(args, message) {
   var masterCraftArray = masterListArray['craft'];
+  console.log('Debug 1 - args: ' + args);
+  console.log('Debug 2 - args[0]: ' + args[0]);
+  console.log('Debug 3 - args[1]: ' + args[1]);
   if (args[1] === undefined) {
     var craftableItems = Object.keys(masterCraftArray);
     messageText = '';
