@@ -357,6 +357,7 @@ function crafting(args, message) {
       }
     });
   } else {
+    console.log('Looking for (first arg): ' + args[1]);
     var craftableItems = Object.keys(masterCraftArray);
     itemIn = '';
     for (i = 0; i < args.length; ++i) {
@@ -364,6 +365,7 @@ function crafting(args, message) {
 		}
     itemIn = itemIn.substring(0, itemIn.length - 1);
 		itemIn = itemIn.toLowerCase();
+    console.log('Looking for (complete): ' + intemIn);
 		if (!craftableItems.includes(itemIn)) {
 			console.log('Crafting item not found: ' + itemIn);
 		  message.channel.send(itemIn + ' not found in database, check for a spelling error or try !craft for a list of available items.');
