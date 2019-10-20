@@ -185,7 +185,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
-			console.log('Requested start point: (' + startX + ', ' + startY + ', ' + startZ);
+			console.log('Requested start point: (' + startX + ', ' + startY + ' ' + startArgs[2] + ')');
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
       if (endArgs.length !== 3) {
@@ -204,7 +204,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
-			console.log('Requested end point: (' + endX + ', ' + endY + ', ' + endZ);
+			console.log('Requested end point: (' + endX + ', ' + endY + ' ' + endArgs[2] + ')');
       setDestination(endX, endY, endZ, message);
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
@@ -224,7 +224,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
-			console.log('Requested start point: (' + startX + ', ' + startY + ', ' + startZ);
+			console.log('Requested start point: (' + startX + ', ' + startY + ' ' + startArgs[2] + ')');
       setStart(startX, startY, startZ, message);
       var searchType = '';
       for (var i = 3; i < args.length; i++) {
