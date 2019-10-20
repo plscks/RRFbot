@@ -169,6 +169,7 @@ client.on('message', message => {
   } else if (command == 'map') {
     if (args[0] == 'start' && args[2] == 'end') {
       var startArgs = args[1].split(',');
+			console.log('startArgs.length: ' + startArgs.length);
       if (startArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane'); return;
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
