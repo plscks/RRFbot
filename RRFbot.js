@@ -169,8 +169,7 @@ client.on('message', message => {
   } else if (command == 'map') {
     if (args[0] == 'start' && args[2] == 'end') {
       var startArgs = args[1].split(',');
-			console.log('startArgs: ' + startArgs + ' startArgs.length: ' + startArgs.length);
-      if (startArgs.length !== 3) message.channel.send('DEBUG1: Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+      if (startArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
       if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
@@ -195,7 +194,7 @@ client.on('message', message => {
       setDestination(endX, endY, endZ, message);
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
-      if (startArgs.length !== 2) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+      if (startArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
       if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
@@ -212,7 +211,6 @@ client.on('message', message => {
       }
       var finalType = searchType.substring(0, searchType.length - 1);
       finalType = finalType.toLowerCase();
-			console.log('finalType: ' + finalType + '    exists? (-1 is no): ' + masterTypeList.indexOf(finalType));
       if (masterTypeList.indexOf(finalType) < 0 ) {
         message.channel.send('Did not find tile type: ' + finalType);
         return;
