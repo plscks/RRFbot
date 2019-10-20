@@ -68,7 +68,7 @@ for (var i = 0; i < TileTypes.length; i++) {
   }
 }
 for (var i = 0; i < masterTypeList.length; i++) {
-	//console.log(masterTypeList[i]);
+	console.log(masterTypeList[i]);
 }
 
 

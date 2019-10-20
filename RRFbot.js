@@ -67,7 +67,7 @@ for (var i = 0; i < TileTypes.length; ++i) {
 var masterTypeList = [];
 for (var i = 0; i < TileTypes.length; i++) {
   if (masterTypeList.indexOf(TileTypes[i]) < 0 ) {
-    masterTypeList.push(TileTypes[i].toLowerCase());
+    masterTypeList.push(TileTypes[i]);
   }
 }
 for (var i = 0; i < masterTypeList.length; i++) {
