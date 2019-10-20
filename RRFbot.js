@@ -283,8 +283,8 @@ client.on('message', message => {
   			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
         { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only work's in select channels.", inline: true},
         { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
-				{ name: "!map", value: "Shows uasge. This give directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
-				{ name: "!craft", value: "Shows usage. This give the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
+				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
+				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
       ]
     }
   	});
