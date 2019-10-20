@@ -660,6 +660,10 @@ function getPastableLocationString(x,y,z) {
 }
 
 function setStart(x,y,z,message) {
+	if (!validLocation(x,y,z)) {
+		message.channel.send('Start location not valid, please use positive whole numbers as follows:\n\nLaurentia: X coordinates 1 to 40 Y coordinates 1 to 40\nElysium: X coordinates 1 to 30 Y coordinates 1 to 40\nStygia: X coordinates 1 to 30 Y coordinates 1 to 40\nSewers: Best not mess with sewers unless you are sure you know the coords\nWyrm\'s Lair: Equally difficult\nTerra Nullius: X coordinates 1 to 11 Y coordinates 1 to 12');
+		return;
+	}
 	pathStartX = x;
 	pathStartY = y;
 	pathStartZ = z;
@@ -670,6 +674,10 @@ function setDestination(x,y,z,message) {
 	if (pathStartX == 0 && pathStartY == 0) {
 		console.log('No starting point selected!');
     message.channel.send('No starting point selected!');
+		return;
+	}
+	if (!validLocation(x,y,z)) {
+		message.channel.send('End location not valid, please use positive whole numbers as follows:\n\nLaurentia: X coordinates 1 to 40 Y coordinates 1 to 40\nElysium: X coordinates 1 to 30 Y coordinates 1 to 40\nStygia: X coordinates 1 to 30 Y coordinates 1 to 40\nSewers: Best not mess with sewers unless you are sure you know the coords\nWyrm\'s Lair: Equally difficult\nTerra Nullius: X coordinates 1 to 11 Y coordinates 1 to 12');
 		return;
 	}
 	pathDestinationX = x;
