@@ -64,15 +64,6 @@ var TileTypes = new Array(20000);
 for (var i = 0; i < TileTypes.length; ++i) {
 	TileTypes[i] = "x";
 }
-var masterTypeList = [];
-for (var i = 0; i < TileTypes.length; i++) {
-  if (masterTypeList.indexOf(TileTypes[i]) < 0 ) {
-    masterTypeList.push(TileTypes[i]);
-  }
-}
-for (var i = 0; i < masterTypeList.length; i++) {
-	console.log(masterTypeList[i]);
-}
 var TileDescriptions = new Array(20000);
 for (var i = 0; i < TileDescriptions.length; ++i) {
 	TileDescriptions[i] = new Array(2);
@@ -91,6 +82,16 @@ for (var i = 0; i < guilds.length; ++i) {
 initializeTileTypes();
 initializeTileNames();
 initializePortals();
+
+var masterTypeList = [];
+for (var i = 0; i < TileTypes.length; i++) {
+  if (masterTypeList.indexOf(TileTypes[i]) < 0 ) {
+    masterTypeList.push(TileTypes[i]);
+  }
+}
+for (var i = 0; i < masterTypeList.length; i++) {
+	console.log(masterTypeList[i]);
+}
 //////////////////////////
 // SIMPLE DEBUGGING LOG //
 //////////////////////////
