@@ -242,7 +242,7 @@ client.on('message', message => {
         setDestinationType(finalType, message);
       }
     } else {
-      message.channel.send('To get directions from one tile to another tile by coordinate:\n!map start X,Y,PLANE end X,Y,PLANE\n\nPlease use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.\n\nTo get directions from one tile to a certain tile type use:\n!map start X,Y,PLANE type TILE_TYPE\n\nexample:\n!map start 38,28,laur type ferry terminal');
+      message.channel.send('To get directions from one tile to another tile by coordinate:\n!map start X,Y,PLANE end X,Y,PLANE\n\nPlease use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.\n\nTo get directions from one tile to a certain tile type use:\n!map start X,Y,PLANE type TILE_TYPE\n\nThe tile type will not have a "a" or "an" in front of it\n\nexamples:\n!map start 38,28,laur type ferry terminal\nexclamation point map start 38 comma 28 comma laur end 3 comma 36 comma ely');
     }
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
