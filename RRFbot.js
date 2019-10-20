@@ -190,12 +190,15 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
+			console.log('DEBUG5');
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
       if (endArgs.length !== 3) {
+				console.log('DEBUG6');
 				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
 				return;
 			}
+			console.log('DEBUG7');
       var endX = parseInt(endArgs[0]);
       var endY = parseInt(endArgs[1]);
       if (endArgs[2].toLowerCase() == 'laur') var endZ = 0;
@@ -204,7 +207,12 @@ client.on('message', message => {
       else if (endArgs[2].toLowerCase() == 'sew') var endZ = 3;
       else if (endArgs[2].toLowerCase() == 'wl') var endZ = 4;
       else if (endArgs[2].toLowerCase() == 'tn') var endZ = 5;
-      else message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.'); return;
+      else {
+				console.log('DEBUG8');
+				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
+				return;
+			}
+			console.log('DEBUG9');
       setDestination(endX, endY, endZ, message);
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
