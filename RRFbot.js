@@ -175,10 +175,10 @@ client.on('message', message => {
       else if (startArgs[2].toLowerCase() == 'sew') var startZ = 3;
       else if (startArgs[2].toLowerCase() == 'wl') var startZ = 4;
       else if (startArgs[2].toLowerCase() == 'tn') var startZ = 5;
-      else message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
+      else message.channel.send('DEBUG1: Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
-      if (endArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+      if (endArgs.length !== 3) message.channel.send('DEBUG2: Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
       var endX = parseInt(endArgs[0]);
       var endY = parseInt(endArgs[1]);
       if (endArgs[2].toLowerCase() == 'laur') var endZ = 0;
