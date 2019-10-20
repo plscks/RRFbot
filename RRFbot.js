@@ -70,6 +70,9 @@ for (var i = 0; i < TileTypes.length; i++) {
     masterTypeList.push(TileTypes[i].toLowerCase());
   }
 }
+for (var i = 0; i < masterTypeList.length; i++) {
+	console.log(masterTypeList[i]);
+}
 var TileDescriptions = new Array(20000);
 for (var i = 0; i < TileDescriptions.length; ++i) {
 	TileDescriptions[i] = new Array(2);
@@ -204,6 +207,7 @@ client.on('message', message => {
       }
       var finalType = searchType.substring(0, searchType.length - 1);
       finalType = finalType.toLowerCase();
+			console.log('finalType: ' + finalType + '    exists? (-1 is no): ' + masterTypeList.indexOf(finalType));
       if (masterTypeList.indexOf(finalType) < 0 ) {
         message.channel.send('Did not find tile type: ' + finalType);
         return;
