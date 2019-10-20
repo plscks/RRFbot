@@ -842,12 +842,13 @@ function calculatePath(message) {
 	}
 	if (walkCount > 0) pathString += getWalkString(currentX,currentY,pathDestinationX, pathDestinationY);
 	pathString += "destination at " + getPastableLocationString(pathDestinationX, pathDestinationY, pathDestinationZ) + ". ";
-	if(tempPath.length > 0)
+	if (tempPath.length > 0) {
 		console.log(pathString);
     message.channel.send(pathString);
-	else
+	} else {
 		console.log('Destination could not be found');
     message.channel.send('Destination could not be found.');
+	}
 }
 ////////////////////////////////////
 // ADD ALL CRAFTING DATTO ARRAY //
