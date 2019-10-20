@@ -57,21 +57,18 @@ initializePortals();
 // start: (38, 28, 0)
 // end: (16, 9, 2)
 // endType: Police Station
-//setStart(38, 28, 0);
-//setDestination(16, 9, 2);
+setStart(38, 28, 0);
+setDestination(16, 9, 2);
 //setDestinationType('a Tea House');
 var masterTypeList = [];
 for (var i = 0; i < TileTypes.length; i++) {
-	console.log('got here first');
-	console.log(masterTypeList.indexOf(TileTypes[i]));
   if (masterTypeList.indexOf(TileTypes[i]) < 0 ) {
-		console.log('got here too!');
     masterTypeList.push(TileTypes[i]);
 
   }
 }
 for (var i = 0; i < masterTypeList.length; i++) {
-	console.log(masterTypeList[i]);
+	//console.log(masterTypeList[i]);
 }
 
 

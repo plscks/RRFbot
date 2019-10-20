@@ -767,8 +767,6 @@ function getSuccessorArray(index) {
 }
 
 function calculatePath(message) {
-	// TEST DATSTART: 1438
-	// TEST DATEND: 1678
 	const route = new Graph()
 	var map = new Array(20000);
 	for(var i = 0; i < 20000; i++) {
@@ -801,7 +799,7 @@ function calculatePath(message) {
 			}
 		}
 		var key = Object.keys(tempMatches).reduce(function (r, a, i) {
-        return !i || +tempMatches[a] < +tempMatches[r] ? : r;
+        return !i || +tempMatches[a] < +tempMatches[r] ? a : r;
     }, undefined);
 		var tempPath = route.path(encodeLocation(pathStartX,pathStartY,pathStartZ).toString(), key.toString());
 		pathDestinationX = decodeLocation(key)[0];
