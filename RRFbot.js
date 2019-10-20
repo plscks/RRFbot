@@ -187,6 +187,7 @@ client.on('message', message => {
 			}
 			console.log('Requested start point: (' + startX + ', ' + startY + ' ' + startArgs[2] + ')');
       setStart(startX, startY, startZ, message);
+			if (!validLocation(startX,startY,startZ)) return;
       var endArgs = args[3].split(',');
       if (endArgs.length !== 3) {
 				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
@@ -206,6 +207,7 @@ client.on('message', message => {
 			}
 			console.log('Requested end point: (' + endX + ', ' + endY + ' ' + endArgs[2] + ')');
       setDestination(endX, endY, endZ, message);
+			if (!validLocation(endX,endY,endZ)) return;
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
       if (startArgs.length !== 3) {
