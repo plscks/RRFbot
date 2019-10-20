@@ -185,6 +185,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
+			console.log('Requested start point: (' + startX + ', ' + startY + ', ' + startZ);
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
       if (endArgs.length !== 3) {
@@ -203,6 +204,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
+			console.log('Requested end point: (' + endX + ', ' + endY + ', ' + endZ);
       setDestination(endX, endY, endZ, message);
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
@@ -222,6 +224,7 @@ client.on('message', message => {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
 			}
+			console.log('Requested start point: (' + startX + ', ' + startY + ', ' + startZ);
       setStart(startX, startY, startZ, message);
       var searchType = '';
       for (var i = 3; i < args.length; i++) {
@@ -233,6 +236,7 @@ client.on('message', message => {
         message.channel.send('Did not find tile type: ' + finalType);
         return;
       } else {
+				console.log('Requested end type: ' + finalType);
         setDestinationType(finalType, message);
       }
     } else {
