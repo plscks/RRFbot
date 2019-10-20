@@ -171,7 +171,10 @@ client.on('message', message => {
       var startArgs = args[1].split(',');
 			console.log('DEBUG1');
 			console.log('startArgs.length: ' + startArgs.length);
-      if (startArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane'); return;
+      if (startArgs.length !== 3) {
+				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+				return;
+			}
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
       if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
@@ -183,7 +186,10 @@ client.on('message', message => {
       else message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.'); return;
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
-      if (endArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane'); return;
+      if (endArgs.length !== 3) {
+				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+				return;
+			}
       var endX = parseInt(endArgs[0]);
       var endY = parseInt(endArgs[1]);
       if (endArgs[2].toLowerCase() == 'laur') var endZ = 0;
@@ -196,7 +202,10 @@ client.on('message', message => {
       setDestination(endX, endY, endZ, message);
     } else if (args[0] == 'start' && args[2] == 'type') {
       var startArgs = args[1].split(',');
-      if (startArgs.length !== 3) message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane'); return;
+      if (startArgs.length !== 3) {
+				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
+				return;
+			}
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
       if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
@@ -205,7 +214,10 @@ client.on('message', message => {
       else if (startArgs[2].toLowerCase() == 'sew') var startZ = 3;
       else if (startArgs[2].toLowerCase() == 'wl') var startZ = 4;
       else if (startArgs[2].toLowerCase() == 'tn') var startZ = 5;
-      else message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.'); return;
+      else {
+				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
+				return;
+			}
       setStart(startX, startY, startZ, message);
       var searchType = '';
       for (var i = 3; i < args.length; i++) {
@@ -220,7 +232,7 @@ client.on('message', message => {
         setDestinationType(finalType, message);
       }
     } else {
-      message.channel.send('To get directions from one tile to another tile by coordinate:\n!map start X,Y,PLANE end X,Y,PLANE\n\nPlease use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.\n\nTo get directions from one tile to a certain tile type use:\n!map start X,Y,PLANE type TILE_TYPE\n\nexample:\n!map start 38,28,laur ferry terminal');
+      message.channel.send('To get directions from one tile to another tile by coordinate:\n!map start X,Y,PLANE end X,Y,PLANE\n\nPlease use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.\n\nTo get directions from one tile to a certain tile type use:\n!map start X,Y,PLANE type TILE_TYPE\n\nexample:\n!map start 38,28,laur type ferry terminal');
     }
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
