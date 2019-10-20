@@ -172,9 +172,11 @@ client.on('message', message => {
 			console.log('DEBUG1');
 			console.log('startArgs.length: ' + startArgs.length);
       if (startArgs.length !== 3) {
+				console.log('DEBUG2');
 				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
 				return;
 			}
+			console.log('DEBUG3');
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
       if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
@@ -183,7 +185,11 @@ client.on('message', message => {
       else if (startArgs[2].toLowerCase() == 'sew') var startZ = 3;
       else if (startArgs[2].toLowerCase() == 'wl') var startZ = 4;
       else if (startArgs[2].toLowerCase() == 'tn') var startZ = 5;
-      else message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.'); return;
+      else {
+				console.log('DEBUG4');
+				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
+				return;
+			}
       setStart(startX, startY, startZ, message);
       var endArgs = args[3].split(',');
       if (endArgs.length !== 3) {
