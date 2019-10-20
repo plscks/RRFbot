@@ -200,7 +200,7 @@ client.on('message', message => {
       setStart(startX, startY, startZ, message);
       var searchType = '';
       for (var i = 3; i < args.length; i++) {
-        searchType += arg[i] + ' ';
+        searchType += args[i] + ' ';
       }
       var finalType = searchType.substring(0, searchType.length - 1);
       finalType = finalType.toLowerCase();
