@@ -373,7 +373,7 @@ function itemRates(args, message) {
 		  message.channel.send(itemIn + ' not found in database, check for spelling error or try !items search [KEYWORD] to search available items. !items for usage information.');
 		  return;
 		} else {
-			var itemDat= jsonData[itemIn.toLowerCase()];
+			var itemData = jsonData[itemIn.toLowerCase()];
 			var sorted = sortResults(itemData);
 			var percentText = '';
 			var locationText = '';
