@@ -18,6 +18,7 @@
 // [x] Add alchemy help
 // [x] Add crafting help
 // [x] Add path finding
+// [ ] Add !raid or !RAID flag to alret @everyone
 //////////////////////
 // GLOBAL VAR SETUP //
 //////////////////////
