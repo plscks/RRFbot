@@ -283,6 +283,8 @@ client.on('message', message => {
 	// TEST COMMAND //
 	//////////////////
   } else if (command === 'test') {
+	  var guildId = message.guild.id;
+	  message.channel.send(`server ID: ${guildId}`);
   	var admin = message.guild.roles.find(role => role.name === "Admin?");
   	message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
   	console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
