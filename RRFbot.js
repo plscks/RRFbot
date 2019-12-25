@@ -334,7 +334,7 @@ client.on('message', message => {
 function smTimer(message, time) {
   var guildId = message.guild.id;
 	var smUser = message.member.displayName;
-	if (time === 0) {
+	if (time === '0') {
 		if (!talkedRecently.has(message.author.id)) {
 	  	message.channel.send(smUser + ' you don\'t have Sorcerer\'s Might timer running. Use "!sm #" to start one.');
 		} else {
