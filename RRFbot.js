@@ -137,11 +137,21 @@ client.login(token);
 // NEW MEMBER JOIN MESSAGE //
 /////////////////////////////
 client.on('guildMemberAdd', member => {
-  var guildId = message.guild.id;
-  console.log(`New member ${member} has joined!`);
-  var leader = member.guild.roles.find(role => role.name === "Leader");
-  member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+  var guildId = member.guild.id;
+  var guildName = member.guild.name;
+  if (guildId === '481612600149540875') {
+    console.log(`New member ${member} has joined ${guildName}!`);
+    var leader = member.guild.roles.find(role => role.name === "Leader");
+    member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+  } else if (guildId === '564993020919808000') {
+    console.log(`New member ${member} has joined ${guildName}!`);
+    var srScientist = member.guild.roles.find(role => role.name === "Sr Scientist");
+    member.guild.channels.get('565313168482631680').send('Welcome to USF! A <@&' + srScientist + '> will be with you shortly to get you access.');
+  } else {
+    console.log(`New member ${member} has joined ${guildName}!`);
+  }
 });
+
 ///////////////////
 // BASE COMMANDS //
 ///////////////////
@@ -154,13 +164,23 @@ client.on('message', message => {
 	///////////////////
 	if (command === 'greet') {
 		message.channel.send('Hello and welcome to the RRF!');
-	} else if (command === 'sm' && message.channel.id === '481612600149540881') {
-		if (args[0] >= 0 && args[0] <= 65) {
-			smTimer(message, args[0]);
-		} else {
-			message.reply('you must enter real positive number of minutes between 1 and 65.');
-		}
-	///////////////////////
+	//////////////////
+  // SM TIMER INIT //
+  ///////////////////
+	} else if (command === 'sm') {
+    var guildName = message.guild.name;
+    var smUser = message.member.displayName;
+    console.log(`${smUser} initiated !sm in ${guildName}.`);
+    if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
+      if (args[0] >= 0 && args[0] <= 65) {
+        smTimer(message, args[0]);
+      } else {
+        message.reply('You must enter real positive number of minutes between 1 and 65.');
+      }
+    } else {
+      message.reply('You don\'t have permission to use this command!')
+    }
+    ///////////////////////
 	// ITEM SEARCH RATES //
 	///////////////////////
 	} else if (command === 'items') {
@@ -312,6 +332,7 @@ client.on('message', message => {
 // SORCERER'S MIGHT TIMER //
 ////////////////////////////
 function smTimer(message, time) {
+  var guildId = message.guild.id;
 	var smUser = message.member.displayName;
 	if (time === 0) {
 		if (!talkedRecently.has(message.author.id)) {
@@ -329,7 +350,13 @@ function smTimer(message, time) {
 			talkedRecently.add(message.author.id);
 			userID[message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
-				message.channel.send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
+				if (guildId === '481612600149540875') { // RRF server
+          // -GENERAL RRF CHANNEL- message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
+          message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+        } else if (guildId === '564993020919808000') { // USF server
+          // -USF LAB CHANNEL- message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
+          message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+        }
 				talkedRecently.delete(message.author.id);
 			}, time * 60000 - 60000);
 		}
