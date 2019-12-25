@@ -284,15 +284,23 @@ client.on('message', message => {
     var guildName = message.guild.name;
     var guildId = message.guild.id;
     if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
-      console.log(`${raidPinger} has issued !raid command in ${guildName}`);
-      if (guildId === '481612600149540875') { // RRF server
-        var RRF = message.guild.roles.find(role => role.name === 'RRF');
-        message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
-        // message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
-      } else if (guildId === '564993020919808000') { // USF server
-        var USF = message.guild.roles.find(role => role.name === 'Scientists');
-        message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
-        // message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+      if (talkedRecently.has(command.toLowerCase())) {
+        message.reply('The faction has already been notified about a possible raid.');
+      } else if (!talkedRecently.has(command.toLowerCase())) {
+        talkedRecently.add(command.toLowerCase());
+        setTimeout(() => {
+          console.log(`${raidPinger} has issued !raid command in ${guildName}`);
+          if (guildId === '481612600149540875') { // RRF server
+            var RRF = message.guild.roles.find(role => role.name === 'RRF');
+            message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
+            //message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
+          } else if (guildId === '564993020919808000') { // USF server
+            var USF = message.guild.roles.find(role => role.name === 'Scientists');
+            message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
+            //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+          }
+          talkedRecently.delete(command.toLowerCase());
+        }, 900000);
       }
     } else {
       console.log(`${raidPinger} tried to issue the !raid command in ${guildName}`);
@@ -359,11 +367,11 @@ function smTimer(message, time) {
 			userID[message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
 				if (guildId === '481612600149540875') { // RRF server
-          // -GENERAL RRF CHANNEL- message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
-          message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+          message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
+          //message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
         } else if (guildId === '564993020919808000') { // USF server
-          // -USF LAB CHANNEL- message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!');
-          message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+          message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
+          // message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
         }
 				talkedRecently.delete(message.author.id);
 			}, time * 60000 - 60000);
