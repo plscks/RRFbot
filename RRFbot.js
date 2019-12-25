@@ -260,7 +260,7 @@ client.on('message', message => {
   ///////////////
   } else if (command.toLowerCase() === 'raid') {
 	  var raidPinger = message.member.displayName;
-    if (message.member.roles.find(r => r.name === 'RRF') {
+    if (message.member.roles.find(r => r.name === 'RRF')) {
       console.log(`${raidPinger} has issued !raid command`);
       var RRF = message.guild.roles.find(role => role.name === 'RRF');
       message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
