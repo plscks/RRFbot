@@ -18,7 +18,7 @@
 // [x] Add alchemy help
 // [x] Add crafting help
 // [x] Add path finding
-// [ ] Add !raid or !RAID flag to alret @everyone
+// [X] Add !raid or !RAID flag to alret @everyone
 //////////////////////
 // GLOBAL VAR SETUP //
 //////////////////////
@@ -101,7 +101,7 @@ for (var i = 0; i < TileTypes.length; i++) {
 //////////////////////////
 var fs = require('fs');
 var util = require('util');
-var log_path = './debug.log'
+var log_path = './debug.log';
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'a+'});
 var log_stdout = process.stdout;
 
@@ -114,7 +114,7 @@ console.log = function(d) { //
 ///////////////////////////////////
 var myArgs = process.argv.slice(2);
 var flag = myArgs[0];
-if (flag == '-t') {
+if (flag === '-t') {
 	var token = myArgs[1];
 }
 else {
@@ -137,15 +137,15 @@ client.login(token);
 // NEW MEMBER JOIN MESSAGE //
 /////////////////////////////
 client.on('guildMemberAdd', member => {
-  console.log(`New member ${member} has joined!`)
-	var leader = member.guild.roles.find(role => role.name === "Leader");
-  member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+    console.log(`New member ${member} has joined!`);
+    var leader = member.guild.roles.find(role => role.name === "Leader");
+    member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
 });
 ///////////////////
 // BASE COMMANDS //
 ///////////////////
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(' ');
 	const command = args.shift().toLowerCase();
 	///////////////////
@@ -153,7 +153,7 @@ client.on('message', message => {
 	///////////////////
 	if (command === 'greet') {
 		message.channel.send('Hello and welcome to the RRF!');
-	} else if (command == 'sm' && message.channel.id === '481612600149540881') {
+	} else if (command === 'sm' && message.channel.id === '481612600149540881') {
 		if (args[0] >= 0 && args[0] <= 65) {
 			smTimer(message, args[0]);
 		} else {
@@ -162,13 +162,13 @@ client.on('message', message => {
 	///////////////////////
 	// ITEM SEARCH RATES //
 	///////////////////////
-	} else if (command == 'items') {
+	} else if (command === 'items') {
 		itemRates(args, message);
   /////////////////////////////
   // HYPERMAP PATHING LOOKUP //
   /////////////////////////////
-  } else if (command == 'map') {
-    if (args[0] == 'start' && args[2] == 'end') {
+  } else if (command === 'map') {
+    if (args[0] === 'start' && args[2] === 'end') {
       var startArgs = args[1].split(',');
       if (startArgs.length !== 3) {
 				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
@@ -176,12 +176,12 @@ client.on('message', message => {
 			}
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
-      if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
-      else if (startArgs[2].toLowerCase() == 'ely') var startZ = 1;
-      else if (startArgs[2].toLowerCase() == 'sty') var startZ = 2;
-      else if (startArgs[2].toLowerCase() == 'sew') var startZ = 3;
-      else if (startArgs[2].toLowerCase() == 'wl') var startZ = 4;
-      else if (startArgs[2].toLowerCase() == 'tn') var startZ = 5;
+      if (startArgs[2].toLowerCase() === 'laur') var startZ = 0;
+      else if (startArgs[2].toLowerCase() === 'ely') var startZ = 1;
+      else if (startArgs[2].toLowerCase() === 'sty') var startZ = 2;
+      else if (startArgs[2].toLowerCase() === 'sew') var startZ = 3;
+      else if (startArgs[2].toLowerCase() === 'wl') var startZ = 4;
+      else if (startArgs[2].toLowerCase() === 'tn') var startZ = 5;
       else {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
@@ -196,12 +196,12 @@ client.on('message', message => {
 			}
       var endX = parseInt(endArgs[0]);
       var endY = parseInt(endArgs[1]);
-      if (endArgs[2].toLowerCase() == 'laur') var endZ = 0;
-      else if (endArgs[2].toLowerCase() == 'ely') var endZ = 1;
-      else if (endArgs[2].toLowerCase() == 'sty') var endZ = 2;
-      else if (endArgs[2].toLowerCase() == 'sew') var endZ = 3;
-      else if (endArgs[2].toLowerCase() == 'wl') var endZ = 4;
-      else if (endArgs[2].toLowerCase() == 'tn') var endZ = 5;
+      if (endArgs[2].toLowerCase() === 'laur') var endZ = 0;
+      else if (endArgs[2].toLowerCase() === 'ely') var endZ = 1;
+      else if (endArgs[2].toLowerCase() === 'sty') var endZ = 2;
+      else if (endArgs[2].toLowerCase() === 'sew') var endZ = 3;
+      else if (endArgs[2].toLowerCase() === 'wl') var endZ = 4;
+      else if (endArgs[2].toLowerCase() === 'tn') var endZ = 5;
       else {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
@@ -209,7 +209,7 @@ client.on('message', message => {
 			console.log('Requested end point: (' + endX + ', ' + endY + ' ' + endArgs[2] + ')');
       setDestination(endX, endY, endZ, message);
 			if (!validLocation(endX,endY,endZ)) return;
-    } else if (args[0] == 'start' && args[2] == 'type') {
+    } else if (args[0] === 'start' && args[2] === 'type') {
       var startArgs = args[1].split(',');
       if (startArgs.length !== 3) {
 				message.channel.send('Please use proper format coordinates must be X,Y,PLANE (no spaces after commas): !map start startX,startY,startPlane end endX,endY,endPlane');
@@ -217,12 +217,12 @@ client.on('message', message => {
 			}
       var startX = parseInt(startArgs[0]);
       var startY = parseInt(startArgs[1]);
-      if (startArgs[2].toLowerCase() == 'laur') var startZ = 0;
-      else if (startArgs[2].toLowerCase() == 'ely') var startZ = 1;
-      else if (startArgs[2].toLowerCase() == 'sty') var startZ = 2;
-      else if (startArgs[2].toLowerCase() == 'sew') var startZ = 3;
-      else if (startArgs[2].toLowerCase() == 'wl') var startZ = 4;
-      else if (startArgs[2].toLowerCase() == 'tn') var startZ = 5;
+      if (startArgs[2].toLowerCase() === 'laur') var startZ = 0;
+      else if (startArgs[2].toLowerCase() === 'ely') var startZ = 1;
+      else if (startArgs[2].toLowerCase() === 'sty') var startZ = 2;
+      else if (startArgs[2].toLowerCase() === 'sew') var startZ = 3;
+      else if (startArgs[2].toLowerCase() === 'wl') var startZ = 4;
+      else if (startArgs[2].toLowerCase() === 'tn') var startZ = 5;
       else {
 				message.channel.send('Please use planes shorthand: "laur" for Laurentia, "ely" for Elysium, "sty" for Stygia, "sew" for Sewers, "wl" for Wyrm\'s Lair, "tn" for TerrNullius.');
 				return;
@@ -249,16 +249,25 @@ client.on('message', message => {
 	/////////////////////////////////////////////////
 	// CRAFTING RECIPES COMPONENTS AND ALCH RATIOS //
 	/////////////////////////////////////////////////
-  } else if (command =='craft') {
+  } else if (command ==='craft') {
 	  crafting(args, message);
-  } else if (command == 'alch') {
+  } else if (command === 'alch') {
     alchemy(args, message);
-  } else if (command == 'components') {
+  } else if (command === 'components') {
     components(args, message);
+  ///////////////
+  // RAID PING //
+  ///////////////
+  } else if (command.toLowerCase() === 'raid') {
+	  var raidPinger = message.member.displayName;
+    console.log(`${raidPinger} has issued !raid command`);
+    var RRF = member.guild.roles.find(role => role.name === "RRF");
+    member.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
+    //member.guild.channels.get('481612600149540881').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
-  } else if (command == 'update') {
+  } else if (command === 'update') {
   	if (message.author.id !== '407383313335189515') return;
   	message.reply('TESTbot is initiating self update.....');
   	console.log("Shutting down RRFbot for self update.....");
@@ -268,7 +277,7 @@ client.on('message', message => {
 	//////////////////
 	// TEST COMMAND //
 	//////////////////
-  } else if (command == 'test') {
+  } else if (command === 'test') {
   	var admin = message.guild.roles.find(role => role.name === "Admin?");
   	message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
   	console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
@@ -276,7 +285,7 @@ client.on('message', message => {
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
-  } else if (command == 'help') {
+  } else if (command === 'help') {
   	message.channel.send({embed: {
       color: 3447003,
       title: "Available Commands:",
@@ -296,7 +305,7 @@ client.on('message', message => {
 ////////////////////////////
 function smTimer(message, time) {
 	var smUser = message.member.displayName;
-	if (time == 0) {
+	if (time === 0) {
 		if (!talkedRecently.has(message.author.id)) {
 	  	message.channel.send(smUser + ' you don\'t have Sorcerer\'s Might timer running. Use "!sm #" to start one.');
 		} else {
@@ -350,20 +359,20 @@ function itemRates(args, message) {
 	/////////////////
 	// OLD COMMAND //
 	/////////////////
-	} else if (args[0] == 'list') {
+	} else if (args[0] === 'list') {
 		message.channel.send('!items list has depreciated, please use `!items search [KEYWORD]` to search for items in database.');
 		return;
 	/////////////////
 	// ITEM SEARCH //
 	/////////////////
-	} else if (args[0] == 'search') {
+	} else if (args[0] === 'search') {
 		if (args[1] === undefined) {
 			message.channel.send('Please enter keyword to search for.');
 			return;
 		}
 		itemList(args[1].toLowerCase(), message);
 	} else {
-		itemIn = ''
+		itemIn = '';
 		for (i = 0; i < args.length; ++i) {
 			itemIn += args[i] + ' ';
 		}
@@ -372,7 +381,6 @@ function itemRates(args, message) {
 		if (!sortedItems.includes(itemIn)) {
 			console.log('Item not found: ' + itemIn);
 		  message.channel.send(itemIn + ' not found in database, check for spelling error or try !items search [KEYWORD] to search available items. !items for usage information.');
-		  return;
 		} else {
 			var itemData = jsonData[itemIn.toLowerCase()];
 			var sorted = sortResults(itemData);
@@ -416,7 +424,7 @@ function getNames(items) {
 function itemList(letterToList, message) {
 	console.log('Search input: ' + letterToList);
 	var itemsStartingWith = itemsStartWith(sortedItems, letterToList);
-	if (itemsStartingWith === undefined || itemsStartingWith.length == 0) {
+	if (itemsStartingWith === undefined || itemsStartingWith.length === 0) {
 		message.channel.send(letterToList + ' not found in the item database.');
 		return;
 	}
@@ -426,7 +434,7 @@ function itemList(letterToList, message) {
 		for (var i = 0; i < smallList.length; ++i) {
 			messageText += smallList[i] + '\n';
 		}
-		if (letterToList.length <= 2 || letterToList == 'white' || letterToList == 'black' || letterToList == 'pair') {
+		if (letterToList.length <= 2 || letterToList === 'white' || letterToList === 'black' || letterToList === 'pair') {
 			message.author.send({embed: {
 		      color: 3447003,
 		      title: "Items starting with " + letterToList.toUpperCase(),
@@ -460,7 +468,7 @@ function itemsStartWith(masterList, letter) {
   return letterList
 }
 //////////////////////////////////////////////////
-// CONVERT LIST DATTO LOWER CASE FOR MATCHING //
+// CONVERT LIST DATA TO LOWER CASE FOR MATCHING //
 //////////////////////////////////////////////////
 function convertKeysToLowerCase(obj) {
     var output = {};
@@ -520,7 +528,6 @@ function crafting(args, message) {
 		if (!craftableItems.includes(itemIn)) {
 			console.log('Crafting item not found: ' + itemIn);
 		  message.channel.send(itemIn + ' not found in database, check for spelling error or try !craft for list of available items.');
-		  return;
     } else {
       var itemRecipe = masterCraftArray[itemIn];
       recipeText = '';
@@ -623,9 +630,9 @@ function createPortal(locationArray,methodsArray,costArray) { // Expects two arr
 function getWalkString(x,y,dx,dy) {
 	var N = 0; S = 0; W = 0; E = 0; NW = 0; NE = 0; SW = 0; SE = 0;
 	if (x > dx) W = x-dx; // walk W
-	else if (x < dx) E = dx-x// walk E
+	else if (x < dx) E = dx-x;// walk E
 	if (y > dy) N = y-dy; // walk N
-	else if (y < dy) S = dy-y// walk S
+	else if (y < dy) S = dy-y;// walk S
 
 	if (N > 0) {
 		if (W > 0) {
@@ -683,7 +690,7 @@ function setDestination(x,y,z,message) {
 		message.channel.send('End location not valid, please use positive whole numbers as follows:\n\nLaurentia: X coordinates 1 to 40 Y coordinates 1 to 40\nElysium: X coordinates 1 to 30 Y coordinates 1 to 40\nStygia: X coordinates 1 to 30 Y coordinates 1 to 40\nSewers: Best not mess with sewers unless you are sure you know the coords\nWyrm\'s Lair: Equally difficult\nTerra Nullius: X coordinates 1 to 11 Y coordinates 1 to 12\n\nPlease use non-void tiles in outer planes.');
 		return;
 	}
-	if (pathStartX == 0 && pathStartY == 0) {
+	if (pathStartX === 0 && pathStartY === 0) {
 		console.log('No starting point selected!');
     message.channel.send('No starting point selected!');
 		return;
@@ -697,7 +704,7 @@ function setDestination(x,y,z,message) {
 }
 
 function setDestinationType(type,message) {
-	if (type == "not_set") return;
+	if (type === "not_set") return;
 	type = type.toLowerCase();
 	pathDestinationX = 0;
 	pathDestinationY = 0;
@@ -709,23 +716,23 @@ function setDestinationType(type,message) {
 function validLocation(x,y,z) {
 	var valid = true;
 	if ((y <= 0) || (y > 40) || (x < 1)) valid = false;
-	else if ((x > 40) && ((z == 0) || (z == 3))) valid = false;
+	else if ((x > 40) && ((z === 0) || (z === 3))) valid = false;
   else if ((x > 30) && (z >= 1) && (z <= 2)) valid = false;
   else if ((x > 12) && (z >= 4)) valid = false;
-  else if ((y > 12) && (z == 4)) valid = false;
-  else if ((y > 13) && (z == 5)) valid = false;
-	else if (TileNames[encodeLocation(x,y,z)] == "Solid Earth") valid = false;
-	else if (TileNames[encodeLocation(x,y,z)] == "") valid = false;
-  else if (TileNames[encodeLocation(x,y,z)] == "x") valid = false;
-  else if (TileNames[encodeLocation(x,y,z)] == "Twisted Space") valid = false;
+  else if ((y > 12) && (z === 4)) valid = false;
+  else if ((y > 13) && (z === 5)) valid = false;
+	else if (TileNames[encodeLocation(x,y,z)] === "Solid Earth") valid = false;
+	else if (TileNames[encodeLocation(x,y,z)] === "") valid = false;
+  else if (TileNames[encodeLocation(x,y,z)] === "x") valid = false;
+  else if (TileNames[encodeLocation(x,y,z)] === "Twisted Space") valid = false;
 	return valid;
 }
 
 function encodeLocation(x,y,z) {
 	var val = x + y*50 + z*2500;
 	if ((x < 1) || (y < 1) || (y > 40)) val = 20000-1;
-  else if (((z == 0) && (x > 40)) || ((z == 1) && (x > 30)) || ((z == 2) && (x > 30)) || ((z == 3) && (x > 40)) || ((z == 4) && (x > 12)) || ((z == 5) && (x > 12))) val = 20000-1;
-	else if (TileNames[val] == "Solid Earth") val = 20000-1;
+  else if (((z === 0) && (x > 40)) || ((z === 1) && (x > 30)) || ((z === 2) && (x > 30)) || ((z === 3) && (x > 40)) || ((z === 4) && (x > 12)) || ((z === 5) && (x > 12))) val = 20000-1;
+	else if (TileNames[val] === "Solid Earth") val = 20000-1;
 	return val;
 }
 
@@ -739,13 +746,13 @@ function decodeLocation(val) {
 
 function pathCostModifier(index) {
 	var modifier = 1.0;
-	if (TileTypes[index] == "sea" || TileTypes[index] == "sea") modifier = waterCostModifier;
-  else if (TileTypes[index] == "lake") modifier = waterCostModifier;
-  else if (TileTypes[index] == "peaceful sea") modifier = waterCostModifier;
-  else if (TileTypes[index] == "river" || TileTypes[index] == "river") modifier = waterCostModifier;
-  else if (TileTypes[index] == "searing river") modifier = waterCostModifier;
-  else if (TileTypes[index] == "lava") modifier = waterCostModifier;
-	else if (TileTypes[index] == "mountain") modifier = 2.0;
+	if (TileTypes[index] === "sea" || TileTypes[index] === "sea") modifier = waterCostModifier;
+  else if (TileTypes[index] === "lake") modifier = waterCostModifier;
+  else if (TileTypes[index] === "peaceful sea") modifier = waterCostModifier;
+  else if (TileTypes[index] === "river" || TileTypes[index] === "river") modifier = waterCostModifier;
+  else if (TileTypes[index] === "searing river") modifier = waterCostModifier;
+  else if (TileTypes[index] === "lava") modifier = waterCostModifier;
+	else if (TileTypes[index] === "mountain") modifier = 2.0;
 	if (flightEnabled) modifier = 0.5;
 	return modifier;
 }
@@ -820,7 +827,7 @@ function calculatePath(message) {
 		map[i][1] = getSuccessorArray(i);
 	}
 	for (var i = 0; i < map.length; i++) {
-		if (map[i][1] == '') {
+		if (map[i][1] === '') {
 		} else {
 			var neighborLength = map[i][1].length
 			var tempEdges = {}
@@ -833,12 +840,12 @@ function calculatePath(message) {
 			//var testNode = i.toString() + ', ' + JSON.stringify(tempEdges);
 		}
 	}
-	if (pathDestinationType == 'not_set') {
+	if (pathDestinationType === 'not_set') {
 		var tempPath = route.path(encodeLocation(pathStartX,pathStartY,pathStartZ).toString(), encodeLocation(pathDestinationX,pathDestinationY,pathDestinationZ).toString());
 	} else {
 		var tempMatches = [];
 		for (var i = 0; i < TileTypes.length; i++) {
-			if (TileTypes[i] == pathDestinationType) {
+			if (TileTypes[i] === pathDestinationType) {
 				var testPath = route.path(encodeLocation(pathStartX,pathStartY,pathStartZ).toString(), i.toString(), { cost: true});
 				tempMatches[i] = testPath['cost'];
 			}
@@ -863,7 +870,7 @@ function calculatePath(message) {
 	for(var i = 0; i < path.length; i++) {
 		var arr = decodeLocation(path[i]);
 		var prevArr = decodeLocation(path[i-1]);
-		if (arr[2] != currentPlane) {
+		if (arr[2] !== currentPlane) {
 			if (walkCount > 0) pathString += getWalkString(currentX,currentY,prevArr[0],prevArr[1]) + getPastableLocationString(prevArr[0],prevArr[1],prevArr[2]) + ". \n";
 			walkCount = 0;
 			currentX = arr[0];
@@ -876,7 +883,7 @@ function calculatePath(message) {
 			currentX = arr[0];
 			currentY = arr[1];
 			var prevArr = decodeLocation(path[i-1]);
-			if (arr[2] == 0) {
+			if (arr[2] === 0) {
 				pathString += "Take Ferry to " + getPastableLocationString(arr[0],arr[1],arr[2]) + ". \n";
 			} else {
 				pathString += "Take Tunnel to " + getPastableLocationString(arr[0],arr[1],arr[2]) + ". \n";
@@ -896,7 +903,7 @@ function calculatePath(message) {
 	}
 }
 ////////////////////////////////////
-// ADD ALL CRAFTING DATTO ARRAY //
+// ADD ALL CRAFTING DATA TO ARRAY //
 ////////////////////////////////////
 function initMasterArray() {
   var masterList = [];
