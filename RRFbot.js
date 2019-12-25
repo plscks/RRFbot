@@ -33,6 +33,7 @@ jsonData = convertKeysToLowerCase(jsonData);
 var masterListArray = initMasterArray();
 var sortedItems = getNames(jsonData);
 var userID = [];
+var serverID = [];
 var waterCostModifier = 2.0;
 var portalMPCostModifier = 0.01;
 var flightEnabled = false;
@@ -284,22 +285,22 @@ client.on('message', message => {
     var guildName = message.guild.name;
     var guildId = message.guild.id;
     if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
-      if (talkedRecently.has(command.toLowerCase())) {
+      if (talkedRecently.has(serverID[guildId][command.toLowerCase()])) {
         message.reply('The faction has already been notified about a possible raid.');
-      } else if (!talkedRecently.has(command.toLowerCase())) {
-        talkedRecently.add(command.toLowerCase());
+      } else if (!talkedRecently.has(serverID[guildId][command.toLowerCase()])) {
+        talkedRecently.add(serverID[guildId][command.toLowerCase()]);
         console.log(`${raidPinger} has issued !raid command in ${guildName}`);
         if (guildId === '481612600149540875') { // RRF server
           var RRF = message.guild.roles.find(role => role.name === 'RRF');
-          //message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
-          message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
+          message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
+          //message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
         } else if (guildId === '564993020919808000') { // USF server
           var USF = message.guild.roles.find(role => role.name === 'Scientists');
-          //message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
-          message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+          message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
+          //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
         }
         setTimeout(() => {
-          talkedRecently.delete(command.toLowerCase());
+          talkedRecently.delete(serverID[guildId][command.toLowerCase()]);
         }, 900000);
       }
     } else {
