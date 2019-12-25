@@ -282,6 +282,7 @@ client.on('message', message => {
   } else if (command.toLowerCase() === 'raid') {
 	  var raidPinger = message.member.displayName;
     var guildName = message.guild.name;
+    var guildId = message.guild.id;
     if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
       console.log(`${raidPinger} has issued !raid command in ${guildName}`);
       if (guildId === '481612600149540875') { // RRF server
