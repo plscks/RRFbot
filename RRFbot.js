@@ -300,7 +300,7 @@ client.on('message', message => {
             //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
           }
           talkedRecently.delete(command.toLowerCase());
-        }, 900000);
+        }, 15000);
       }
     } else {
       console.log(`${raidPinger} tried to issue the !raid command in ${guildName}`);
