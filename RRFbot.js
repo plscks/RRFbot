@@ -281,13 +281,20 @@ client.on('message', message => {
   ///////////////
   } else if (command.toLowerCase() === 'raid') {
 	  var raidPinger = message.member.displayName;
-    if (message.member.roles.find(r => r.name === 'RRF')) {
-      console.log(`${raidPinger} has issued !raid command`);
-      var RRF = message.guild.roles.find(role => role.name === 'RRF');
-      message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
-      //message.guild.channels.get('481612600149540881').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+    var guildName = message.guild.name;
+    if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
+      console.log(`${raidPinger} has issued !raid command in ${guildName}`);
+      if (guildId === '481612600149540875') { // RRF server
+        var RRF = message.guild.roles.find(role => role.name === 'RRF');
+        message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
+        // message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
+      } else if (guildId === '564993020919808000') { // USF server
+        var USF = message.guild.roles.find(role => role.name === 'Scientists');
+        message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
+        // message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+      }
     } else {
-      console.log(`${raidPinger} tried to issue the !raid command`);
+      console.log(`${raidPinger} tried to issue the !raid command in ${guildName}`);
       message.channel.send('You don\'t have permission to use this command!');
     }
 	/////////////////
