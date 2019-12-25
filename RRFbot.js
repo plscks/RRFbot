@@ -352,19 +352,19 @@ function smTimer(message, time) {
   var guildId = message.guild.id;
 	var smUser = message.member.displayName;
 	if (time === '0') {
-		if (!talkedRecently.has(message.author.id)) {
+		if (!talkedRecently.has(guildId + ' ' + message.author.id)) {
 	  	message.channel.send(smUser + ' you don\'t have Sorcerer\'s Might timer running. Use "!sm #" to start one.');
 		} else {
 			message.channel.send(smUser + ' canceled Sorcerer\'s Might.');
-	 		clearTimeout(userID[message.author.id]);
-			talkedRecently.delete(message.author.id);
+	 		clearTimeout(userID[guildId + ' ' + message.author.id]);
+			talkedRecently.delete(guildId + ' ' + message.author.id);
 		}
 	} else {
-		if (talkedRecently.has(message.author.id)) {
+		if (talkedRecently.has(guildId + ' ' + message.author.id)) {
 	  	message.reply('you already have Sorcerer\'s Might timer running. Use "!sm 0" to cancel it.');
 		} else {
 			message.channel.send(smUser + ' started Sorcerer\'s Might timer for ' + time + ' minutes.');
-			talkedRecently.add(message.author.id);
+			talkedRecently.add(guildId + ' ' + message.author.id);
 			userID[message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
 				if (guildId === '481612600149540875') { // RRF server
@@ -374,7 +374,7 @@ function smTimer(message, time) {
           message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
           // message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
         }
-				talkedRecently.delete(message.author.id);
+				talkedRecently.delete(guildId + ' ' + message.author.id);
 			}, time * 60000 - 60000);
 		}
 	}
