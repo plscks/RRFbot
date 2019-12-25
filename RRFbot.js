@@ -285,10 +285,10 @@ client.on('message', message => {
     var guildName = message.guild.name;
     var guildId = message.guild.id;
     if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
-      if (talkedRecently.has(serverID[guildId][command.toLowerCase()])) {
+      if (talkedRecently.has(guildId + ' ' + command.toLowerCase())) {
         message.reply('The faction has already been notified about a possible raid.');
-      } else if (!talkedRecently.has(serverID[guildId][command.toLowerCase()])) {
-        talkedRecently.add(serverID[guildId][command.toLowerCase()]);
+      } else if (!talkedRecently.has(guildId + ' ' + command.toLowerCase())) {
+        talkedRecently.add(guildId + ' ' + command.toLowerCase());
         console.log(`${raidPinger} has issued !raid command in ${guildName}`);
         if (guildId === '481612600149540875') { // RRF server
           var RRF = message.guild.roles.find(role => role.name === 'RRF');
@@ -300,7 +300,7 @@ client.on('message', message => {
           //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
         }
         setTimeout(() => {
-          talkedRecently.delete(serverID[guildId][command.toLowerCase()]);
+          talkedRecently.delete(guildId + ' ' + command.toLowerCase());
         }, 900000);
       }
     } else {
