@@ -262,7 +262,7 @@ client.on('message', message => {
 	  var raidPinger = message.member.displayName;
     console.log(`${raidPinger} has issued !raid command`);
     var RRF = message.guild.roles.find(role => role.name === "RRF");
-    message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
+    message.guild.channels.get('529523355825471499').send('<@&' + RRF + '> We\'re getting raided!');
     //message.guild.channels.get('481612600149540881').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
 	/////////////////
 	// SELF UPDATE //
