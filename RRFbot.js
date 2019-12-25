@@ -260,10 +260,15 @@ client.on('message', message => {
   ///////////////
   } else if (command.toLowerCase() === 'raid') {
 	  var raidPinger = message.member.displayName;
-    console.log(`${raidPinger} has issued !raid command`);
-    var RRF = message.guild.roles.find(role => role.name === "RRF");
-    message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
-    //message.guild.channels.get('481612600149540881').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+    if (message.member.roles.find(r => r.name === 'RRF') {
+      console.log(`${raidPinger} has issued !raid command`);
+      var RRF = message.guild.roles.find(role => role.name === 'RRF');
+      message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!');
+      //message.guild.channels.get('481612600149540881').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+    } else {
+      console.log(`${raidPinger} tried to issue the !raid command`);
+      message.channel.send('You don\'t have permission to use this command!');
+    }
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
