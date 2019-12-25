@@ -137,9 +137,10 @@ client.login(token);
 // NEW MEMBER JOIN MESSAGE //
 /////////////////////////////
 client.on('guildMemberAdd', member => {
-    console.log(`New member ${member} has joined!`);
-    var leader = member.guild.roles.find(role => role.name === "Leader");
-    member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
+  var guildId = message.guild.id;
+  console.log(`New member ${member} has joined!`);
+  var leader = member.guild.roles.find(role => role.name === "Leader");
+  member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
 });
 ///////////////////
 // BASE COMMANDS //
@@ -283,8 +284,8 @@ client.on('message', message => {
 	// TEST COMMAND //
 	//////////////////
   } else if (command === 'test') {
-	  var guildId = message.guild.id;
-	  message.channel.send(`server ID: ${guildId}`);
+	  var guildId = message.guild.name;
+	  message.channel.send(`server name: ${guildId}`);
   	var admin = message.guild.roles.find(role => role.name === "Admin?");
   	message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
   	console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
