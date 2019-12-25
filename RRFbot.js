@@ -288,17 +288,17 @@ client.on('message', message => {
         message.reply('The faction has already been notified about a possible raid.');
       } else if (!talkedRecently.has(command.toLowerCase())) {
         talkedRecently.add(command.toLowerCase());
+        console.log(`${raidPinger} has issued !raid command in ${guildName}`);
+        if (guildId === '481612600149540875') { // RRF server
+          var RRF = message.guild.roles.find(role => role.name === 'RRF');
+          message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
+          //message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
+        } else if (guildId === '564993020919808000') { // USF server
+          var USF = message.guild.roles.find(role => role.name === 'Scientists');
+          message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
+          //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+        }
         setTimeout(() => {
-          console.log(`${raidPinger} has issued !raid command in ${guildName}`);
-          if (guildId === '481612600149540875') { // RRF server
-            var RRF = message.guild.roles.find(role => role.name === 'RRF');
-            message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
-            //message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
-          } else if (guildId === '564993020919808000') { // USF server
-            var USF = message.guild.roles.find(role => role.name === 'Scientists');
-            message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
-            //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
-          }
           talkedRecently.delete(command.toLowerCase());
         }, 15000);
       }
