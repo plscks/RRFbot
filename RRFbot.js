@@ -167,7 +167,7 @@ client.on('message', message => {
   ///////////////
   // KID CHECK //
   ///////////////
-  } else if (command.toLowerCase() === 'KidCheck') {
+  } else if (command.toLowerCase() === 'kidcheck') {
 	  if (message.guild.member('214148964847452161')) {
 	    message.reply('Kid is here.');
     } else {
