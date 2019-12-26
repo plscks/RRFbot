@@ -172,7 +172,7 @@ client.on('message', message => {
       if (talkedRecently.has(command.toLowerCase())) {
         message.reply('Kid has been checked on enough today (once per 12 hours)! Thank you for caring so much for him!');
       } else if (!talkedRecently.has(command.toLowerCase())) {
-        message.channel.send('<@&214148964847452161> Have you been fed today and are you properly clothed?');
+        message.channel.send('<@214148964847452161> Have you been fed today and are you properly clothed?');
         setTimeout(() => {
           talkedRecently.delete(command.toLowerCase());
         }, 15000);
