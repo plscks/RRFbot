@@ -364,7 +364,7 @@ function smTimer(message, time) {
 		} else {
 			message.channel.send(smUser + ' started Sorcerer\'s Might timer for ' + time + ' minutes.');
 			talkedRecently.add(guildId + ' ' + message.author.id);
-			userID[message.author.id] = setTimeout(() => {
+			userID[guildId + ' ' + message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
 				if (guildId === '481612600149540875') { // RRF server
           //message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
