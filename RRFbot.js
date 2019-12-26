@@ -163,7 +163,16 @@ client.on('message', message => {
 	// GREET MESSAGE //
 	///////////////////
 	if (command === 'greet') {
-		message.channel.send('Hello and welcome to the RRF!');
+    message.channel.send('Hello and welcome to the server!');
+  ///////////////
+  // KID CHECK //
+  ///////////////
+  } else if (command.toLowerCase() === 'KidCheck') {
+	  if (message.guild.member('214148964847452161')) {
+	    message.reply('Kid is here.');
+    } else {
+	    message.rely('Kid is not here.');
+    }
 	//////////////////
   // SM TIMER INIT //
   ///////////////////
@@ -291,12 +300,12 @@ client.on('message', message => {
         console.log(`${raidPinger} has issued !raid command in ${guildName}`);
         if (guildId === '481612600149540875') { // RRF server
           var RRF = message.guild.roles.find(role => role.name === 'RRF');
-          message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
-          //message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
+          //message.guild.channels.get('545312880162111513').send('<@&' + RRF + '> We\'re getting raided!'); //RRF #bot-testing channel
+          message.guild.channels.get('481612600149540881').send('<@&' + RRF + '> We\'re getting raided!'); // RRF #general channel
         } else if (guildId === '564993020919808000') { // USF server
           var USF = message.guild.roles.find(role => role.name === 'Scientists');
-          message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
-          //message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
+          //message.guild.channels.get('659401848138104833').send('<@&' + USF + '> We\'re getting raided!'); // USF #bot-testing channel
+          message.guild.channels.get('564993020919808002').send('<@&' + USF + '> We\'re getting raided!'); // USF #the-laboratory channel
         }
         setTimeout(() => {
           talkedRecently.delete(guildId + ' ' + command.toLowerCase());
@@ -367,11 +376,11 @@ function smTimer(message, time) {
 			userID[guildId + ' ' + message.author.id] = setTimeout(() => {
 				var medic = message.guild.roles.find(role => role.name === "Medic");
 				if (guildId === '481612600149540875') { // RRF server
-          //message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
-          message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+          message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
+          //message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
         } else if (guildId === '564993020919808000') { // USF server
-          //message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
-          message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+          message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
+          //message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
         }
 				talkedRecently.delete(guildId + ' ' + message.author.id);
 			}, time * 60000 - 60000);
