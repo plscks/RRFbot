@@ -173,9 +173,10 @@ client.on('message', message => {
         message.reply('Kid has been checked on enough today (once per 12 hours)! Thank you for caring so much for him!');
       } else if (!talkedRecently.has(command.toLowerCase())) {
         message.channel.send('<@214148964847452161> Have you been fed today and are you properly clothed?');
+        talkedRecently.add(command.toLowerCase());
         setTimeout(() => {
           talkedRecently.delete(command.toLowerCase());
-        }, 60000);
+        }, 20000);
       }
     } else {
 	    message.reply('Kid is not here.');
