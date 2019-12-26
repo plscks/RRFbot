@@ -168,7 +168,7 @@ client.on('message', message => {
   // KID CHECK //
   ///////////////
   } else if (command.toLowerCase() === 'kidcheck') {
-	  if (message.channel.member('214148964847452161')) {
+	  if (message.guild.member('214148964847452161')) {
       if (talkedRecently.has(command.toLowerCase())) {
         message.reply('Kid has been checked on enough today (once per 12 hours)! Thank you for caring so much for him!');
       } else if (!talkedRecently.has(command.toLowerCase())) {
