@@ -176,7 +176,7 @@ client.on('message', message => {
         talkedRecently.add(command.toLowerCase());
         setTimeout(() => {
           talkedRecently.delete(command.toLowerCase());
-        }, 20000);
+        }, 43200000);
       }
     } else {
 	    message.reply('Kid is not here.');
