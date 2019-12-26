@@ -175,7 +175,7 @@ client.on('message', message => {
         message.channel.send('<@214148964847452161> Have you been fed today and are you properly clothed?');
         setTimeout(() => {
           talkedRecently.delete(command.toLowerCase());
-        }, 15000);
+        }, 60000);
       }
     } else {
 	    message.reply('Kid is not here.');
