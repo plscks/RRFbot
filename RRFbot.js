@@ -168,7 +168,7 @@ client.on('message', message => {
   // KID CHECK //
   ///////////////
   } else if (command.toLowerCase() === 'kidcheck') {
-	  if (message.guild.channels.member('214148964847452161')) {
+	  if (message.channel.member('214148964847452161')) {
 	    message.reply('Kid is here.');
     } else {
 	    message.reply('Kid is not here.');
