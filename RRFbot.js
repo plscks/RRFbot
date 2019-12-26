@@ -171,7 +171,7 @@ client.on('message', message => {
 	  if (message.guild.member('214148964847452161')) {
 	    message.reply('Kid is here.');
     } else {
-	    message.rely('Kid is not here.');
+	    message.reply('Kid is not here.');
     }
 	//////////////////
   // SM TIMER INIT //
