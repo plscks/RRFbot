@@ -197,6 +197,22 @@ client.on('message', message => {
     } else {
       message.reply('You don\'t have permission to use this command!')
     }
+  /////////////////////////
+  // FIXED SM TIMER INIT //
+  /////////////////////////
+  } else if (command === 'smFix') {
+    var guildName = message.guild.name;
+    var smUser = message.member.displayName;
+    console.log(`${smUser} initiated !sm in ${guildName}.`);
+    if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
+      if (args[0] >= 0 && args[0] <= 65) {
+        smTimerFix(message, args[0]);
+      } else {
+        message.reply('You must enter real positive number of minutes between 1 and 65.');
+      }
+    } else {
+      message.reply('You don\'t have permission to use this command!')
+    }
   ///////////////////////
 	// ITEM SEARCH RATES //
 	///////////////////////
@@ -394,6 +410,64 @@ function smTimer(message, time) {
 			}, time * 60000 - 60000);
 		}
 	}
+}
+////////////////////////////////////////////////
+// SORCERER'S MIGHT TIMER FIXED FOR BROKEN SM //
+////////////////////////////////////////////////
+function smTimerFix(message, time) {
+  var origTime = time;
+  time = calc_sm_time(time, getDateTime(1));
+  var guildId = message.guild.id;
+  var smUser = message.member.displayName;
+  if (time === '0') {
+    if (!talkedRecently.has(guildId + ' ' + message.author.id)) {
+      message.channel.send(smUser + ' you don\'t have Sorcerer\'s Might timer running. Use "!sm #" to start one.');
+    } else {
+      message.channel.send(smUser + ' canceled Sorcerer\'s Might.');
+      clearTimeout(userID[guildId + ' ' + message.author.id]);
+      talkedRecently.delete(guildId + ' ' + message.author.id);
+    }
+  } else {
+    if (talkedRecently.has(guildId + ' ' + message.author.id)) {
+      message.reply('you already have Sorcerer\'s Might timer running. Use "!sm 0" to cancel it.');
+    } else {
+      message.channel.send(smUser + ' started Sorcerer\'s Might timer for ' + origTime + ' minutes. Adjusted to ' + time + ' minutes due to the current SM timer bug.');
+      talkedRecently.add(guildId + ' ' + message.author.id);
+      userID[guildId + ' ' + message.author.id] = setTimeout(() => {
+        var medic = message.guild.roles.find(role => role.name === "Medic");
+        if (guildId === '481612600149540875') { // RRF server
+          message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
+          //message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+        } else if (guildId === '564993020919808000') { // USF server
+          message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
+          //message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+        }
+        talkedRecently.delete(guildId + ' ' + message.author.id);
+      }, time * 60000 - 60000);
+    }
+  }
+}
+///////////////////////////////
+// SM FIX ~thanks to AnTrue~ //
+///////////////////////////////
+function calc_sm_time(init_sm, init_minute) {
+  if (init_sm < 15 - init_minute) {
+    return init_sm;
+  }
+
+  var elapsed_minutes = 15 - init_minute
+  var remaining_sm = init_sm - elapsed_minutes
+  while (true) {
+    remaining_sm -= 5;
+    if (remaining_sm <= 0) {
+      return elapsed_minutes;
+    }
+    if (remaining_sm < 15) {
+      return elapsed_minutes + remaining_sm;
+    }
+    remaining_sm -= 15
+    elapsed_minutes += 15
+  }
 }
 //////////////////////////////////
 // SUPER SECRET BOT SELF UPDATE //
@@ -659,7 +733,7 @@ function components(args, message) {
 ////////////////////////////////////////////
 // GET DATE AND TIME FOR EASY LOG DISPLAY //
 ////////////////////////////////////////////
-function getDateTime() {
+function getDateTime(sm) {
   var date = new Date();
   var hour = date.getHours();
   hour = (hour < 10 ? "0" : "") + hour;
@@ -672,7 +746,11 @@ function getDateTime() {
   month = (month < 10 ? "0" : "") + month;
   var day  = date.getDate();
   day = (day < 10 ? "0" : "") + day;
-  return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+  if (sm === 1) {
+    return min;
+  } else {
+    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+  }
 }
 ////////////////////////////////////
 // HYPERMAP PATHFINDING FUNCTIONS //
