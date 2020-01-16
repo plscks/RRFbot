@@ -200,7 +200,7 @@ client.on('message', message => {
   /////////////////////////
   // FIXED SM TIMER INIT //
   /////////////////////////
-  } else if (command === 'smFix') {
+  } else if (command === 'timerfix') {
     var guildName = message.guild.name;
     var smUser = message.member.displayName;
     console.log(`${smUser} initiated !sm in ${guildName}.`);
@@ -436,11 +436,11 @@ function smTimerFix(message, time) {
       userID[guildId + ' ' + message.author.id] = setTimeout(() => {
         var medic = message.guild.roles.find(role => role.name === "Medic");
         if (guildId === '481612600149540875') { // RRF server
-          message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
-          //message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+          //message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
+          message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
         } else if (guildId === '564993020919808000') { // USF server
-          message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
-          //message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+          //message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
+          message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
         }
         talkedRecently.delete(guildId + ' ' + message.author.id);
       }, time * 60000 - 60000);
