@@ -416,7 +416,10 @@ function smTimer(message, time) {
 ////////////////////////////////////////////////
 function smTimerFix(message, time) {
   var origTime = time;
-  time = calc_sm_time(time, getDateTime(1));
+  var initTime = getDateTime(1);
+  var initMin = initTime - (Math.floor(initTime / 15) * 15);
+  time = calc_sm_time(time, initMin);
+  console.log(`SM TIMER DATA~~REAL INIT MINUTE: ${initTime}    INIT MINUTE: ${initMin}    SM TIME: ${origTime}    ADJUSTED AM TIME: ${time}`);
   var guildId = message.guild.id;
   var smUser = message.member.displayName;
   if (time === '0') {
