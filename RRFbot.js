@@ -190,22 +190,6 @@ client.on('message', message => {
     console.log(`${smUser} initiated !sm in ${guildName}.`);
     if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
       if (args[0] >= 0 && args[0] <= 65) {
-        smTimer(message, args[0]);
-      } else {
-        message.reply('You must enter real positive number of minutes between 1 and 65.');
-      }
-    } else {
-      message.reply('You don\'t have permission to use this command!')
-    }
-  /////////////////////////
-  // FIXED SM TIMER INIT //
-  /////////////////////////
-  } else if (command === 'timerfix') {
-    var guildName = message.guild.name;
-    var smUser = message.member.displayName;
-    console.log(`${smUser} initiated !sm in ${guildName}.`);
-    if (message.member.roles.find(r => r.name === 'RRF') || message.member.roles.find(r => r.name === 'Scientists')) {
-      if (args[0] >= 0 && args[0] <= 65) {
         smTimerFix(message, args[0]);
       } else {
         message.reply('You must enter real positive number of minutes between 1 and 65.');
@@ -419,7 +403,7 @@ function smTimerFix(message, time) {
   var initTime = getDateTime(1);
   var initMin = initTime - (Math.floor(initTime / 15) * 15);
   time = calc_sm_time(time, initMin);
-  console.log(`SM TIMER DATA~~REAL INIT MINUTE: ${initTime}    INIT MINUTE: ${initMin}    SM TIME: ${origTime}    ADJUSTED AM TIME: ${time}`);
+  console.log(`~~SM TIMER DATA    MINUTE OF HOUR: ${initTime}    INIT MINUTE: ${initMin}    SM TIME: ${origTime}    ADJUSTED SM TIME: ${time}`);
   var guildId = message.guild.id;
   var smUser = message.member.displayName;
   if (time === '0') {
@@ -439,11 +423,11 @@ function smTimerFix(message, time) {
       userID[guildId + ' ' + message.author.id] = setTimeout(() => {
         var medic = message.guild.roles.find(role => role.name === "Medic");
         if (guildId === '481612600149540875') { // RRF server
-          //message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
-          message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
+          message.guild.channels.get('481612600149540881').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // RRF #general channel
+          //message.guild.channels.get('545312880162111513').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); //RRF #bot-testing channel
         } else if (guildId === '564993020919808000') { // USF server
-          //message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
-          message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
+          message.guild.channels.get('564993020919808002').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #the-laboratory channel
+          //message.guild.channels.get('659401848138104833').send('<@&' + medic + '> Sorcerer\'s Might will wear off of ' + smUser + ' in about one minute!'); // USF #bot-testing channel
         }
         talkedRecently.delete(guildId + ' ' + message.author.id);
       }, time * 60000 - 60000);
