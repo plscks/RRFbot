@@ -736,7 +736,7 @@ function getDateTime(sm) {
   if (sm === 1) {
     return min;
   } else {
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+    return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
   }
 }
 ////////////////////////////////////
