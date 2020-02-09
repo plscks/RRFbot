@@ -3,7 +3,21 @@
 ////////////////
 // INIT STUFF //
 ////////////////
+// Written by plscks
+//////////////
+// REQUIRES //
+//////////////
 const shell = require('shelljs');
+const sqlite3 = require('sqlite3').verbose();
+///////////////////
+// DATABASE INIT //
+///////////////////
+let db = new sqlite3.Database('./Testbot', (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the Testbot database.');
+});
 ///////////////////////////////////
 // COMMAND LINE ARGUMENT PARSING //
 ///////////////////////////////////
@@ -79,9 +93,20 @@ if (flag === '-a') {
   console.log('        -rm       Remove faction from database "-rm [Faction Name]"');
   process.exit();
 }
-
+///////////////////////////
+// ADD INPUT TO DATABASE //
+///////////////////////////
 function addFaction(facArray) {
   for (var i = 0; i < facArray.length; i++) {
     console.log(facArray[i]);
   }
 }
+/////////////////////////
+// CLOSES THE DATABASE //
+/////////////////////////
+db.close((err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Close the database connection.');
+});
