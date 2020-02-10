@@ -62,9 +62,9 @@ function arg_parse() {
       var addHostile = newArgs[7].toLowerCase();
       var addTop10 = newArgs[8].toLowerCase();
       if (addTop10 === 'y') {
-        addTop10 = true;
+        addTop10 = 1;
       } else if (addTop10 === 'n') {
-        addTop10 = false;
+        addTop10 = 0;
       } else {
         console.log('Please use "Y" or "N" for is faction in top 10 or not.');
         process.exit();
@@ -101,9 +101,6 @@ function arg_parse() {
 // ADD FACTION TO DATABASE //
 /////////////////////////////
 function addFaction(facArray) {
-  for (var i = 0; i < facArray.length; i++) {
-    console.log(facArray[i]);
-  }
   db.run(`INSERT INTO factions(faction_name, faction_id, alignment, x_coord, y_coord, plane, hostile, top_ten) VALUES("${facArray[0]}", "${facArray[1]}", "${facArray[2]}", "${facArray[3]}", "${facArray[4]}", "${facArray[5]}", "${facArray[6]}", "${facArray[7]}")`, function(err) {
     if (err) {
       return console.log(err.message);
@@ -130,7 +127,6 @@ function searchFaction(searchString) {
     if (err) {
       throw err;
     }
-    console.log(`top_ten: ${row.top_ten}`);
     if (row.top_ten) {
       var topMessage = 'This faction is in the top ten factions.';
     } else {
