@@ -77,7 +77,8 @@ function arg_parse() {
     }
   } else if (flag === '-s') {
     myArgs.shift();
-    var searchFaction = myArgs.join(' ').toLowerCase();
+    var factionString = myArgs.join(' ').toLowerCase();
+    searchFaction(factionString);
   } else if (flag === '-r') {
     if (!myArgs[1]) {
       var randTopTen = true;
@@ -96,9 +97,9 @@ function arg_parse() {
     process.exit();
   }
 }
-///////////////////////////
-// ADD INPUT TO DATABASE //
-///////////////////////////
+/////////////////////////////
+// ADD FACTION TO DATABASE //
+/////////////////////////////
 function addFaction(facArray) {
   for (var i = 0; i < facArray.length; i++) {
     console.log(facArray[i]);
@@ -108,7 +109,35 @@ function addFaction(facArray) {
       return console.log(err.message);
     }
     // get the last insert id
-    console.log(`A row has been inserted with rowid ${this.lastID}`);
+    console.log(`${facArray[0]} ID: ${facArray[1]} has been added to the database.`);
+  });
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+}
+//////////////////////////////////////
+// SEARCH DATABASE FOR FACTION NAME //
+//////////////////////////////////////
+function searchFaction(searchString) {
+  let db = new sqlite3.Database('./Testbot');
+
+  let sql = `SELECT * FROM factions WHERE faction_name = ? ORDER BY faction_name`;
+
+  db.each(sql, [`${searchString}`], (err, row) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`top_ten: ${row.top_ten}`);
+    if (row.top_ten) {
+      var topMessage = 'This faction is in the top ten factions.';
+    } else {
+      var topMessage = 'This faction is not in the top ten factions';
+    }
+    console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+    console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
   });
   db.close((err) => {
     if (err) {
