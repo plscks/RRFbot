@@ -1,13 +1,8 @@
 // Testing database interactions with SQlite
 // written by plscks
-////////////////
-// INIT STUFF //
-////////////////
-// Written by plscks
 //////////////
 // REQUIRES //
 //////////////
-const shell = require('shelljs');
 const sqlite3 = require('sqlite3').verbose();
 ////////////////////
 // DATABASE STUFF //
@@ -83,6 +78,7 @@ function arg_parse() {
     if (!myArgs[1]) {
       var randTopTen = true;
     }
+    randomFaction();
   } else if (flag === '-rm') {
     myArgs.shift();
     var rmFaction = myArgs.join(' ').toLowerCase();
@@ -101,7 +97,8 @@ function arg_parse() {
 // ADD FACTION TO DATABASE //
 /////////////////////////////
 function addFaction(facArray) {
-  db.run(`INSERT INTO factions(faction_name, faction_id, alignment, x_coord, y_coord, plane, hostile, top_ten) VALUES("${facArray[0]}", "${facArray[1]}", "${facArray[2]}", "${facArray[3]}", "${facArray[4]}", "${facArray[5]}", "${facArray[6]}", "${facArray[7]}")`, function(err) {
+  let sql = `INSERT INTO factions(faction_name, faction_id, alignment, x_coord, y_coord, plane, hostile, top_ten) VALUES("${facArray[0]}", "${facArray[1]}", "${facArray[2]}", "${facArray[3]}", "${facArray[4]}", "${facArray[5]}", "${facArray[6]}", "${facArray[7]}")`
+  db.run(sql, function(err) {
     if (err) {
       return console.log(err.message);
     }
@@ -120,7 +117,6 @@ function addFaction(facArray) {
 //////////////////////////////////////
 function searchFaction(searchString) {
   let db = new sqlite3.Database('./Testbot');
-
   let sql = `SELECT * FROM factions WHERE faction_name = ? ORDER BY faction_name`;
 
   db.each(sql, [`${searchString}`], (err, row) => {
@@ -141,4 +137,10 @@ function searchFaction(searchString) {
     }
     console.log('Close the database connection.');
   });
+}
+//////////////////////////
+// GET A RANDOM FACTION //
+//////////////////////////
+function randomFaction() {
+
 }
