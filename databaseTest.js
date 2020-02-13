@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose();
 ////////////////////
 // DATABASE STUFF //
 ////////////////////
-let db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
+const db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
   if (err) {
     console.error(err.message);
   }
@@ -77,11 +77,14 @@ function arg_parse() {
   } else if (flag === '-r') {
     if (!myArgs[1]) {
       var randTopTen = true;
+    } else {
+      var randTopTen = false;
     }
-    randomFaction();
+    randomFaction(randTopTen);
   } else if (flag === '-rm') {
     myArgs.shift();
     var rmFaction = myArgs.join(' ').toLowerCase();
+    removeFaction(rmFaction);
   } else {
     console.log('Usage: node databaseTest.js [FLAG]');
     console.log('FLAGS:');
@@ -116,10 +119,10 @@ function addFaction(facArray) {
 // SEARCH DATABASE FOR FACTION NAME //
 //////////////////////////////////////
 function searchFaction(searchString) {
-  let db = new sqlite3.Database('./Testbot');
   let sql = `SELECT * FROM factions WHERE faction_name = ? ORDER BY faction_name`;
 
-  db.each(sql, [`${searchString}`], (err, row) => {
+  //db.each(sql, [`${searchString}`], (err, row) => {
+  db.each(sql, [searchString], (err, row) => {
     if (err) {
       throw err;
     }
@@ -141,6 +144,60 @@ function searchFaction(searchString) {
 //////////////////////////
 // GET A RANDOM FACTION //
 //////////////////////////
-function randomFaction() {
-
+function randomFaction(randTopTen) {
+  if (randTopTen === true) {
+    let sql = `SELECT * FROM factions WHERE top_ten = 1 ORDER BY RANDOM() LIMIT 1`;
+    db.get(sql, (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      if (row.top_ten) {
+        var topMessage = 'This faction is in the top ten factions.';
+      } else {
+        var topMessage = 'This faction is not in the top ten factions';
+      }
+      console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+      console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
+    });
+  } else {
+    let sql = `SELECT * FROM factions ORDER BY RANDOM() LIMIT 1`;
+    db.get(sql, (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      if (row.top_ten) {
+        var topMessage = 'This faction is in the top ten factions.';
+      } else {
+        var topMessage = 'This faction is not in the top ten factions';
+      }
+      console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+      console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
+    });
+  }
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
 }
+////////////////////////////////////////
+// REMOVE A FACTION FROM THE DATABASE //
+////////////////////////////////////////
+function removeFaction(factionName) {
+  let sql = `DELETE FROM factions WHERE faction_name =?`;
+  db.run(sql, [factionName], function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    // get the last insert id
+    console.log(`${factionName} has been removed from the database.`);
+  });
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+}
+
