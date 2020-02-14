@@ -358,7 +358,7 @@ client.on('message', message => {
       var guildId = message.guild.name;
     }
     var userName = message.member.displayName;
-    console.log(`${userName} initiated !faction in ${guildName}.`);
+    console.log(`${userName} initiated !faction in ${guildId}.`);
     if (message.author.id !== '407383313335189515') {
       message.channel.send('You are not authorized to use this function yet!');
     } else {
@@ -499,7 +499,6 @@ function updateBot() {
 // FACTION LIST ARG PARSE //
 ////////////////////////////
 function factionParse(args, message) {
-  console.log(`${args}`);
   var myArgs = args;
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
