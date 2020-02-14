@@ -29,6 +29,15 @@ const sqlite3 = require('sqlite3').verbose();
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
+/////////////////////////
+// CONNECT TO DATABASE //
+/////////////////////////
+const db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the Testbot database.');
+});
 let jsonData = require('./searchRates.json');
 jsonData = convertKeysToLowerCase(jsonData);
 var masterListArray = initMasterArray();
@@ -362,13 +371,7 @@ client.on('message', message => {
     if (message.author.id !== '407383313335189515') {
       message.channel.send('You are not authorized to use this function yet!');
     } else {
-      const db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
-        if (err) {
-          console.error(err.message);
-        }
-        console.log('Connected to the Testbot database.');
-        factionParse(args, message);
-      });
+      factionParse(args, message);
     }
 	///////////////////
 	// COMMANDS LIST //
