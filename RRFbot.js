@@ -499,6 +499,7 @@ function updateBot() {
 // FACTION LIST ARG PARSE //
 ////////////////////////////
 function factionParse(args, message) {
+  console.log(`${args}`);
   var myArgs = args;
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
@@ -512,6 +513,7 @@ function factionParse(args, message) {
         ]
       }
     });
+    return;
   }
   var flag = myArgs[0].toLowerCase();
   if (flag === 'add') {
