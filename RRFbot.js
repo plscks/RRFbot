@@ -528,7 +528,7 @@ function factionParse(args, message) {
     console.log(`!faction add ${args} called.`);
     var argLength = myArgs.length;
     if (argLength < 9) {
-      message.channel.send('Please fill out all fields of "-a [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]"');
+      message.reply('Please fill out all fields: "!faction add **[Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]**"');
       return;
     }
     var notInt = 0;
@@ -562,7 +562,7 @@ function factionParse(args, message) {
       var addFac = [addName, addID, addAlignment, addX_coord, addY_coord, addPlane, addHostile, addTop10];
       addFaction(addFac, message);
     } else {
-      message.channel.send('Please fill out all fields of "-a [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]"');
+      message.reply('Please fill out all fields: "!faction add **[Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]**"');
     }
   } else if (flag === 'search') {
     console.log(`!faction search ${args} called.`);
@@ -589,8 +589,8 @@ function factionParse(args, message) {
         fields: [
           { name: "!faction random [all]", value: "Give information on a random faction from the database, defaults to only factions in the top 10 unless [all] is used then it will give any faction in the database."},
           { name: "!faction search [Faction Name]", value: "Searches the database for faction information by name."},
-          { name: "!faction add [required fields]", value: "*ONLY AVAILABLE FOR LEADERS* Add faction info to database, must use include all fields '!faction add [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]'"},
-          { name: "!faction remove [Faction Name]", value: "*ONLY AVAILABLE FOR LEADERS* Removes a faction from the database by name."},
+          { name: "!faction add [required fields]", value: "**ONLY AVAILABLE FOR LEADERS** - Add faction info to database, must use include all fields '!faction add [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]'"},
+          { name: "!faction remove [Faction Name]", value: "**ONLY AVAILABLE FOR LEADERS** - Removes a faction from the database by name."},
         ]
       }
     });
@@ -682,6 +682,19 @@ function randomFaction(randTopTen, message) {
       } else {
         var topMessage = 'This faction is not in the top ten factions';
       }
+      message.channel.send({embed: {
+          color: 3447003,
+          title: `${row.faction_name}`,
+          fields: [
+            { name: 'Location:', value: `(${row.x_coord}, ${row.y_coord} ${row.plane})`, inline: true},
+            { name: 'Alignment:', value: `${row.alignment}`, inline: true},
+            { name: 'Link:', value: `https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`, inline: true},
+          ],
+          footer: {
+            text: `${topMessage}`
+          }
+        }
+      });
       console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
       console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
     });
