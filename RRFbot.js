@@ -337,10 +337,10 @@ client.on('message', message => {
 	// TEST COMMAND //
 	//////////////////
   } else if (command === 'test') {
-	  if (message.guild.name) {
-      var guildId = message.guild.name;
-    } else {
+	  if (message.guild.name === undefined || message.guild.name === null) {
       var guildId = 'Private DM';
+    } else {
+      var guildId = message.guild.name;
     }
     message.channel.send(`server name: ${guildId}`);
     var admin = message.guild.roles.find(role => role.name === "Admin?");
@@ -351,10 +351,10 @@ client.on('message', message => {
   // FACTION LISTS AND RANDOMIZER //
   //////////////////////////////////
   } else if (command === 'faction') {
-    if (message.guild.name) {
-      var guildId = message.guild.name;
-    } else {
+    if (message.guild.name === undefined || message.guild.name === null) {
       var guildId = 'Private DM';
+    } else {
+      var guildId = message.guild.name;
     }
     var userName = message.member.displayName;
     console.log(`${userName} initiated !faction in ${guildName}.`);
