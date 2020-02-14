@@ -338,6 +338,12 @@ client.on('message', message => {
 	/////////////////
   } else if (command === 'update') {
   	if (message.author.id !== '407383313335189515') return;
+    db.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Close the database connection.');
+    });
   	message.reply('TESTbot is initiating self update.....');
   	console.log("Shutting down RRFbot for self update.....");
   	setTimeout(() => {
@@ -602,12 +608,6 @@ function addFaction(facArray, message) {
     message.channel.send(`${facArray[0]} ID: ${facArray[1]} has been added to the database.`)
     console.log(`${facArray[0]} ID: ${facArray[1]} has been added to the database.`);
   });
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Close the database connection.');
-  });
 }
 //////////////////////////////////////
 // SEARCH DATABASE FOR FACTION NAME //
@@ -638,12 +638,6 @@ function searchFaction(searchString, message) {
     });
     console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
     console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
-  });
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Close the database connection.');
   });
 }
 //////////////////////////
@@ -679,12 +673,6 @@ function randomFaction(randTopTen, message) {
       console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
     });
   }
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Close the database connection.');
-  });
 }
 ////////////////////////////////////////
 // REMOVE A FACTION FROM THE DATABASE //
@@ -697,12 +685,6 @@ function removeFaction(factionName, message) {
     }
     // get the last insert id
     console.log(`${factionName} has been removed from the database.`);
-  });
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Close the database connection.');
   });
 }
 ///////////////////////
