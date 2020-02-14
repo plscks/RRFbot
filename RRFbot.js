@@ -337,12 +337,30 @@ client.on('message', message => {
 	// TEST COMMAND //
 	//////////////////
   } else if (command === 'test') {
-	  var guildId = message.guild.name;
-	  message.channel.send(`server name: ${guildId}`);
-  	var admin = message.guild.roles.find(role => role.name === "Admin?");
-  	message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
-  	console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
-  	console.log(typeof(args[0]));
+    var guildId = message.guild.name;
+    message.channel.send(`server name: ${guildId}`);
+    var admin = message.guild.roles.find(role => role.name === "Admin?");
+    message.channel.send('Perhaps this will ping <@&' + admin + '>? We can only hope.....');
+    console.log('first arg: ' + args[0] + ' second arg: ' + args[1] + ' third arg: ' + args[2]);
+    console.log(typeof (args[0]));
+  //////////////////////////////////
+  // FACTION LISTS AND RANDOMIZER //
+  //////////////////////////////////
+  } else if (command === 'faction') {
+    var guildName = message.guild.name;
+    var userName = message.member.displayName;
+    console.log(`${userName} initiated !faction in ${guildName}.`);
+    if (message.author.id !== '407383313335189515') {
+      message.channel.send('You are not authorized to use this function yet!');
+    } else {
+      const db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Connected to the Testbot database.');
+        factionParse(args, message);
+      });
+    }
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
@@ -467,6 +485,212 @@ function updateBot() {
 	} else {
 		process.exit();
 	}
+}
+////////////////////////////
+// FACTION LIST ARG PARSE //
+////////////////////////////
+function factionParse(args, message) {
+  var myArgs = args;
+  if (myArgs[0] === undefined || myArgs[0] === null) {
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "Factions usage:",
+        fields: [
+          { name: "!faction random [all]", value: "Give information on a random faction from the database, defaults to only factions in the top 10 unless [all] is used then it will give any faction in the database."},
+          { name: "!faction search [Faction Name]", value: "Searches the database for faction information by name."},
+          { name: "!faction add [required fields]", value: "*ONLY AVAILABLE FOR LEADERS* Add faction info to database, must use include all fields '!faction add [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]'"},
+          { name: "!faction remove [Faction Name]", value: "*ONLY AVAILABLE FOR LEADERS* Removes a faction from the database by name."},
+        ]
+      }
+    });
+  }
+  var flag = myArgs[0].toLowerCase();
+  if (flag === 'add') {
+    console.log(`!faction add ${args} called.`);
+    var argLength = myArgs.length;
+    if (argLength < 9) {
+      message.channel.send('Please fill out all fields of "-a [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]"');
+      return;
+    }
+    var notInt = 0;
+    for (var i = 1; i < argLength - 1; i++) {
+      if (isNaN(parseInt(myArgs[i]))) {
+        notInt += 1;
+      } else {
+        var facIDindex = i;
+        i = argLength - 1;
+      }
+    }
+    var facName = myArgs.slice(1, facIDindex).join(' ');
+    var newArgs = [myArgs[0], facName, myArgs[facIDindex], myArgs[facIDindex + 1], myArgs[facIDindex + 2], myArgs[facIDindex + 3], myArgs[facIDindex + 4], myArgs[facIDindex + 5], myArgs[facIDindex + 6]];
+    if (newArgs.length === 9) {
+      var addName = newArgs[1].toLowerCase();
+      var addID = parseInt(newArgs[2].toLowerCase());
+      var addAlignment = newArgs[3].toLowerCase();
+      var addX_coord = parseInt(newArgs[4]);
+      var addY_coord = parseInt(newArgs[5]);
+      var addPlane = newArgs[6].toLowerCase();
+      var addHostile = newArgs[7].toLowerCase();
+      var addTop10 = newArgs[8].toLowerCase();
+      if (addTop10 === 'y') {
+        addTop10 = 1;
+      } else if (addTop10 === 'n') {
+        addTop10 = 0;
+      } else {
+        message.channel.send('Please use "Y" or "N" for is faction in top 10 or not.');
+        return;
+      }
+      var addFac = [addName, addID, addAlignment, addX_coord, addY_coord, addPlane, addHostile, addTop10];
+      addFaction(addFac, message);
+    } else {
+      message.channel.send('Please fill out all fields of "-a [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]"');
+    }
+  } else if (flag === 'search') {
+    console.log(`!faction search ${args} called.`);
+    myArgs.shift();
+    var factionString = myArgs.join(' ').toLowerCase();
+    searchFaction(factionString, message);
+  } else if (flag === 'random') {
+    console.log(`!faction random called.`);
+    if (!myArgs[1]) {
+      var randTopTen = true;
+    } else {
+      var randTopTen = false;
+    }
+    randomFaction(randTopTen, message);
+  } else if (flag === 'remove') {
+    console.log(`!faction remove ${args} called.`);
+    myArgs.shift();
+    var rmFaction = myArgs.join(' ').toLowerCase();
+    removeFaction(rmFaction, message);
+  } else {
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "Factions usage:",
+        fields: [
+          { name: "!faction random [all]", value: "Give information on a random faction from the database, defaults to only factions in the top 10 unless [all] is used then it will give any faction in the database."},
+          { name: "!faction search [Faction Name]", value: "Searches the database for faction information by name."},
+          { name: "!faction add [required fields]", value: "*ONLY AVAILABLE FOR LEADERS* Add faction info to database, must use include all fields '!faction add [Faction Name] [Faction ID] [Faction Alignment] [x-coord] [y-coord] [Plane] [Hostile/Neutral/Friendly] [In top 10: Y/N]'"},
+          { name: "!faction remove [Faction Name]", value: "*ONLY AVAILABLE FOR LEADERS* Removes a faction from the database by name."},
+        ]
+      }
+    });
+  }
+}
+/////////////////////////////
+// ADD FACTION TO DATABASE //
+/////////////////////////////
+function addFaction(facArray, message) {
+  let sql = `INSERT INTO factions(faction_name, faction_id, alignment, x_coord, y_coord, plane, hostile, top_ten) VALUES("${facArray[0]}", "${facArray[1]}", "${facArray[2]}", "${facArray[3]}", "${facArray[4]}", "${facArray[5]}", "${facArray[6]}", "${facArray[7]}")`
+  db.run(sql, function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    message.channel.send(`${facArray[0]} ID: ${facArray[1]} has been added to the database.`)
+    console.log(`${facArray[0]} ID: ${facArray[1]} has been added to the database.`);
+  });
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+}
+//////////////////////////////////////
+// SEARCH DATABASE FOR FACTION NAME //
+//////////////////////////////////////
+function searchFaction(searchString, message) {
+  let sql = `SELECT * FROM factions WHERE faction_name = ? ORDER BY faction_name`;
+  db.each(sql, [searchString], (err, row) => {
+    if (err) {
+      return console.log(err.message);
+    }
+    if (row.top_ten) {
+      var topMessage = 'This faction is in the top ten factions.';
+    } else {
+      var topMessage = 'This faction is not in the top ten factions';
+    }
+    message.channel.send({embed: {
+        color: 3447003,
+        title: `${row.faction_name}`,
+        fields: [
+          { name: 'Location:', value: `(${row.x_coord}, ${row.y_coord} ${row.plane})`, inline: true},
+          { name: 'Alignment:', value: `${row.alignment}`, inline: true},
+          { name: 'Link:', value: `https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`, inline: true},
+        ]
+        footer: [
+          { text: `${topMessage}` },
+        ]
+      }
+    });
+    console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+    console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
+  });
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+}
+//////////////////////////
+// GET A RANDOM FACTION //
+//////////////////////////
+function randomFaction(randTopTen, message) {
+  if (randTopTen === true) {
+    let sql = `SELECT * FROM factions WHERE top_ten = 1 ORDER BY RANDOM() LIMIT 1`;
+    db.get(sql, (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      if (row.top_ten) {
+        var topMessage = 'This faction is in the top ten factions.';
+      } else {
+        var topMessage = 'This faction is not in the top ten factions';
+      }
+      console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+      console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
+    });
+  } else {
+    let sql = `SELECT * FROM factions ORDER BY RANDOM() LIMIT 1`;
+    db.get(sql, (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      if (row.top_ten) {
+        var topMessage = 'This faction is in the top ten factions.';
+      } else {
+        var topMessage = 'This faction is not in the top ten factions';
+      }
+      console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
+      console.log(`Link: https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`);
+    });
+  }
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+}
+////////////////////////////////////////
+// REMOVE A FACTION FROM THE DATABASE //
+////////////////////////////////////////
+function removeFaction(factionName, message) {
+  let sql = `DELETE FROM factions WHERE faction_name =?`;
+  db.run(sql, [factionName], function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    // get the last insert id
+    console.log(`${factionName} has been removed from the database.`);
+  });
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
 }
 ///////////////////////
 // SEARCH RATES INFO //
