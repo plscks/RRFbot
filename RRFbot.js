@@ -617,10 +617,10 @@ function searchFaction(searchString, message) {
           { name: 'Location:', value: `(${row.x_coord}, ${row.y_coord} ${row.plane})`, inline: true},
           { name: 'Alignment:', value: `${row.alignment}`, inline: true},
           { name: 'Link:', value: `https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`, inline: true},
-        ]
-        footer: [
-          { text: `${topMessage}` },
-        ]
+        ],
+        footer: {
+          text: `${topMessage}`
+        }
       }
     });
     console.log(`Faction: ${row.faction_name}    alignment: ${row.alignment}    location: (${row.x_coord}, ${row.y_coord} ${row.plane}) -- ${topMessage}`);
