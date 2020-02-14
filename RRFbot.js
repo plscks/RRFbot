@@ -337,7 +337,7 @@ client.on('message', message => {
 	// TEST COMMAND //
 	//////////////////
   } else if (command === 'test') {
-	  if (message.guild.name === undefined || message.guild.name === null) {
+	  if (message.guild === undefined || message.guild === null) {
       var guildId = 'Private DM';
     } else {
       var guildId = message.guild.name;
@@ -351,7 +351,7 @@ client.on('message', message => {
   // FACTION LISTS AND RANDOMIZER //
   //////////////////////////////////
   } else if (command === 'faction') {
-    if (message.guild.name === undefined || message.guild.name === null) {
+    if (message.guild === undefined || message.guild === null) {
       var guildId = 'Private DM';
     } else {
       var guildId = message.guild.name;
