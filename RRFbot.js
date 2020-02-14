@@ -25,6 +25,7 @@
 const Discord = require('discord.js');
 const Graph = require('node-dijkstra')
 const shell = require('shelljs');
+const sqlite3 = require('sqlite3').verbose();
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
