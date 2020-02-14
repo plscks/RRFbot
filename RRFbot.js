@@ -614,9 +614,9 @@ function searchFaction(searchString, message) {
         color: 3447003,
         title: `${row.faction_name}`,
         fields: [
-          { name: 'Location:', value: `(${row.x_coord}, ${row.y_coord} ${row.plane})` },
-          { name: 'Alignment:', value: `${row.alignment}` },
-          { name: 'Link:', value: `https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}` },
+          { name: 'Location:', value: `(${row.x_coord}, ${row.y_coord} ${row.plane})`, inline: true},
+          { name: 'Alignment:', value: `${row.alignment}`, inline: true},
+          { name: 'Link:', value: `https://www.nexusclash.com/modules.php?name=Game&op=faction&do=view&id=${row.faction_id}`, inline: true},
         ]
         footer: [
           { text: `${topMessage}` },
