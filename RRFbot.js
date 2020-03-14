@@ -565,7 +565,11 @@ function covid19Args(myArgs, message) {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
       let provinceList = covid19List('province', country);
+    } else {
+      message.channel.send('Please use the correct command. See !covid19 for usage.');
     }
+  } else if (flag === data) {
+
   }
 }
 /////////////////////////////////////
@@ -582,14 +586,12 @@ function covid19List(option, country) {
       rows.forEach((row) => {
         results.push(row.country);
       });
-      console.log(`results: ${results}`);
-      console.log(`results[0]: ${results[0]}`);
+      results.splice(0, results.length, ...(new Set(results)))
       return results
     });
   } else {
     let results = [];
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
-    console.log(`SQL: ${sql}`);
     db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
@@ -597,8 +599,7 @@ function covid19List(option, country) {
       rows.forEach((row) => {
         results.push(row.province);
       });
-      console.log(`results: ${results}`);
-      console.log(`results[0]: ${results[0]}`);
+      results.splice(0, results.length, ...(new Set(results)))
       return results
     });
   }
