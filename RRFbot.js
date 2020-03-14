@@ -588,7 +588,7 @@ function covid19List(option, country) {
     });
   } else {
     let results = [];
-    let sql = `SELECT province FROM all_data WHERE country = '${country}'`;
+    let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     console.log(`SQL: ${sql}`);
     db2.all(sql, [], (err, rows) => {
       if (err) {
