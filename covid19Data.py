@@ -94,15 +94,18 @@ def databasePush(data):
 
     print('~Loading data to worldwide database.')
     for index, row in data.iterrows():
-        c.execute(f'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Country"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+        wwQuery = f'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Country"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})'
+        c.execute(wwQuery)
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
-        c.execute(f'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+        usQuery = f'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})'
+        c.execute(usQuery)
 
     print('~Loading data into local database.')
     for index, row in local.iterrows():
-        c.execute(f'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES ({row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+        localQuery = f'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES ({row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})'
+        c.execute(localQuery)
 
     conn.commit()
     conn.close()
