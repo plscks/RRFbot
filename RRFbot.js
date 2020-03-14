@@ -575,7 +575,7 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-function covid19List(option, country) {
+async function covid19List(option, country) {
   let results = [];
   let endResults = [];
   if (option === 'country') {
@@ -591,7 +591,7 @@ function covid19List(option, country) {
       console.log(`Returning results: ${results}`);
       return await results
     });
-
+    return await results
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], async (err, rows) => {
