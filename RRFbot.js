@@ -354,7 +354,13 @@ client.on('message', message => {
       if (err) {
         console.error(err.message);
       }
-      console.log('Close the database connection.');
+      console.log('Close the Testbot database connection.');
+    });
+    db2.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Close the COVID-19 database connection.');
     });
   	message.reply('TESTbot is initiating self update.....');
   	console.log("Shutting down RRFbot for self update.....");
@@ -402,8 +408,6 @@ client.on('message', message => {
     }
     var userName = message.member.displayName;
     console.log(`${userName} initiated !covid19 in ${guildId}.`);
-    console.log(`${args}`);
-    console.log(`${args[0]}`);
     covid19Args(args, message);
 	///////////////////
 	// COMMANDS LIST //
@@ -533,8 +537,9 @@ function updateBot() {
 ///////////////////
 // COVID-19 ARGS //
 ///////////////////
-function covid19Args(args, message) {
+function covid19Args(myArgs, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
+    console.log(`Arg [0] is ${myArgs[0]}`);
     message.channel.send({embed: {
         color: 3447003,
         title: "COVID-19 DATA function usage:",
