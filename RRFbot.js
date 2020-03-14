@@ -559,7 +559,7 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      const countryList = await new covid19List('country', null);
+      const countryList = await covid19List('country', null);
       console.log(countryList);
       console.log(require('util').inspect(countryList, {colors:true, depth:null}));
       for (var i = 0; i < countryList.length; i++) {
