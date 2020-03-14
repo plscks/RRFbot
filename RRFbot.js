@@ -586,10 +586,10 @@ function covid19List(option, country) {
       rows.forEach((row) => {
         results.push(row.country);
       });
-      results.splice(0, results.length, ...(new Set(results)))
-      console.log(`Returning results: ${results}`);
-      return results
     });
+    results.splice(0, results.length, ...(new Set(results)))
+    console.log(`Returning results: ${results}`);
+    return results
   } else {
     let results = [];
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
