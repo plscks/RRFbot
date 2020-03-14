@@ -582,10 +582,10 @@ function covid19List(option, country) {
       rows.forEach((row) => {
         results.push(row.country);
       });
+      console.log(`results: ${results}`);
+      console.log(`results[0]: ${results[0]}`);
+      return results
     });
-    console.log(`results: ${results}`);
-    console.log(`results[0]: ${results[0]}`);
-    return results
   } else {
     let results = [];
     let sql = `SELECT province FROM all_data WHERE country = ${country}`;
@@ -594,12 +594,12 @@ function covid19List(option, country) {
         return console.log(err.message);
       }
       rows.forEach((row) => {
-        results.push(row.country);
+        results.push(row.province);
       });
+      console.log(`results: ${results}`);
+      console.log(`results[0]: ${results[0]}`);
+      return results
     });
-    console.log(`results: ${results}`);
-    console.log(`results[0]: ${results[0]}`);
-    return results
   }
 }
 ////////////////////////////
