@@ -594,7 +594,7 @@ function covid19List(option, country) {
 
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
-    await db2.all(sql, [], (err, rows) => {
+    db2.all(sql, [], async (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
@@ -602,6 +602,7 @@ function covid19List(option, country) {
         results.push(row.province);
       });
       results.splice(0, results.length, ...(new Set(results)))
+      return await results
     });
   }
 }
