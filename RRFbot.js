@@ -590,7 +590,7 @@ function covid19List(option, country) {
       console.log(`Returning results: ${results}`);
       return results
     });
-
+    console.log(`Are there results here?: ${results}`);
   } else {
     let results = [];
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
@@ -605,6 +605,7 @@ function covid19List(option, country) {
       return results
     });
   }
+  console.log(`How about over here?: ${results}`);
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
