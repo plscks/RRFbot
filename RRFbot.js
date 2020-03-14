@@ -577,9 +577,10 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 function covid19List(option, country) {
   let results = [];
+  let endResults = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    db2.all(sql, [], (err, rows) => {
+    endResults = db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
@@ -588,12 +589,9 @@ function covid19List(option, country) {
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve(results);
-        }, 1000);
-      });
+      return results
     });
+    return endResults
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], (err, rows) => {
