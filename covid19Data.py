@@ -85,7 +85,7 @@ def i2cOut(world, us, local):
     disp.show()
 
 def databasePush(data):
-    print('')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     print('~~Performing database operations~~')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     us = data[data.Country == 'US']
@@ -113,6 +113,9 @@ def databasePush(data):
 
     conn.commit()
     conn.close()
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('~~Finished database operations~~')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 if __name__ == "__main__":
     data = dataGrab()
