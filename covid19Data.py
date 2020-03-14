@@ -108,7 +108,7 @@ def databasePush(data):
     for index, row in local.iterrows():
         localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?)'
         localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'])
-        c.execute(localQuery, localParmas)
+        c.execute(localQuery, localParams)
 
     conn.commit()
     conn.close()
