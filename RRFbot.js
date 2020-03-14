@@ -584,12 +584,12 @@ async function covid19List(option, country) {
       if (err) {
         return console.log(err.message);
       }
-      await rows.forEach((row) => {
+      rows.forEach((row) async () => {
         results.push(row.country);
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
-      return results
+      return await results
     });
 
   } else {
