@@ -575,16 +575,16 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-async function covid19List(option, country) {
+function covid19List(option, country) {
   let results = [];
   let endResults = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    await db2.all(sql, [], (err, rows) => {
+    db2.all(sql, [], async (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
-      rows.forEach((row) async () => {
+      rows.forEach((row) => {
         results.push(row.country);
       });
       results.splice(0, results.length, ...(new Set(results)))
