@@ -87,6 +87,7 @@ def i2cOut(world, us, local):
 def databasePush(data):
     print('')
     print('~~Performing database operations~~')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     us = data[data.Country == 'US']
     local = data[data.Province == 'Illinois']
     conn = sqlite3.connect('COVID-19')
