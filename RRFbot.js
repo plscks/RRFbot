@@ -539,7 +539,6 @@ function updateBot() {
 ///////////////////
 function covid19Args(myArgs, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
-    console.log(`Arg [0] is ${myArgs[0]}`);
     message.channel.send({embed: {
         color: 3447003,
         title: "COVID-19 DATA function usage:",
@@ -575,7 +574,7 @@ function covid19Args(myArgs, message) {
 function covid19List(option, country) {
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    db2.query(sql, function(err, result) {
+    db2.query(sql), function(err, result) {
       if (err) {
         return console.log(err.message);
       }
