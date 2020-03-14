@@ -576,8 +576,8 @@ function covid19Args(myArgs, message) {
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
 function covid19List(option, country) {
+  let results = [];
   if (option === 'country') {
-    let results = []
     let sql = 'SELECT country FROM all_data';
     db2.all(sql, [], (err, rows) => {
       if (err) {
@@ -591,7 +591,6 @@ function covid19List(option, country) {
     });
     console.log(`Are there results here?: ${results}`);
   } else {
-    let results = [];
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], (err, rows) => {
       if (err) {
@@ -601,7 +600,6 @@ function covid19List(option, country) {
         results.push(row.province);
       });
       results.splice(0, results.length, ...(new Set(results)))
-      return results
     });
   }
   console.log(`How about over here?: ${results}`);
