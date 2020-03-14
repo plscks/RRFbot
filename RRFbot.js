@@ -537,7 +537,7 @@ function updateBot() {
 ///////////////////
 // COVID-19 ARGS //
 ///////////////////
-function covid19Args(myArgs, message) {
+async function covid19Args(myArgs, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
@@ -559,12 +559,12 @@ function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      let countryList = covid19List('country', null);
+      let countryList = await covid19List('country', null);
       console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
-      let provinceList = covid19List('province', country);
+      let provinceList = await covid19List('province', country);
     } else {
       message.channel.send('Please use the correct command. See !covid19 for usage.');
     }
@@ -588,8 +588,8 @@ function covid19List(option, country) {
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
+      return results
     });
-    console.log(`Are there results here?: ${results}`);
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], (err, rows) => {
@@ -602,7 +602,6 @@ function covid19List(option, country) {
       results.splice(0, results.length, ...(new Set(results)))
     });
   }
-  console.log(`How about over here?: ${results}`);
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
