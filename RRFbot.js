@@ -561,6 +561,9 @@ async function covid19Args(myArgs, message) {
     if (listFlag === 'country') {
       const countryList = await new covid19List('country', null);
       console.log(countryList);
+      for (var i = 0; i < countryList.length; i++) {
+        console.log(countryList);
+      }
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
