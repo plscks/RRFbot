@@ -580,14 +580,26 @@ function covid19List(option, country) {
         return console.log(err.message);
       }
       rows.forEach((row) => {
-        console.log(`row: ${row}`);
-        console.log(`row.country: ${row.country}`);
-        console.log(`row[0]: ${row[0]}`);
-        console.log(`row[1]: ${row[1]}`);
-        console.log(`row.country[0]: ${row.country[0]}`);
-        console.log(`row.country[1]: ${row.country[1]}`);
+        results.push(row.country);
       });
     });
+    console.log(`results: ${results}`);
+    console.log(`results[0]: ${results[0]}`);
+    return results
+  } else {
+    let results = [];
+    let sql = `SELECT province FROM all_data WHERE country = ${country}`;
+    db2.all(sql, [], (err, rows) => {
+      if (err) {
+        return console.log(err.message);
+      }
+      rows.forEach((row) => {
+        results.push(row.country);
+      });
+    });
+    console.log(`results: ${results}`);
+    console.log(`results[0]: ${results[0]}`);
+    return results
   }
 }
 ////////////////////////////
