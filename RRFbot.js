@@ -537,7 +537,7 @@ function updateBot() {
 ///////////////////
 // COVID-19 ARGS //
 ///////////////////
-async function covid19Args(myArgs, message) {
+function covid19Args(myArgs, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
@@ -559,12 +559,12 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      let countryList = await covid19List('country', null);
+      let countryList = covid19List('country', null);
       console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
-      let provinceList = await covid19List('province', country);
+      let provinceList = covid19List('province', country);
     } else {
       message.channel.send('Please use the correct command. See !covid19 for usage.');
     }
@@ -575,12 +575,12 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-function covid19List(option, country) {
+async function covid19List(option, country) {
   let results = [];
   let endResults = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    endResults = db2.all(sql, [], (err, rows) => {
+    await db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
@@ -591,10 +591,10 @@ function covid19List(option, country) {
       console.log(`Returning results: ${results}`);
       return results
     });
-    return endResults
+
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
-    db2.all(sql, [], (err, rows) => {
+    await db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
