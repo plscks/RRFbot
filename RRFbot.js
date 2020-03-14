@@ -38,6 +38,18 @@ const db = new sqlite3.Database('./Testbot', sqlite3.OPEN_READWRITE, (err) => {
   }
   console.log('Connected to the Testbot database.');
 });
+//////////////////////////////////
+// CONNECT TO COVID-19 DATABASE //
+//////////////////////////////////
+const db2 = new sqlite3.Database('./COVID-19', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the COVID-19 database.');
+});
+/////////////////////
+// INIT PHASE VARS //
+/////////////////////
 let jsonData = require('./searchRates.json');
 jsonData = convertKeysToLowerCase(jsonData);
 var masterListArray = initMasterArray();
@@ -379,6 +391,18 @@ client.on('message', message => {
     } else {
       factionParse(args, message);
     }
+  ///////////////////
+  // COVID-19 DATA //
+  ///////////////////
+  } else if (command === 'covid19') {
+    if (message.guild === undefined || message.guild === null) {
+      var guildId = 'Private DM';
+    } else {
+      var guildId = message.guild.name;
+    }
+    var userName = message.member.displayName;
+    console.log(`${userName} initiated !faction in ${guildId}.`);
+    covid19Args(args, message);
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
@@ -503,6 +527,54 @@ function updateBot() {
 	} else {
 		process.exit();
 	}
+}
+///////////////////
+// COVID-19 ARGS //
+///////////////////
+function covid19Args(args, message) {
+  if (myArgs[0] === undefined || myArgs[0] === null) {
+    message.channel.send({embed: {
+        color: 3447003,
+        title: "Factions usage:",
+        fields: [
+          { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information, the data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC"},
+          { name: "!covid19 worldwide", value: "Gives worldwide COVID-19 data"},
+          { name: "!covid19 list country", value: "Lists countries that data is available for."},
+          { name: "!covid19 list province [country]", value: "Lists provinces with data available for the given country."},
+          { name: "!covid19 data [country/province]", value: "Gives COVID-19 data for the given country or province."}
+        ]
+      }
+    });
+    return;
+  }
+  let flag = myArgs[0].toLowerCase();
+  if (flag === 'worldwide') {
+
+  } else if (flag === 'list') {
+    let listFlag = myArgs[1].toLowerCase();
+    if (listFlag === 'country') {
+      let countryList = covid19List('country', null);
+      console.log(countryList);
+    } else if (listFlag === 'province') {
+      let countryArray = myArgs.slice(2, myArgs.length);
+      let country = countryArray.join(' ');
+      let provinceList = covid19List('province', country);
+    }
+  }
+}
+/////////////////////////////////////
+// COVID-19 LIST AVAILABLE CHOICES //
+/////////////////////////////////////
+function covid19List(option, country) {
+  if (option === 'country') {
+    let sql = 'SELECT country FROM all_data';
+    db2.query(sql, function(err, result) {
+      if (err) {
+        return console.log(err.message);
+      }
+      return result
+    });
+  }
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
