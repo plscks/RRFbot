@@ -10,6 +10,7 @@ import datetime
 import pandas as pd
 import time
 import subprocess
+import sqlite3
 
 from board import SCL, SDA
 import busio
@@ -83,6 +84,29 @@ def i2cOut(world, us, local):
     disp.image(image)
     disp.show()
 
+def databasePush(data):
+    print('')
+    print('~~Performing database operations~~')
+    us = data[data.Country == 'US']
+    local = data[data.Province == 'Illinois']
+    conn = sqlite3.connect('COVID-19')
+    c = conn.cursor()
+
+    print('~Loading data to worldwide database.')
+    for index, row in data.iterrows():
+        c.execute(f'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Country"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+
+    print('~Loading data into US database.')
+    for index, row in us.iterrows():
+        c.execute(f'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+
+    print('~Loading data into local database.')
+    for index, row in local.iterrows():
+        c.execute(f'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES ({row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})')
+
+    conn.commit()
+    conn.close()
+
 if __name__ == "__main__":
     data = dataGrab()
     worldData = parseData('world', data)
@@ -90,3 +114,4 @@ if __name__ == "__main__":
     localData = parseData('local', data)
     output(worldData, usData, localData)
     i2cOut(worldData, usData, localData)
+    databasePush(data)
