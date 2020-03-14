@@ -401,7 +401,9 @@ client.on('message', message => {
       var guildId = message.guild.name;
     }
     var userName = message.member.displayName;
-    console.log(`${userName} initiated !faction in ${guildId}.`);
+    console.log(`${userName} initiated !covid19 in ${guildId}.`);
+    console.log(`${args}`);
+    console.log(`${args[0]}`);
     covid19Args(args, message);
 	///////////////////
 	// COMMANDS LIST //
@@ -535,7 +537,7 @@ function covid19Args(args, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
-        title: "Factions usage:",
+        title: "COVID-19 DATA function usage:",
         fields: [
           { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information, the data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC"},
           { name: "!covid19 worldwide", value: "Gives worldwide COVID-19 data"},
