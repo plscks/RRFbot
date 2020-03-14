@@ -580,8 +580,12 @@ function covid19List(option, country) {
         return console.log(err.message);
       }
       rows.forEach((row) => {
-        console.log(row);
-        console.log(row.country);
+        console.log(`row: ${row}`);
+        console.log(`row.country: ${row.country}`);
+        console.log(`row[0]: ${row[0]}`);
+        console.log(`row[1]: ${row[1]}`);
+        console.log(`row.country[0]: ${row.country[0]}`);
+        console.log(`row.country[1]: ${row.country[1]}`);
       });
     });
   }
