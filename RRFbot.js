@@ -589,7 +589,7 @@ async function covid19List(option, country) {
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
-      return results
+      return await results
     });
 
   } else {
