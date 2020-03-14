@@ -573,14 +573,16 @@ function covid19Args(myArgs, message) {
 /////////////////////////////////////
 function covid19List(option, country) {
   if (option === 'country') {
+    let results = []
     let sql = 'SELECT country FROM all_data';
-    db2.query(sql, function(err, result) {
+    db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
-      return result
+      rows.forEach((row) => {
+        console.log(row);
     });
-  }
+  });
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
