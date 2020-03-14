@@ -94,8 +94,9 @@ def databasePush(data):
 
     print('~Loading data to worldwide database.')
     for index, row in data.iterrows():
-        wwQuery = f'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES ({row["Province"]}, {row["Country"]}, {row["Updated"]}, {row["Confirmed"]}, {row["Deaths"]}, {row["Recovered"]})'
-        c.execute(wwQuery)
+        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?)'
+        params = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'])
+        c.execute(wwQuery, params)
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
