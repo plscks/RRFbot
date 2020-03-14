@@ -582,8 +582,9 @@ function covid19List(option, country) {
       rows.forEach((row) => {
         console.log(row);
         console.log(row.country);
+      });
     });
-  });
+  }
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
