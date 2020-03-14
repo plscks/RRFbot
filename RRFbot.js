@@ -560,7 +560,7 @@ async function covid19Args(myArgs, message) {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
       let countryList = await covid19List('country', null);
-      await console.log(countryList);
+      console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
@@ -588,7 +588,11 @@ function covid19List(option, country) {
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
-      return results
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(results);
+        }, 1000);
+      });
     });
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
