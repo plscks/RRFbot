@@ -574,7 +574,7 @@ function covid19Args(myArgs, message) {
 function covid19List(option, country) {
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    db2.query(sql), function(err, result) {
+    db2.query(sql, function(err, result) {
       if (err) {
         return console.log(err.message);
       }
