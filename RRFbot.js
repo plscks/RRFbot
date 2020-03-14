@@ -559,8 +559,8 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      let countryList = covid19List('country', null);
-      await console.log(countryList);
+      const countryList = await new covid19List('country', null);
+      console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
@@ -575,12 +575,12 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-async function covid19List(option, country) {
+function covid19List(option, country) {
   let results = [];
   let endResults = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    db2.all(sql, [], async (err, rows) => {
+    db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
@@ -589,12 +589,11 @@ async function covid19List(option, country) {
       });
       results.splice(0, results.length, ...(new Set(results)))
       console.log(`Returning results: ${results}`);
-      return await results
+      return results
     });
-    return await results
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
-    db2.all(sql, [], async (err, rows) => {
+    db2.all(sql, [], (err, rows) => {
       if (err) {
         return console.log(err.message);
       }
@@ -602,7 +601,7 @@ async function covid19List(option, country) {
         results.push(row.province);
       });
       results.splice(0, results.length, ...(new Set(results)))
-      return await results
+      return results
     });
   }
 }
