@@ -544,9 +544,9 @@ async function covid19Args(myArgs, message) {
         title: "COVID-19 DATA function usage:",
         fields: [
           { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information, the data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC"},
-          { name: "!covid19 worldwide", value: "Gives worldwide COVID-19 data"},
-          { name: "!covid19 list country", value: "Lists countries that data is available for."},
-          { name: "!covid19 list province [country]", value: "Lists provinces with data available for the given country."},
+          { name: "!covid19 list", value: "Lists countries that data is available for."},
+          { name: "!covid19 list [country]", value: "Lists provinces with data available for the given country."},
+          { name: "!covid19 data", value: "Gives worldwide COVID-19 data."}
           { name: "!covid19 data [country/province]", value: "Gives COVID-19 data for the given country or province."}
         ]
       }
@@ -554,39 +554,45 @@ async function covid19Args(myArgs, message) {
     return;
   }
   let flag = myArgs[0].toLowerCase();
-  if (flag === 'worldwide') {
-
-  } else if (flag === 'list') {
-    let listFlag = myArgs[1].toLowerCase();
-    if (listFlag === 'country') {
+  if (flag === 'list') {
+    if (myArgs.length <= 1) {
+      // list countries
       let countryListDB = [];
       let countryList = [];
-      countryListDB = await covid19List('country', null);
+      countryListDB = await covid19List('listCountry', null);
       console.log(`Country list: ${countryListDB}`);
       countryListDB.forEach(e=>{
         countryList.push(e.country);
         console.log(`Counrty: ${e.country}`);
       });
-      //countryList.splice(0, countryList.length, ...(new Set(countryList)))
       console.log(`COUNTRY LIST: ${countryList}`);
-    } else if (listFlag === 'province') {
-      let provinceListDB = []
-      let provinceList = []
-      let countryArray = []
-      countryArray = myArgs.slice(2, myArgs.length);
+    } else {
+      // list provinces for given country
+      let provinceListDB = [];
+      let provinceList = [];
+      let countryArray = [];
+      countryArray = myArgs.slice(1, myArgs.length);
       let country = countryArray.join(' ');
-      provinceListDB = await covid19List('province', country);
+      provinceListDB = await covid19List('listProvince', country);
       console.log(`Province db for ${country}: ${provinceListDB}`);
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
         console.log(`Province in ${country}: ${e.province}`);
       });
       console.log(`Province in ${country}: ${provinceList}`);
-    } else {
-      message.channel.send('Please use the correct command. See !covid19 for usage.');
     }
-  } else if (flag === data) {
-
+  } else if (flag === 'data') {
+    if (myArgs.length <= 1) {
+      //give worldwide data
+      let worldDataDB = [];
+      let worldData = [];
+      worldDataDB = await covid19List('worldwideData', null);
+      console.log(`Worldwide Numbers=> Date: ${worldDataDB.date}   Confirmed: ${worldDataDB.confirmed}   Deaths: ${worldDataDB.deaths}   Recovered: ${worldDataDB.recovered}`);
+      for (var i = 0; i < worldDataDB.length; i++) {
+        worldData.push(worldDataDB[i]);
+      }
+      console.log(`: ${worldData}`);
+    }
   }
 }
 /////////////////////////////////////
@@ -594,10 +600,16 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 function covid19List(option, country) {
   let data = []
-  if (country === null) {
+  if (option === 'listCountry') {
     sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
-  } else {
+  } else if (option === 'ListProvince') {
     sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${country}" ORDER BY province`;
+  } else if (option === 'localData') {
+    // country/province data
+  } else {
+    // option === 'worldwideData'
+    // SELECT a.date, a.confirmed, a.deaths, a.recovered FROM all_data AS a
+    sql = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate';
   }
   return new Promise(resolve=>{
     db2.all(sql, [], (err,rows) => {
