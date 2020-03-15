@@ -567,7 +567,7 @@ async function covid19Args(myArgs, message) {
         countryList.push(e.country);
         console.log(`Counrty: ${e.country}`);
       });
-      countryList.splice(0, countryList.length, ...(new Set(countryList)))
+      //countryList.splice(0, countryList.length, ...(new Set(countryList)))
       console.log(`COUNTRY LIST: ${countryList}`);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
@@ -586,7 +586,7 @@ async function covid19Args(myArgs, message) {
 function covid19List(option, country) {
   let data = []
   return new Promise(resolve=>{
-    db2.all('SELECT country FROM all_data ORDER BY country', [], (err,rows) => {
+    db2.all('SELECT DISTINCT(country) FROM all_data ORDER BY country', [], (err,rows) => {
       if (err) {
         return console.error(err.message);
       }
