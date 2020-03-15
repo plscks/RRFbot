@@ -562,7 +562,7 @@ async function covid19Args(myArgs, message) {
       let countryList = []
       let countryListDB = await covid19List('country', null);
       console.log(`Country list: ${countryListDB}`);
-      await for (row in countryListDB) {
+      for (row in countryListDB) {
         await coutryList.push(row.country);
         await console.log(`Country: ${row.country}`);
       }
