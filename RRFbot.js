@@ -560,15 +560,15 @@ async function covid19Args(myArgs, message) {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
       let countryListDB = [];
-      let countrylist = [];
+      let countryList = [];
       countryListDB = await covid19List('country', null);
       console.log(`Country list: ${countryListDB}`);
       countryListDB.forEach(e=>{
         countryList.push(e.country);
         console.log(`Counrty: ${e.country}`);
       });
-      //countryList.splice(0, countryList.length, ...(new Set(countryList)))
-      //console.log(`COUNTRY LIST: ${countryList}`);
+      countryList.splice(0, countryList.length, ...(new Set(countryList)))
+      console.log(`COUNTRY LIST: ${countryList}`);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
