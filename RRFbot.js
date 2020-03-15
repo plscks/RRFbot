@@ -597,7 +597,7 @@ function covid19List(option, country) {
   if (country === null) {
     sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
   } else {
-    sql = `SELECT DISTINCT(province) FROM all_data WHERE country = "${country}" ORDER BY province`;
+    sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${country}" ORDER BY province`;
   }
   return new Promise(resolve=>{
     db2.all(sql, [], (err,rows) => {
