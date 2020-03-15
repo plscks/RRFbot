@@ -559,8 +559,12 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      let countryList = await covid19List('country', null);
-      console.log(countryList);
+      let countryList = []
+      let countryListDB = await covid19List('country', null);
+      countryListDB.forEach((row) => {
+        countryList.push(row.country);
+      });
+      console.log(`Country list: ${countryList}`);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
