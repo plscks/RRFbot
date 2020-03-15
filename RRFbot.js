@@ -566,7 +566,7 @@ async function covid19Args(myArgs, message) {
       countryListDB.forEach(e=>{
         console.log(e.country);
       });
-      
+
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
@@ -584,11 +584,11 @@ async function covid19Args(myArgs, message) {
 function covid19List(option, country) {
   let data = []
   return new Promise(resolve=>{
-    db2.all('SELECT country FROM all_data ORDER BY name',[],(err,rows)=>{
-      if(err){
+    db2.all('SELECT country FROM all_data ORDER BY DESC', [], (err,rows) => {
+      if (err) {
         return console.error(err.message);
       }
-      rows.forEach((row)=>{
+      rows.forEach((row) => {
         data.push(row);
       });
       resolve(data);
