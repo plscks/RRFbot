@@ -580,19 +580,11 @@ async function covid19List(option, country) {
   let endResults = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    const results2 = await db2.all(sql, [], async (err, rows) => {
-      if (err) {
-        return console.log(err.message);
-      }
-      rows.forEach((row) => {
-        results.push(row.country);
-      });
-      results.splice(0, results.length, ...(new Set(results)))
-      console.log(`Returning results: ${results}`);
-      return await results
-    });
-    await console.log(`Return results2: ${results2}`);
-    return await results2
+    const results = await db2.all(sql)
+    //results.splice(0, results.length, ...(new Set(results)))
+    console.log(`Returning results: ${results}`);
+    console.log(`Countries: ${results.country}`);
+    return results
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], (err, rows) => {
