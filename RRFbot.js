@@ -562,11 +562,11 @@ async function covid19Args(myArgs, message) {
       let countryList = []
       let countryListDB = await covid19List('country', null);
       console.log(`Country list: ${countryListDB}`);
-      for (row in countryListDB) {
-        coutryList.push(row.country);
-        console.log(`Country: ${row.country}`);
+      await for (row in countryListDB) {
+        await coutryList.push(row.country);
+        await console.log(`Country: ${row.country}`);
       }
-      console.log(`Countries: ${countryList}`);
+      await console.log(`Countries: ${countryList}`);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
