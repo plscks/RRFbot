@@ -570,9 +570,18 @@ async function covid19Args(myArgs, message) {
       //countryList.splice(0, countryList.length, ...(new Set(countryList)))
       console.log(`COUNTRY LIST: ${countryList}`);
     } else if (listFlag === 'province') {
+      let provinceListDB = []
+      let provinceList = []
+      let countryArray = []
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
-      let provinceList = covid19List('province', country);
+      let provinceListDB = await covid19List('province', country);
+      console.log(`Province db for ${country}: ${provinceListDB}`);
+      provinceListDB.forEach(e=>{
+        provinceList.push(e.province);
+        console.log(`Province in ${country}: ${e.province}`);
+      });
+      console.log(`Province in ${country}: ${provinceList}`);
     } else {
       message.channel.send('Please use the correct command. See !covid19 for usage.');
     }
@@ -585,8 +594,13 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 function covid19List(option, country) {
   let data = []
+  if (country === null) {
+    sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
+  } else {
+    sql = `SELECT DISTINCT(province) FROM all_data WHERE country = "${country}" ORDER BY province`;
+  }
   return new Promise(resolve=>{
-    db2.all('SELECT DISTINCT(country) FROM all_data ORDER BY country', [], (err,rows) => {
+    db2.all(sql, [], (err,rows) => {
       if (err) {
         return console.error(err.message);
       }
