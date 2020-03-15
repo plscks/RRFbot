@@ -591,7 +591,7 @@ async function covid19List(option, country) {
       console.log(`Returning results: ${results}`);
       return await results
     });
-    console.log(`Return results2: ${results2}`);
+    await console.log(`Return results2: ${results2}`);
     return await results2
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
