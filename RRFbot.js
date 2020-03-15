@@ -561,8 +561,6 @@ async function covid19Args(myArgs, message) {
     if (listFlag === 'country') {
       let countryList = []
       let countryListDB = await covid19List('country', null);
-      console.log(`First: ${countryListDB.country}`);
-      console.log(`second: ${countryListDB.country[0]}`);
       console.log(`Country list: ${countryListDB}`);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
