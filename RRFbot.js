@@ -585,7 +585,7 @@ async function covid19List(option, country) {
   let results = [];
   if (option === 'country') {
     let sql = 'SELECT country FROM all_data';
-    db2.each(sql, [], (err, row) => {
+    db2.each(sql, (err, row) => {
       if (err) {
         throw err;
       }
