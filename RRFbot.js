@@ -573,9 +573,9 @@ async function covid19Args(myArgs, message) {
       let provinceListDB = []
       let provinceList = []
       let countryArray = []
-      let countryArray = myArgs.slice(2, myArgs.length);
+      countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
-      let provinceListDB = await covid19List('province', country);
+      provinceListDB = await covid19List('province', country);
       console.log(`Province db for ${country}: ${provinceListDB}`);
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
