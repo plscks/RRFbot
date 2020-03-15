@@ -586,7 +586,7 @@ async function covid19Args(myArgs, message) {
 function covid19List(option, country) {
   let data = []
   return new Promise(resolve=>{
-    db2.all('SELECT country FROM all_data', [], (err,rows) => {
+    db2.all('SELECT country FROM all_data ORDER BY country', [], (err,rows) => {
       if (err) {
         return console.error(err.message);
       }
