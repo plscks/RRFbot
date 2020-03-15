@@ -602,8 +602,10 @@ function covid19List(option, country) {
   let data = []
   if (option === 'listCountry') {
     sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
+    console.log(`SQL: ${sql}`);
   } else if (option === 'ListProvince') {
     sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${country}" ORDER BY province`;
+    console.log(`SQL: ${sql}`);
   } else if (option === 'localData') {
     // country/province data
   } else {
