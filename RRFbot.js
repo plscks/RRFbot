@@ -560,7 +560,7 @@ function covid19Args(myArgs, message) {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
       let countryList = covid19List('country', null);
-      await console.log(countryList);
+      console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
