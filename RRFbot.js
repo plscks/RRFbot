@@ -546,7 +546,7 @@ async function covid19Args(myArgs, message) {
           { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information, the data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC"},
           { name: "!covid19 list", value: "Lists countries that data is available for."},
           { name: "!covid19 list [country]", value: "Lists provinces with data available for the given country."},
-          { name: "!covid19 data", value: "Gives worldwide COVID-19 data."}
+          { name: "!covid19 data", value: "Gives worldwide COVID-19 data."},
           { name: "!covid19 data [country/province]", value: "Gives COVID-19 data for the given country or province."}
         ]
       }
