@@ -603,7 +603,7 @@ function covid19List(option, country) {
   if (option === 'listCountry') {
     sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
     console.log(`SQL: ${sql}`);
-  } else if (option === 'ListProvince') {
+  } else if (option === 'listProvince') {
     sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${country}" ORDER BY province`;
     console.log(`SQL: ${sql}`);
   } else if (option === 'localData') {
@@ -612,6 +612,7 @@ function covid19List(option, country) {
     // option === 'worldwideData'
     // SELECT a.date, a.confirmed, a.deaths, a.recovered FROM all_data AS a
     sql = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate';
+    console.log(`SQL: ${sql}`);
   }
   return new Promise(resolve=>{
     db2.all(sql, [], (err,rows) => {
