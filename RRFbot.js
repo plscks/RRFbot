@@ -559,14 +559,14 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      let countryList = []
-      let countryListDB = await covid19List('country', null);
+      let countryListDB = [];
+      let countrylist = [];
+      countryListDB = await covid19List('country', null);
       console.log(`Country list: ${countryListDB}`);
-      for (row in countryListDB) {
-        await countryList.push(row.country);
-        await console.log(`Country: ${row.country}`);
-      }
-      await console.log(`Countries: ${countryList}`);
+      countryListDB.forEach(e=>{
+        console.log(e.country);
+      });
+      
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
       let country = countryArray.join(' ');
@@ -581,32 +581,19 @@ async function covid19Args(myArgs, message) {
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-async function covid19List(option, country) {
-  let results = [];
-  if (option === 'country') {
-    let sql = 'SELECT country FROM all_data';
-    db2.each(sql, (err, row) => {
-      if (err) {
-        throw err;
+function covid19List(option, country) {
+  let data = []
+  return new Promise(resolve=>{
+    db2.all('SELECT country FROM all_data ORDER BY name',[],(err,rows)=>{
+      if(err){
+        return console.error(err.message);
       }
-      results.push(row.country);
-    });
-    results.splice(0, results.length, ...(new Set(results)))
-    console.log(`RESULTS: ${results}`);
-    return await results
-  } else {
-    let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
-    db2.all(sql, [], (err, rows) => {
-      if (err) {
-        return console.log(err.message);
-      }
-      rows.forEach((row) => {
-        results.push(row.province);
+      rows.forEach((row)=>{
+        data.push(row);
       });
-      results.splice(0, results.length, ...(new Set(results)))
-      return results
+      resolve(data);
     });
-  }
+  });
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //
