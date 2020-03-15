@@ -620,6 +620,9 @@ function covid19List(option, country) {
       if (err) {
         return console.error(err.message);
       }
+      console.log('~~~~~');
+      console.log(JSON.stringify(rows, null, 4));
+      console.log('~~~~~~');
       rows.forEach((row) => {
         data.push(row);
       });
