@@ -537,7 +537,7 @@ function updateBot() {
 ///////////////////
 // COVID-19 ARGS //
 ///////////////////
-async function covid19Args(myArgs, message) {
+function covid19Args(myArgs, message) {
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
@@ -559,7 +559,7 @@ async function covid19Args(myArgs, message) {
   } else if (flag === 'list') {
     let listFlag = myArgs[1].toLowerCase();
     if (listFlag === 'country') {
-      const countryList = await covid19List('country', null);
+      let countryList = covid19List('country', null);
       await console.log(countryList);
     } else if (listFlag === 'province') {
       let countryArray = myArgs.slice(2, myArgs.length);
@@ -582,8 +582,6 @@ async function covid19List(option, country) {
     let sql = 'SELECT country FROM all_data';
     const results = await db2.all(sql)
     //results.splice(0, results.length, ...(new Set(results)))
-    console.log(`Returning results: ${results}`);
-    console.log(`Countries: ${results.country}`);
     return results
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
