@@ -588,7 +588,7 @@ async function covid19List(option, country) {
     let sql = 'SELECT country FROM all_data';
     const results = await db2.all(sql)
     //results.splice(0, results.length, ...(new Set(results)))
-    return results
+    return await results
   } else {
     let sql = `SELECT province FROM all_data WHERE country like '${country}'`;
     db2.all(sql, [], (err, rows) => {
