@@ -589,10 +589,6 @@ async function covid19Args(myArgs, message) {
       worldDataDB = await covid19List('worldwideData', null);
       console.log(JSON.stringify(worldDataDB, null, 4));
       console.log(`Worldwide Numbers=> Date: ${worldDataDB[0].date}   Confirmed: ${worldDataDB[0].confirmed}   Deaths: ${worldDataDB[0].deaths}   Recovered: ${worldDataDB[0].recovered}`);
-      for (var i = 0; i < worldDataDB.length; i++) {
-        worldData.push(worldDataDB[i]);
-      }
-      console.log(`: ${worldData}`);
     }
   }
 }
@@ -611,7 +607,6 @@ function covid19List(option, country) {
     // country/province data
   } else {
     // option === 'worldwideData'
-    // SELECT a.date, a.confirmed, a.deaths, a.recovered FROM all_data AS a
     sql = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate';
     console.log(`SQL: ${sql}`);
   }
