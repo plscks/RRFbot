@@ -367,6 +367,25 @@ client.on('message', message => {
   	setTimeout(() => {
   		updateBot();
   	}, 5000);
+  //////////////////////
+  // SHUTDOWN COMMAND //
+  //////////////////////
+  } else if (command === "shutdown") {
+    if (message.author.id !== '407383313335189515') return;
+    db.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Close the Testbot database connection.');
+    });
+    db2.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Close the COVID-19 database connection.');
+    });
+    console.log("Ready for shutdown.");
+    process.exit();
 	//////////////////
 	// TEST COMMAND //
 	//////////////////
