@@ -588,7 +588,7 @@ async function covid19Args(myArgs, message) {
       let worldData = [];
       worldDataDB = await covid19List('worldwideData', null);
       console.log(JSON.stringify(worldDataDB, null, 4));
-      console.log(`Worldwide Numbers=> Date: ${worldDataDB[0]}   Confirmed: ${worldDataDB[1]}   Deaths: ${worldDataDB[2]}   Recovered: ${worldDataDB[3]}`);
+      console.log(`Worldwide Numbers=> Date: ${worldDataDB[0].date}   Confirmed: ${worldDataDB[0].confirmed}   Deaths: ${worldDataDB[0].deaths}   Recovered: ${worldDataDB[0].recovered}`);
       for (var i = 0; i < worldDataDB.length; i++) {
         worldData.push(worldDataDB[i]);
       }
