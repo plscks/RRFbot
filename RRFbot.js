@@ -588,7 +588,7 @@ async function covid19Args(myArgs, message) {
       let worldData = [];
       worldDataDB = await covid19List('worldwideData', null);
       console.log(JSON.stringify(worldDataDB, null, 4));
-      console.log(`Worldwide Numbers=> Date: ${worldDataDB.date}   Confirmed: ${worldDataDB.confirmed}   Deaths: ${worldDataDB.deaths}   Recovered: ${worldDataDB.recovered}`);
+      console.log(`Worldwide Numbers=> Date: ${worldDataDB['date']}   Confirmed: ${worldDataDB['confirmed']}   Deaths: ${worldDataDB['deaths']}   Recovered: ${worldDataDB['recovered']}`);
       for (var i = 0; i < worldDataDB.length; i++) {
         worldData.push(worldDataDB[i]);
       }
@@ -620,9 +620,6 @@ function covid19List(option, country) {
       if (err) {
         return console.error(err.message);
       }
-      console.log('~~~~~');
-      console.log(JSON.stringify(rows, null, 4));
-      console.log('~~~~~~');
       rows.forEach((row) => {
         data.push(row);
       });
