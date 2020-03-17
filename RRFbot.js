@@ -578,7 +578,7 @@ async function covid19Args(myArgs, message) {
           { name: "!covid19 list", value: "Lists countries that data is available for."},
           { name: "!covid19 list [country]", value: "Lists provinces with data available for the given country."},
           { name: "!covid19 data", value: "Gives worldwide COVID-19 data."},
-          { name: "!covid19 data [country/province]", value: "Gives COVID-19 data for the given country or province."}
+          { name: "!covid19 data [country or province]", value: "Gives COVID-19 data for the given country or province."}
         ]
       }
     });
