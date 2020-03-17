@@ -383,9 +383,10 @@ client.on('message', message => {
         console.error(err.message);
       }
       console.log('Close the COVID-19 database connection.');
+      console.log("Shutting down now.");
+      process.exit();
     });
-    console.log("Ready for shutdown.");
-    process.exit();
+
 	//////////////////
 	// TEST COMMAND //
 	//////////////////
@@ -422,10 +423,11 @@ client.on('message', message => {
   } else if (command === 'covid19') {
     if (message.guild === undefined || message.guild === null) {
       var guildId = 'Private DM';
+      var userName = 'Private user';
     } else {
       var guildId = message.guild.name;
+      var userName = message.member.displayName;
     }
-    var userName = message.member.displayName;
     console.log(`${userName} initiated !covid19 in ${guildId}.`);
     covid19Args(args, message);
 	///////////////////
@@ -577,14 +579,44 @@ async function covid19Args(myArgs, message) {
     if (myArgs.length <= 1) {
       // list countries
       let countryListDB = [];
+      let countryList2 = [];
       let countryList = [];
+      let returnMessage = [];
+      let returnMessage2 = [];
+      returnMessage[0] = 'Countries (part 1):';
+      returnMessage[1] = '';
+      returnMessage2[0] = 'Countries (part 2)';
+      returnMessage2[1] = '';
       countryListDB = await covid19List('listCountry', null);
-      console.log(`Country list: ${countryListDB}`);
       countryListDB.forEach(e=>{
-        countryList.push(e.country);
-        console.log(`Counrty: ${e.country}`);
+        countryList2.push(e.country);
       });
+      let halfList = Math.ceil(countryList2.length / 2);
+      countryList = countryList2.splice(0,halfList);
+      for (var k = 0; k < countryList2.length; k++) {
+        if (k === countryList2.length - 1) {
+          returnMessage2[1] += `${countryList2[k]}.`
+        } else {
+          returnMessage2[1] += `${countryList2[k]}, `;
+        }
+      }
+      for (var j = 0; j < countryList.length; j++) {
+        if (j === countryList.length - 1) {
+          returnMessage[1] += `${countryList[j]}.`
+        } else {
+          returnMessage[1] += `${countryList[j]}, `;
+        }
+      }
       console.log(`COUNTRY LIST: ${countryList}`);
+      message.channel.send({embed: {
+          color: 3447003,
+          title: "Countries with available COVID-19 DATA",
+          fields: [
+            { name: `${returnMessage[0]}`, value: `${returnMessage[1]}`},
+            { name: `${returnMessage2[0]}`, value: `${returnMessage2[1]}`}
+          ]
+        }
+      });
     } else {
       // list provinces for given country
       let provinceListDB = [];
@@ -592,42 +624,120 @@ async function covid19Args(myArgs, message) {
       let countryArray = [];
       countryArray = myArgs.slice(1, myArgs.length);
       let country = countryArray.join(' ');
+      let returnMessage = [];
+      returnMessage[0] = `There is province data for these ${country} provinces: `;
       provinceListDB = await covid19List('listProvince', country);
-      console.log(`Province db for ${country}: ${provinceListDB}`);
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
-        console.log(`Province in ${country}: ${e.province}`);
       });
-      console.log(`Province in ${country}: ${provinceList}`);
+      if (provinceListDB[0].province === null) {
+        returnMessage[0] = `There is no listed province data for ${country}`;
+      } else {
+        returnMessage[1] = '';
+        for (var j = 0; j < provinceList.length; j++) {
+          if (j === provinceList.length - 1) {
+            returnMessage[1] += `${provinceList[j]}.`
+          } else {
+            returnMessage[1] += `${provinceList[j]}, `;
+          }
+        }
+      }
+      if (returnMessage.length === 1) {
+        console.log(returnMessage);
+        message.channel.send({embed: {
+          color: 3447003,
+          description: `${returnMessage[0]}`
+        }});
+      } else {
+        message.channel.send({embed: {
+            color: 3447003,
+            title: `${country} provinces with available COVID-19 data:`,
+            fields: [
+              { name: `${returnMessage[0]}`, value: `${returnMessage[1]}`}
+            ]
+          }
+        });
+      }
     }
   } else if (flag === 'data') {
     if (myArgs.length <= 1) {
       //give worldwide data
-      let worldDataDB = [];
       let worldData = [];
-      worldDataDB = await covid19List('worldwideData', null);
-      console.log(JSON.stringify(worldDataDB, null, 4));
-      console.log(`Worldwide Numbers=> Date: ${worldDataDB[0].date}   Confirmed: ${worldDataDB[0].confirmed}   Deaths: ${worldDataDB[0].deaths}   Recovered: ${worldDataDB[0].recovered}`);
+      worldData = await covid19List('worldwideData', null);
+      // This shows the structure of an object
+      // console.log(JSON.stringify(worldDataDB, null, 4));
+      console.log(`Worldwide Numbers=> Date: ${worldData[0].date}   Confirmed: ${worldData[0].confirmed}   Deaths: ${worldData[0].deaths}   Recovered: ${worldData[0].recovered}`);
+      message.channel.send({embed: {
+          color: 3447003,
+          title: `Worldwide COVID-19 data as of ${worldData[0].date}:`,
+          fields: [
+            { name: `Confimed Cases:`, value: `${worldData[0].confirmed}`},
+            { name: `Deaths:`, value: `${worldData[0].deaths}`},
+            { name: `Recovered:`, value: `${worldData[0].recovered}`},
+          ]
+        }
+      });
+    } else {
+      let queryArray = myArgs.slice(1, myArgs.length);
+      let query = queryArray.join(' ');
+      let localData = await covid19List('localData', query);
+      let provinceListDB = [];
+      let provinceList = [];
+      let provinceLower = [];
+      provinceListDB = await covid19List('allProvince', null);
+      provinceListDB.forEach(e=>{
+        provinceList.push(e.province);
+      });
+      for (var l = 0; l < provinceList.length; l++) {
+        if (provinceList[l] != null) {
+          provinceLower.push(provinceList[l].toLowerCase());
+        }
+      }
+      console.log(provinceLower);
+      if (provinceLower.includes(query.toLowerCase())) {
+        message.channel.send({embed: {
+            color: 3447003,
+            title: `COVID-19 data for ${query} as of ${localData[0].date}:`,
+            fields: [
+              { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
+              { name: `Deaths:`, value: `${localData[0].deaths}`},
+              { name: `Recovered:`, value: `${localData[0].recovered}`},
+              { name: `Last data point updated:`, value: `${localData[0].last_updated}`}
+            ]
+          }
+        });
+      } else {
+        message.channel.send({embed: {
+            color: 3447003,
+            title: `COVID-19 data for ${query} as of ${localData[0].date}:`,
+            fields: [
+              { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
+              { name: `Deaths:`, value: `${localData[0].deaths}`},
+              { name: `Recovered:`, value: `${localData[0].recovered}`}
+            ]
+          }
+        });
+      }
     }
   }
 }
 /////////////////////////////////////
 // COVID-19 LIST AVAILABLE CHOICES //
 /////////////////////////////////////
-function covid19List(option, country) {
+function covid19List(option, query) {
   let data = []
   if (option === 'listCountry') {
     sql = 'SELECT DISTINCT(country) FROM all_data ORDER BY country';
-    console.log(`SQL: ${sql}`);
   } else if (option === 'listProvince') {
-    sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${country}" ORDER BY province`;
-    console.log(`SQL: ${sql}`);
+    sql = `SELECT DISTINCT(province) FROM all_data WHERE country like "${query}" ORDER BY province`;
+  } else if (option === 'allProvince') {
+    sql = `SELECT DISTINCT(province) FROM all_data`;
   } else if (option === 'localData') {
     // country/province data
+    sql = `SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered, last_updated FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate AND (country like "${query}" OR province like "${query}")`;
   } else {
     // option === 'worldwideData'
     sql = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate';
-    console.log(`SQL: ${sql}`);
   }
   return new Promise(resolve=>{
     db2.all(sql, [], (err,rows) => {
