@@ -560,12 +560,22 @@ function updateBot() {
 // COVID-19 ARGS //
 ///////////////////
 async function covid19Args(myArgs, message) {
+  let worldData = [];
+  let provinceLower = [];
+  let provinceListDB = [];
+  let provinceList = [];
+  let countryArray = [];
+  let countryListDB = [];
+  let countryList2 = [];
+  let countryList = [];
+  let returnMessage = [];
+  let returnMessage2 = [];
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
         title: "COVID-19 DATA function usage:",
         fields: [
-          { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information, the data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC"},
+          { name: "!covid19", value: "This command usage message. Note~You can DM the bot for private information~ The data comes from Johns Hopkins COVID-19 github repository and is updated daily at about 00:00 UTC, not all sources are updated as quickly as others, but it seems like a rather good baseline."},
           { name: "!covid19 list", value: "Lists countries that data is available for."},
           { name: "!covid19 list [country]", value: "Lists provinces with data available for the given country."},
           { name: "!covid19 data", value: "Gives worldwide COVID-19 data."},
@@ -578,11 +588,6 @@ async function covid19Args(myArgs, message) {
   let flag = myArgs[0].toLowerCase();
   if (flag === 'list') {
     if (myArgs.length <= 1) {
-      let countryListDB = [];
-      let countryList2 = [];
-      let countryList = [];
-      let returnMessage = [];
-      let returnMessage2 = [];
       returnMessage[0] = 'Countries (part 1):';
       returnMessage[1] = '';
       returnMessage2[0] = 'Countries (part 2)';
@@ -618,19 +623,15 @@ async function covid19Args(myArgs, message) {
         }
       });
     } else {
-      let provinceListDB = [];
-      let provinceList = [];
-      let countryArray = [];
       countryArray = myArgs.slice(1, myArgs.length);
       let country = countryArray.join(' ');
-      let returnMessage = [];
       returnMessage[0] = `There is province data for these ${country} provinces: `;
       provinceListDB = await covid19List('listProvince', country);
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
       });
-      if (provinceListDB[0] === undefined) { return }
-      if (provinceListDB[0].province === null) {
+      //if (provinceListDB[0] === undefined) { return }
+      if (provinceListDB[0] === undefined || provinceListDB[0].province === null) {
         returnMessage[0] = `There is no listed province data for ${country}`;
       } else {
         returnMessage[1] = '';
@@ -660,7 +661,6 @@ async function covid19Args(myArgs, message) {
     }
   } else if (flag === 'data') {
     if (myArgs.length <= 1) {
-      let worldData = [];
       worldData = await covid19List('worldwideData', null);
       // This shows the structure of an object
       // console.log(JSON.stringify(worldDataDB, null, 4));
@@ -678,9 +678,6 @@ async function covid19Args(myArgs, message) {
       let queryArray = myArgs.slice(1, myArgs.length);
       let query = queryArray.join(' ');
       let localData = await covid19List('localData', query);
-      let provinceListDB = [];
-      let provinceList = [];
-      let provinceLower = [];
       provinceListDB = await covid19List('allProvince', null);
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
