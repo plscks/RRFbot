@@ -612,7 +612,6 @@ async function covid19Args(myArgs, message) {
           returnMessage[1] += `${countryList[j]}, `;
         }
       }
-      console.log(`COUNTRY LIST: ${countryList}`);
       message.channel.send({embed: {
           color: 3447003,
           title: "Countries with available COVID-19 DATA",
