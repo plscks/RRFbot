@@ -428,7 +428,7 @@ client.on('message', message => {
       var guildId = message.guild.name;
       var userName = message.member.displayName;
     }
-    console.log(`${userName} initiated !covid19 in ${guildId}.`);
+    console.log(`${userName} initiated !covid19 in ${guildId} with the arguments: ${args}`);
     covid19Args(args, message);
 	///////////////////
 	// COMMANDS LIST //
@@ -443,6 +443,7 @@ client.on('message', message => {
         { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
 				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
 				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
+        { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
       ]
     }
   	});
@@ -577,7 +578,6 @@ async function covid19Args(myArgs, message) {
   let flag = myArgs[0].toLowerCase();
   if (flag === 'list') {
     if (myArgs.length <= 1) {
-      // list countries
       let countryListDB = [];
       let countryList2 = [];
       let countryList = [];
@@ -618,7 +618,6 @@ async function covid19Args(myArgs, message) {
         }
       });
     } else {
-      // list provinces for given country
       let provinceListDB = [];
       let provinceList = [];
       let countryArray = [];
@@ -630,6 +629,7 @@ async function covid19Args(myArgs, message) {
       provinceListDB.forEach(e=>{
         provinceList.push(e.province);
       });
+      if (provinceListDB[0] === undefined) { return }
       if (provinceListDB[0].province === null) {
         returnMessage[0] = `There is no listed province data for ${country}`;
       } else {
@@ -643,7 +643,6 @@ async function covid19Args(myArgs, message) {
         }
       }
       if (returnMessage.length === 1) {
-        console.log(returnMessage);
         message.channel.send({embed: {
           color: 3447003,
           description: `${returnMessage[0]}`
@@ -661,12 +660,10 @@ async function covid19Args(myArgs, message) {
     }
   } else if (flag === 'data') {
     if (myArgs.length <= 1) {
-      //give worldwide data
       let worldData = [];
       worldData = await covid19List('worldwideData', null);
       // This shows the structure of an object
       // console.log(JSON.stringify(worldDataDB, null, 4));
-      console.log(`Worldwide Numbers=> Date: ${worldData[0].date}   Confirmed: ${worldData[0].confirmed}   Deaths: ${worldData[0].deaths}   Recovered: ${worldData[0].recovered}`);
       message.channel.send({embed: {
           color: 3447003,
           title: `Worldwide COVID-19 data as of ${worldData[0].date}:`,
@@ -693,7 +690,13 @@ async function covid19Args(myArgs, message) {
           provinceLower.push(provinceList[l].toLowerCase());
         }
       }
-      console.log(provinceLower);
+      if (localData[0].confirmed === null) {
+        message.channel.send({embed: {
+          color: 3447003,
+          description: `No data available for ${query}`
+        }});
+        return
+      }
       if (provinceLower.includes(query.toLowerCase())) {
         message.channel.send({embed: {
             color: 3447003,
