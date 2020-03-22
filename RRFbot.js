@@ -736,7 +736,7 @@ function covid19List(option, query) {
     sql = `SELECT DISTINCT(province) FROM all_data`;
   } else if (option === 'localData') {
     // country/province data
-    sql = `SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered, last_updated FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate AND (country like "${query}" OR province like "${query}")`;
+    sql = `SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered, last_updated, a.country AS country FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate AND (country like "${query}" OR province like "${query}")`;
   } else {
     // option === 'worldwideData'
     sql = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate';
