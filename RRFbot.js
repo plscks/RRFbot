@@ -692,7 +692,7 @@ async function covid19Args(myArgs, message) {
         }});
         return
       }
-      message.send(`localData[0].country: ${localData[0].country}`);
+      message.channel.send(`localData[0].country: ${localData[0].country}`);
       if (provinceLower.includes(query.toLowerCase())) {
         if (query.toLowerCase() === 'us') {
           message.channel.send({embed: {
