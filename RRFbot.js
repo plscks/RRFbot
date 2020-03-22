@@ -717,6 +717,8 @@ async function covid19Args(myArgs, message) {
           });
         }
       } else {
+        let test = typeof(localData[0].count);
+        message.channel.send(`${localData[0].count} is typeof is: ${test}`);
         if (localData[0].count >= 2) {
           message.channel.send({embed: {
               color: 3447003,
