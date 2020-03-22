@@ -692,7 +692,7 @@ async function covid19Args(myArgs, message) {
         }});
         return
       }
-      message.channel.send(`localData[0].country: ${localData[0].country}`);
+      message.channel.send(`localData[0].province.length: ${localData[0].province.length}`);
       if (provinceLower.includes(query.toLowerCase())) {
         if (query.toLowerCase() === 'us') {
           message.channel.send({embed: {
@@ -701,12 +701,21 @@ async function covid19Args(myArgs, message) {
               fields: [
                 { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
                 { name: `Deaths:`, value: `${localData[0].deaths}`},
-                { name: `Recovered:`, value: `${localData[0].recovered}`},
+                { name: `Recovered:`, value: `${localData[0].recovered}`}
               ]
             }
           });
-        } else if (query === 'nothing') {
-          console.log('spaceholder');
+        } else if (localData[0].country.toLowerCase() === 'us') {
+          message.channel.send({embed: {
+              color: 3447003,
+              title: `COVID-19 data for ${query} as of ${localData[0].date}:`,
+              fields: [
+                { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
+                { name: `Deaths:`, value: `${localData[0].deaths}`},
+                { name: `Last data point updated::`, value: `${localData[0].last_updated}`}
+              ]
+            }
+          });
         }
       } else {
         message.channel.send({embed: {
