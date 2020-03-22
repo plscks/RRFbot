@@ -715,6 +715,18 @@ async function covid19Args(myArgs, message) {
               ]
             }
           });
+        } else {
+          message.channel.send({embed: {
+              color: 3447003,
+              title: `COVID-19 data for ${query} as of ${localData[0].date}:`,
+              fields: [
+                { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
+                { name: `Deaths:`, value: `${localData[0].deaths}`},
+                { name: `Recovered:`, value: `${localData[0].recovered}`},
+                { name: `Last data point updated::`, value: `${localData[0].last_updated}`}
+              ]
+            }
+          });
         }
       } else {
         let test = typeof(localData[0].count);
