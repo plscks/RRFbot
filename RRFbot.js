@@ -711,7 +711,7 @@ async function covid19Args(myArgs, message) {
               fields: [
                 { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
                 { name: `Deaths:`, value: `${localData[0].deaths}`},
-                { name: `Last data point updated::`, value: `${localData[0].last_updated} UTC`}
+                { name: `Last data point updated:`, value: `${localData[0].last_updated} UTC`}
               ]
             }
           });
@@ -748,7 +748,7 @@ async function covid19Args(myArgs, message) {
                 { name: `Confimed Cases:`, value: `${localData[0].confirmed}`},
                 { name: `Deaths:`, value: `${localData[0].deaths}`},
                 { name: `Recovered:`, value: `${localData[0].recovered}`},
-                { name: `Last data point updated::`, value: `${localData[0].last_updated} UTC`}
+                { name: `Last data point updated:`, value: `${localData[0].last_updated} UTC`}
               ]
             }
           });
