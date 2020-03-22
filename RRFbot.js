@@ -705,8 +705,8 @@ async function covid19Args(myArgs, message) {
               ]
             }
           });
-        } else if () {
-
+        } else if (query === 'nothing') {
+          console.log('spaceholder');
         }
       } else {
         message.channel.send({embed: {
