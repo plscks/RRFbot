@@ -98,20 +98,20 @@ def databasePush(data):
 
     print('~Loading data to worldwide database.')
     for index, row in data.iterrows():
-        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?)'
-        wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'])
+        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['FIPS'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(wwQuery, wwParams)
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
-        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?)'
-        usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'])
+        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(usQuery, usParams)
 
     print('~Loading data into local database.')
     for index, row in local.iterrows():
-        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?)'
-        localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'])
+        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(localQuery, localParams)
 
     conn.commit()
