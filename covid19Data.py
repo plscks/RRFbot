@@ -104,13 +104,13 @@ def databasePush(data):
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
-        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(usQuery, usParams)
 
     print('~Loading data into local database.')
     for index, row in local.iterrows():
-        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?)'
         localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(localQuery, localParams)
 
