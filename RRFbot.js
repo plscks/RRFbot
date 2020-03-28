@@ -565,10 +565,9 @@ async function covid19Args(myArgs, message) {
   let provinceList = [];
   let countryArray = [];
   let countryListDB = [];
-  let countryList2 = [];
   let countryList = [];
   let returnMessage = [];
-  let returnMessage2 = [];
+  let countryListShort = [];
   if (myArgs[0] === undefined || myArgs[0] === null) {
     message.channel.send({embed: {
         color: 3447003,
@@ -587,39 +586,21 @@ async function covid19Args(myArgs, message) {
   let flag = myArgs[0].toLowerCase();
   if (flag === 'list') {
     if (myArgs.length <= 1) {
-      returnMessage[0] = 'Countries (part 1):';
-      returnMessage[1] = '';
-      returnMessage2[0] = 'Countries (part 2)';
-      returnMessage2[1] = '';
       countryListDB = await covid19List('listCountry', null);
       countryListDB.forEach(e=>{
-        countryList2.push(e.country);
+        countryList.push(e.country);
       });
-      let halfList = Math.ceil(countryList2.length / 2);
-      countryList = countryList2.splice(0,halfList);
-      for (var k = 0; k < countryList2.length; k++) {
-        if (k === countryList2.length - 1) {
-          returnMessage2[1] += `${countryList2[k]}.`
-        } else {
-          returnMessage2[1] += `${countryList2[k]}, `;
-        }
+      countryListShort = listShorten(countryList, 1024);
+      const embed = new Discord.RichEmbed()
+        .setColor('3447003');
+        .setTitle('Countries with available COVID-19 DATA');
+      for (var a = 0; a < countryListShort.length; a++) {
+        var part = a + 1;
+        embed.addFields(
+          { name: `Countries (part ${part})`, value: `${countryListShort[a]}` }
+        );
       }
-      for (var j = 0; j < countryList.length; j++) {
-        if (j === countryList.length - 1) {
-          returnMessage[1] += `${countryList[j]}.`
-        } else {
-          returnMessage[1] += `${countryList[j]}, `;
-        }
-      }
-      message.channel.send({embed: {
-          color: 3447003,
-          title: "Countries with available COVID-19 DATA",
-          fields: [
-            { name: `${returnMessage[0]}`, value: `${returnMessage[1]}`},
-            { name: `${returnMessage2[0]}`, value: `${returnMessage2[1]}`}
-          ]
-        }
-      });
+      message.channel.send(embed);
     } else {
       countryArray = myArgs.slice(1, myArgs.length);
       let country = countryArray.join(' ');
@@ -786,6 +767,38 @@ function covid19List(option, query) {
       resolve(data);
     });
   });
+}
+///////////////////////////////
+// ARRAY SHORTENING FUNCTION //
+///////////////////////////////
+function listShorten(list, maxLength) {
+  let listLength = list.length;
+  let outList = [];
+  let finalList = [];
+  let tempList = [];
+  for (var i = 0; i < list.length; i++) {
+    tempList.push(list[i]);
+    count = charCount(tempList);
+    if (count >= maxLength) {
+      tempList.pop();
+      outList.push(tempList);
+      tempList = [];
+      tempList.push(list[i]);
+    }
+  }
+  outList.push(tempList);
+  for (var k = 0; k < outList.length; k++) {
+    outList[k] = outList[k].join(', ');
+  }
+  return outList
+}
+///////////////////////////////////////////
+// RETURNS NUMBER OF CHARACTERS IN ARRAY //
+///////////////////////////////////////////
+function charCount(inList) {
+  let inListString = inList.join(", ");
+  let inListCharCount = inListString.length;
+  return inListCharCount
 }
 ////////////////////////////
 // FACTION LIST ARG PARSE //

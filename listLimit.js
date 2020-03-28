@@ -1,4 +1,4 @@
-// Split list into multiple arrays of no more than 20 characters
+// Split list into multiple arrays of no more than X characters
 
 // Initial list
 let list = ["pants", "totally", "random", "words", "in", "this", "pants", "list", "gotta", "be", "enough", "for testing", "let us see", "what happens", "when", "I", "add", "more", "items", "to", "the", "initial", "list"];
