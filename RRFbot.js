@@ -591,7 +591,7 @@ async function covid19Args(myArgs, message) {
         countryList.push(e.country);
       });
       countryListShort = listShorten(countryList, 1024);
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
       embed.setColor('3447003');
       embed.setTitle('Countries with available COVID-19 DATA');
       for (var a = 0; a < countryListShort.length; a++) {
