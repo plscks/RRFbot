@@ -151,7 +151,7 @@ else {
 //////////////////////////
 client.once('ready', () => {
 console.log('Ready!');
-client.user.setActivity('!help for commands and usage.');
+client.user.setActivity('!help for commands.');
 });
 client.login(token);
 ////////////////
