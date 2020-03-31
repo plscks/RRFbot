@@ -151,12 +151,13 @@ else {
 //////////////////////////
 client.once('ready', () => {
 console.log('Ready!');
+client.user.setActivity('!help for commands and usage.');
 });
 client.login(token);
 ////////////////
 // SET STATUS //
 ////////////////
-client.user.setActivity('!help for commands and usage.');
+
 ///////////////////
 // BOT FUNCTIONS //
 /////////////////////////////
