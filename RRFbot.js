@@ -156,7 +156,7 @@ client.login(token);
 ////////////////
 // SET STATUS //
 ////////////////
-client.setActivity('!help for commands and usage.');
+client.user.setActivity('!help for commands and usage.');
 ///////////////////
 // BOT FUNCTIONS //
 /////////////////////////////
