@@ -5,3 +5,4 @@ nohup.out
 debug.log
 package-lock.json
 npm-debug.log
+testScript.js
