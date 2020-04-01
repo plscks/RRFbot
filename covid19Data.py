@@ -19,6 +19,8 @@ import adafruit_ssd1306
 
 def dataGrab():
     now = datetime.datetime.utcnow()
+    print(f'{now}')
+    print(f'{now.month:02d}-{now.day:02d}-{now.year}')
     csvFormat = f'{now.month:02d}-{(now.day-1):02d}-{now.year}.csv'
     url = f'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{csvFormat}'
     # Legacy format
