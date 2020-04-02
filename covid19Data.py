@@ -20,8 +20,7 @@ import adafruit_ssd1306
 def dataGrab():
     ## need to include an if that will roll the month back and set to the last day of previous if it is the first.
     now = datetime.datetime.utcnow()
-    #csvFormat = f'{now.month:02d}-.{(now.day-1):02d}-{now.year}.csv'
-    csvFormat = '04-01-2020.csv'
+    csvFormat = f'{now.month:02d}-.{(now.day-1):02d}-{now.year}.csv'
     url = f'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{csvFormat}'
     # Legacy format
     # df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Confirmed', 'Deaths', 'Recovered', 'Latitude', 'Longitude'], skiprows=1)
