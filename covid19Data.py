@@ -25,6 +25,7 @@ def dataGrab():
     # Legacy format
     # df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Confirmed', 'Deaths', 'Recovered', 'Latitude', 'Longitude'], skiprows=1)
     # New format as of 2020-03-24
+    console.log(f'URL: {url}')
     df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
     return df
 
