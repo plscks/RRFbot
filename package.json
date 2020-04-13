@@ -29,6 +29,7 @@
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",
     "inquirer": "^7.1.0",
+    "neo-blessed": "^0.2.0",
     "node-dijkstra": "^2.5.0",
     "prompt-checkbox": "^2.2.0",
     "shelljs": "^0.8.3",
