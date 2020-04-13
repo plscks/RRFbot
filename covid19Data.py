@@ -104,19 +104,19 @@ def databasePush(data):
 
     print('~Loading data to worldwide database.')
     for index, row in data.iterrows():
-        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid, ios3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['FIPS'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'], row['ISO3'])
         c.execute(wwQuery, wwParams)
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
-        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
         c.execute(usQuery, usParams)
 
     print('~Loading data into local database.')
     for index, row in local.iterrows():
-        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
         c.execute(localQuery, localParams)
 
