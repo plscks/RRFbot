@@ -168,11 +168,11 @@ client.on('guildMemberAdd', member => {
   var guildName = member.guild.name;
   if (guildId === '481612600149540875') {
     console.log(`New member ${member} has joined ${guildName}!`);
-    var leader = member.guild.roles.find(role => role.name === "Leader");
+    var leader = message.guild.roles.find(role => role.name === "Leader");
     member.guild.channels.get('481613088794083357').send('Welcome to the RRF! <@&' + leader + '> will be with you shortly to get you access.');
   } else if (guildId === '564993020919808000') {
     console.log(`New member ${member} has joined ${guildName}!`);
-    var srScientist = member.guild.roles.find(role => role.name === "Sr Scientist");
+    var srScientist = message.guild.roles.find(role => role.name === "Sr Scientist");
     member.guild.channels.get('565313168482631680').send('Welcome to USF! A <@&' + srScientist + '> will be with you shortly to get you access.');
   } else {
     console.log(`New member ${member} has joined ${guildName}!`);
