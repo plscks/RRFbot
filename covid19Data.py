@@ -26,11 +26,11 @@ def dataGrab():
     # df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Confirmed', 'Deaths', 'Recovered', 'Latitude', 'Longitude'], skiprows=1)
     # New format as of 2020-03-24
     print(f'URL: {url}')
-    # Legacy format
-    # df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
+    # Legacy format - rolled back 2020-04-14
+     df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
     # New format as of 2020-04-13
     # Province_State	Country_Region	Last_Update	Lat	Long_	Confirmed	Deaths	Recovered	Active	Admin2	FIPS	Combined_Key	Incident_Rate	People_Tested	People_Hospitalized	UID	ISO3
-    df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'County', 'FIPS', 'CombinedKeys', 'IncidentRate', 'NumberTested', 'NumberHospitalized', 'UID', 'ISO3'], skiprows=1)
+    #df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'County', 'FIPS', 'CombinedKeys', 'IncidentRate', 'NumberTested', 'NumberHospitalized', 'UID', 'ISO3'], skiprows=1)
     return df
 
 def parseData(region, df):
@@ -104,20 +104,29 @@ def databasePush(data):
 
     print('~Loading data to worldwide database.')
     for index, row in data.iterrows():
-        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid, iso3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['FIPS'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'], row['ISO3'])
+        # format change from 2020-04-13
+        # wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid, iso3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        # wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['FIPS'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'], row['ISO3'])
+        wwQuery = 'INSERT INTO all_data (province, country, last_updated, confirmed, deaths, recovered, fips, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        wwParams = (row['Province'], row['Country'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['FIPS'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(wwQuery, wwParams)
 
     print('~Loading data into US database.')
     for index, row in us.iterrows():
-        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
+        # format change from 2020-04-13
+        # usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        # usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
+        usQuery = 'INSERT INTO us_data (state, last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        usParams = (row['Province'], row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(usQuery, usParams)
 
     print('~Loading data into local database.')
     for index, row in local.iterrows():
-        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
+        # format change from 2020-04-13
+        # localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys, incident_rate, number_tested, number_hospitalized, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        # localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'], row['IncidentRate'], row['NumberTested'], row['NumberHospitalized'], row['UID'])
+        localQuery = 'INSERT INTO il_data (last_updated, confirmed, deaths, recovered, county, active, combined_keys) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        localParams = (row['Updated'], row['Confirmed'], row['Deaths'], row['Recovered'], row['County'], row['Active'], row['CombinedKeys'])
         c.execute(localQuery, localParams)
 
     conn.commit()
