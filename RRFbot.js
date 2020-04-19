@@ -550,6 +550,7 @@ async function nextRaid(message, faction) {
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
     var usedChannel = message.channel.fetch();
     console.log(`usedChannel: ${usedChannel}`);
+    console.log(JSON.stringify(usedChannel, null, 4));
   }
   console.log('Checking for upcomming raids...');
   const timeNow = Date.now();
@@ -565,7 +566,7 @@ async function nextRaid(message, faction) {
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     var raidTimeArray = await timeReturn(timeNow, raidTime);
-    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time ${item['raid_message']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}"\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
     console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
   });
 }
@@ -687,6 +688,7 @@ async function tickCheck() {
       var alertChannel = '699739075585769592';
       var role = guild.roles.cache.find(role => role.name === "RRF");
     }
+    console.log(JSON.stringify(guild, null, 4));
     var leaderId = guild.members.cache.find(user => user.displayName === item['raid_leader']);
     var raidDate = item['scheduled_date'];
     var raidTimeBase = item['scheduled_time'];
