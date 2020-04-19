@@ -552,14 +552,8 @@ async function nextRaid(message, faction) {
   }
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
     var usedChannel = await message.channel.fetch();
-    console.log(JSON.stringify(usedChannel, null, 4));
-    console.log(`usedChannel['id']: ${usedChannel['id']}`);
     if (usedChannel['id'] === '528780223898976273') { alertChannel = '528780223898976273' }; // RRF allow use in war-room by leaders
     if (usedChannel['id'] === '612159579001847844') { alertChannel = '612159579001847844' }; // USF allow use in Sr Scientists
-    if (usedChannel['id'] === '701456191368462336') { console.log('without symbols worked') };
-    if (usedChannel['id'] === '<#701456191368462336>') { console.log('with symbols worked') };
-    console.log(`usedChannel: ${usedChannel[0]['id']}`);
-    console.log(JSON.stringify(usedChannel, null, 4));
   }
   console.log('Checking for upcomming raids...');
   const timeNow = Date.now();
