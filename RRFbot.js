@@ -493,7 +493,13 @@ client.on('message', message => {
       message.reply('you cannot use this command in DM!');
       return
     } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
-      message.reply('Running commands!');
+      const argLength = args.length;
+      if (argLength != 1 || ifNaN(args[0]) === true) {
+        message.reply('you can cancel a raid by record number "-cancelRaid [record number]"');
+      } else {
+        message.reply(`canceling raid with record number ${args[0]}`);
+        cancelRaid(args[0]);
+      }
     } else {
       message.reply('you do not have permissions to use this command');
       return
