@@ -541,7 +541,15 @@ client.on('message', message => {
 /////////////////////
 async function nextRaid(message, faction) {
   if (faction === 'H-Fam Gaming') {
-    var alertChannel = '699739075585769592';
+    var alertChannel = '699739075585769592'; // test channel
+  } else if (faction === 'Ridleybank Resistance Front - Nexus Clash') {
+    var alertChannel = '545312880162111513'; // test channel
+  } else if (faction === 'University of Science Friction') {
+    var alertChannel = '701456191368462336'; // test channel
+  }
+  if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+    var usedChannel = message.channel.fetch();
+    console.log(`usedChannel: ${usedChannel}`);
   }
   console.log('Checking for upcomming raids...');
   const timeNow = Date.now();
