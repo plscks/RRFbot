@@ -570,8 +570,13 @@ async function nextRaid(message, faction) {
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     var raidTimeArray = await timeReturn(timeNow, raidTime);
-    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}"\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
-    console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
+    if (alertChannel === '696854575541518406') {
+      client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}" record number ${item['record_no']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+      console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
+    } else {
+      client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}"\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+      console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
+    }
   });
 }
 ///////////////////
@@ -716,16 +721,16 @@ async function tickCheck() {
       var seconds = raidTimeArray[0];
       if (seconds >= 86380 && seconds <= 86420) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 35980 && seconds <= 36020) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 14380 && seconds <= 14420) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 1} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 1780 && seconds <= 1820) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[3] + 1} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[3] + 1} minutes: ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[3] + 2} minutes: ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 880 && seconds <= 920) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: NEXT TICK!! Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
         client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid NEXT TICK!! ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
