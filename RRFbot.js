@@ -689,14 +689,22 @@ async function tickCheck() {
   if (dbPull === 'No upcoming raid scheduled') {
     console.log(`${dbPull}`);
   }
-  dbPull.forEach(async (item) => {
+  dbPull.forEach((item) => {
     if (item['raiding_faction'] === 'H-Fam Gaming') {
-      var guild = await client.guilds.cache.get('690617394539921560');
-      var alertChannel = '699739075585769592';
+      var guild = client.guilds.cache.get('690617394539921560');
+      var alertChannel = '699739075585769592'; // test channel
       var role = guild.roles.cache.find(role => role.name === "RRF");
+    } else if (item['raiding_faction'] === 'Ridleybank Resistance Front - Nexus Clash') {
+      var guild = client.guilds.cache.get('481612600149540875');
+      var alertChannel = '545312880162111513'; // test channel
+      //var alertChannel = '481612600149540881'; // RRF - general
+      var role = guild.roles.cache.find(role => role.name === "RRF");
+    } else if (item['raiding_faction'] === 'University of Science Friction') {
+      var guild = client.guilds.cache.get('564993020919808000');
+      var alertChannel = '701456191368462336'; // test channel
+      //var alertChannel = '564993020919808002'; // USF - the lab
+      var role = guild.roles.cache.find(role => role.name === "Scientists");
     }
-    console.log('guild:');
-    console.log(JSON.stringify(guild, null, 4));
     var leaderId = guild.members.cache.find(user => user.displayName === item['raid_leader']);
     var raidDate = item['scheduled_date'];
     var raidTimeBase = item['scheduled_time'];
