@@ -554,6 +554,7 @@ async function nextRaid(message, faction) {
     var usedChannel = await message.channel.fetch();
     if (usedChannel['id'] === '528780223898976273') { alertChannel = '528780223898976273' }; // RRF allow use in war-room by leaders
     if (usedChannel['id'] === '612159579001847844') { alertChannel = '612159579001847844' }; // USF allow use in Sr Scientists
+    if (usedChannel['id'] === '696854575541518406') { alertChannel = '696854575541518406' }; // HFG allow use in jeffs channel
   }
   console.log('Checking for upcomming raids...');
   const timeNow = Date.now();
