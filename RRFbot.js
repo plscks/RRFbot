@@ -552,7 +552,6 @@ async function nextRaid(message, faction) {
   }
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
     var usedChannel = await message.channel.fetch();
-    console.log(`usedChannel: ${usedChannel[0]['id']}`);
     console.log(JSON.stringify(usedChannel, null, 4));
     if (usedChannel[0]['id'] === '528780223898976273') { alertChannel = '528780223898976273' }; // RRF allow use in war-room by leaders
     if (usedChannel[0]['id'] === '612159579001847844') { alertChannel = '612159579001847844' }; // USF allow use in Sr Scientists
