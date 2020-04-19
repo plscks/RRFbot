@@ -495,7 +495,7 @@ client.on('message', message => {
     } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
       const argLength = args.length;
       if (argLength != 1 || ifNaN(args[0]) === true) {
-        message.reply('you can cancel a raid by record number "-cancelRaid [record number]"');
+        message.reply('you can cancel a raid by record number "!cancelRaid [record number]"');
       } else {
         message.reply(`canceling raid with record number ${args[0]}`);
         cancelRaid(args[0]);
@@ -524,19 +524,53 @@ client.on('message', message => {
 	// COMMANDS LIST //
 	///////////////////
   } else if (command === 'help') {
-  	message.channel.send({embed: {
-      color: 3447003,
-      title: "Available Commands:",
-      fields: [
-  			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
-        { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only works in select channels.", inline: true},
-        { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
-				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
-				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
-        { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
-      ]
+    if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      message.channel.send({embed: {
+        color: 3447003,
+        title: "Available Commands:",
+        fields: [
+    			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
+          { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only works in select channels.", inline: true},
+          { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
+  				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
+  				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
+          { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+          { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
+          { name: "!addRaid", value: "Schedule a raid with: !addRaid [date] [time in UTC] [optional message]", inline: true},
+          { name: "!cancelRaid", value: "Cancel a raid by record number with: !cancelRaid [record number]", inline: true},
+        ]
+      }
+    	});
+    } else if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
+    	message.channel.send({embed: {
+        color: 3447003,
+        title: "Available Commands:",
+        fields: [
+    			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
+          { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only works in select channels.", inline: true},
+          { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
+  				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
+  				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
+          { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+          { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
+        ]
+      }
+    	});
+    } else {
+      message.channel.send({embed: {
+        color: 3447003,
+        title: "Available Commands:",
+        fields: [
+    			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
+          { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only works in select channels.", inline: true},
+          { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
+  				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
+  				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
+          { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+        ]
+      }
+    	});
     }
-  	});
   }
 });
 ////////////////////
