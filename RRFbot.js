@@ -542,14 +542,19 @@ client.on('message', message => {
 async function nextRaid(message, faction) {
   if (faction === 'H-Fam Gaming') {
     var alertChannel = '699739075585769592'; // test channel
+    //var alertChannel = '696854575541518406'; // Jeff's channel
   } else if (faction === 'Ridleybank Resistance Front - Nexus Clash') {
     var alertChannel = '545312880162111513'; // test channel
+    //var alertChannel = '481612600149540881'; // RRF - general
   } else if (faction === 'University of Science Friction') {
     var alertChannel = '701456191368462336'; // test channel
+    //var alertChannel = '564993020919808002'; // USF - the lab
   }
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
     var usedChannel = await message.channel.fetch();
-    console.log(`usedChannel: ${usedChannel}`);
+    if (usedChannel[0]['id'] === '528780223898976273') { alertChannel = '528780223898976273' }; // RRF allow use in war-room by leaders
+    if (usedChannel[0]['id'] === '612159579001847844') { alertChannel = '612159579001847844' }; // USF allow use in Sr Scientists
+    console.log(`usedChannel: ${usedChannel[0]['id']}`);
     console.log(JSON.stringify(usedChannel, null, 4));
   }
   console.log('Checking for upcomming raids...');
@@ -682,12 +687,13 @@ async function tickCheck() {
   if (dbPull === 'No upcoming raid scheduled') {
     console.log(`${dbPull}`);
   }
-  dbPull.forEach((item) => {
+  dbPull.forEach(async (item) => {
     if (item['raiding_faction'] === 'H-Fam Gaming') {
-      var guild = client.guilds.cache.get('690617394539921560');
+      var guild = await client.guilds.cache.get('690617394539921560');
       var alertChannel = '699739075585769592';
       var role = guild.roles.cache.find(role => role.name === "RRF");
     }
+    console.log('guild:');
     console.log(JSON.stringify(guild, null, 4));
     var leaderId = guild.members.cache.find(user => user.displayName === item['raid_leader']);
     var raidDate = item['scheduled_date'];
