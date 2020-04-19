@@ -554,8 +554,8 @@ async function nextRaid(message, faction) {
     var usedChannel = await message.channel.fetch();
     if (usedChannel[0]['id'] === '528780223898976273') { alertChannel = '528780223898976273' }; // RRF allow use in war-room by leaders
     if (usedChannel[0]['id'] === '612159579001847844') { alertChannel = '612159579001847844' }; // USF allow use in Sr Scientists
-    if (usedChannel[0]['id'] === '701456191368462336') { console.log('without symbols worked');
-    if (usedChannel[0]['id'] === '<#701456191368462336>') { console.log('with symbols worked');
+    if (usedChannel[0]['id'] === '701456191368462336') { console.log('without symbols worked') };
+    if (usedChannel[0]['id'] === '<#701456191368462336>') { console.log('with symbols worked') };
     console.log(`usedChannel: ${usedChannel[0]['id']}`);
     console.log(JSON.stringify(usedChannel, null, 4));
   }
