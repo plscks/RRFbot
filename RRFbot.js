@@ -29,6 +29,7 @@ const sqlite3 = require('sqlite3').verbose();
 const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
+const CronJob = require('cron').CronJob;
 /////////////////////////
 // CONNECT TO DATABASE //
 /////////////////////////
@@ -154,10 +155,14 @@ console.log('Ready!');
 client.user.setActivity('!help for commands.');
 });
 client.login(token);
-////////////////
-// SET STATUS //
-////////////////
-
+///////////////////
+// CRONJOB STUFF //
+///////////////////
+// every 15 minutes: '*/15 * * * *'
+const job = new CronJob('*/15 * * * *', function() {
+  tickCheck();
+}, null, true, 'America/Chicago');
+job.start();
 ///////////////////
 // BOT FUNCTIONS //
 /////////////////////////////
@@ -212,12 +217,16 @@ client.on('message', message => {
   // SM TIMER INIT //
   ///////////////////
 	} else if (command === 'sm') {
+    if (message.guild === undefined || message.guild === null) {
+      message.reply('You cannot use this function through DM!');
+      return
+    }
     var guildName = message.guild.name;
     var smUser = message.member.displayName;
     console.log(`${smUser} initiated !sm in ${guildName}.`);
     //if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
     //console.log(`Member role: ${message.member.roles}`);
-      if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
+    if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
       if (args[0] >= 0 && args[0] <= 65) {
         smTimerFix(message, args[0]);
       } else {
@@ -435,6 +444,76 @@ client.on('message', message => {
     }
     console.log(`${userName} initiated !covid19 in ${guildId} with the arguments: ${args}`);
     covid19Args(args, message);
+  ////////////////////
+  // RAID SCHEDULER //
+  ////////////////////
+  //////////////
+  // ADD RAID //
+  //////////////
+  } else if (command === 'addraid') {
+    if (message.guild === undefined || message.guild === null) {
+      message.reply('you cannot use this command in DM!');
+      return
+    } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      const leader = message.member.displayName;
+      const faction = message.guild.name;
+      const argLength = args.length;
+      const argString = args.join(' ');
+      console.log(`${leader} in ${faction} tried to use command !addraid ${argString}`);
+      if (argLength < 2 ) {
+        message.reply('you can add a scheduled raid with: "!addRaid [date] [time in UTC] [optional message]"');
+        return
+      } else if ( argLength === 2 ) {
+        var raidMess = null;
+      } else {
+        const messageArray = args.slice(2, argLength);
+        var raidMess = messageArray.join(' ');
+      }
+      const dateTest = args[0];
+      const timeTest = args[1];
+      if (!isValidDate(dateTest)) {
+        message.reply('please use a date in "YYYY-MM-DD" format.');
+        return
+      } else if (!isValidTime(timeTest)) {
+        message.reply('please usa a time in "HHMM" or "HH:MM" format.');
+        return
+      } else {
+        const date = isValidDate(dateTest);
+        const time = isValidTime(timeTest);
+        addRaid(date, time, raidMess, leader, faction, message);
+      }
+    } else {
+      message.reply('you do not have permissions to use this command');
+    }
+  /////////////////
+  // CANCEL RAID //
+  /////////////////
+  } else if (command === 'cancelraid') {
+    if (message.guild === undefined || message.guild === null) {
+      message.reply('you cannot use this command in DM!');
+      return
+    } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      message.reply('Running commands!');
+    } else {
+      message.reply('you do not have permissions to use this command');
+      return
+    }
+  ///////////////
+  // NEXT RAID //
+  ///////////////
+  } else if (command === 'nextraid') {
+    if (message.guild === undefined || message.guild === null) {
+      message.reply('you cannot use this command in DM!');
+      return
+    } else if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
+      const faction = message.guild.name;
+      const user = message.member.displayName;
+      console.log(`${user} in ${faction} requested the next raid information.`);
+      nextRaid(message, faction);
+    } else {
+      message.reply('you do not have permissions to use this command');
+      return
+    }
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
@@ -454,6 +533,256 @@ client.on('message', message => {
   	});
   }
 });
+////////////////////
+// RAID SCHEDULER //
+////////////////////
+/////////////////////
+// NEXT RAID CHECK //
+/////////////////////
+async function nextRaid(message, faction) {
+  if (faction === 'H-Fam Gaming') {
+    var alertChannel = '699739075585769592';
+  }
+  console.log('Checking for upcomming raids...');
+  const timeNow = Date.now();
+  const dbPull = await getRecord('active', 1, faction);
+  if (dbPull === 'No upcoming raid scheduled') {
+    console.log(`${dbPull}`);
+    client.channels.cache.get(`${alertChannel}`).send(`${dbPull}`);
+  }
+  dbPull.forEach(async (item) => {
+    var raidDate = item['scheduled_date'];
+    var raidTimeBase = item['scheduled_time'];
+    var dateArray = raidDate.split('-');
+    var timeArray = raidTimeBase.split(':');
+    var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
+    var raidTimeArray = await timeReturn(timeNow, raidTime);
+    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time ${item['raid_message']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+    console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
+  });
+}
+///////////////////
+// SCHEDULE RAID //
+///////////////////
+// If there but active = 0 set to 1 and insert new message
+function addRaid(date, time, raidMess, leader, faction, message) {
+  let sqlCHECK = `SELECT * from raid_schedule where scheduled_date = '${date}' AND scheduled_time = '${time}'`;
+  if (raidMess === null) {
+    let sqlINSERT = `INSERT INTO raid_schedule(raid_leader, raiding_faction, 	scheduled_date, scheduled_time) VALUES("${leader}", "${faction}", "${date}", "${time}")`
+    db.get(sqlCHECK, async (err, rows) => {
+      if (err) {
+        return console.log(err.message);
+      }
+      if (rows === undefined) {
+        db.run(sqlINSERT);
+        const data = await getLastInsert();
+        const record_no = data[0]['last_insert_rowid()'];
+        message.channel.send(`${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+      } else {
+        message.reply(`there is already a raid scheduled for ${date} at ${time}.`)
+        console.log(`There is already a raid scheduled for ${date} at ${time}.`);
+      }
+    });
+  } else {
+    let sqlINSERT = `INSERT INTO raid_schedule(raid_leader, raiding_faction, scheduled_date, scheduled_time, raid_message) VALUES("${leader}", "${faction}", "${date}", "${time}", "${raidMess}")`
+    db.get(sqlCHECK, async (err, rows) => {
+      if (err) {
+        return console.log(err.message);
+      }
+      if (rows === undefined) {
+        db.run(sqlINSERT);
+        const data = await getLastInsert();
+        const record_no = data[0]['last_insert_rowid()'];
+        message.channel.send(`${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+      } else {
+        message.reply(`there is already a raid scheduled for ${date} at ${time}.`)
+        console.log(`There is already a raid scheduled for ${date} at ${time}.`);
+      }
+    });
+  }
+}
+////////////////
+// GET RECORD //
+////////////////
+function getRecord(column, value, faction) {
+  var data = [];
+  if (faction === 'any') {
+    var sql = `SELECT * FROM "raid_schedule" WHERE ${column} = ${value} ORDER BY record_no DESC`;
+  } else {
+    var sql = `SELECT * FROM "raid_schedule" WHERE ${column} = ${value} AND raiding_faction = "${faction}" ORDER BY scheduled_date ASC, scheduled_time ASC LIMIT 2`;
+  }
+  return new Promise(resolve => {
+        db.all(sql, (err,rows) => {
+            if(err) {
+                return console.error(err.message);
+            }
+            rows.forEach((row)=>{
+                data.push(row);
+            });
+            resolve(data);
+        });
+    });
+    if (data === undefined) {
+      return 'No upcoming raid scheduled';
+    } else {
+      return data
+    }
+}
+////////////////////////
+// GET LAST INSERT ID //
+////////////////////////
+function getLastInsert() {
+  var data = [];
+  return new Promise(resolve => {
+        db.all('SELECT last_insert_rowid() FROM "raid_schedule"', (err,rows) => {
+            if(err) {
+                return console.error(err.message);
+            }
+            rows.forEach((row)=>{
+                data.push(row);
+            });
+            resolve(data);
+        });
+    });
+    return data
+}
+///////////////////////////
+// CANCEL SCHEDULED RAID //
+///////////////////////////
+function cancelRaid(record_no) {
+  const sql = `UPDATE "raid_schedule" SET active = 0 WHERE record_no = ${record_no}`;
+  db.run(sql);
+}
+//////////////////////////////
+// RAID REMINDER TICK CHECK //
+//////////////////////////////
+async function tickCheck() {
+  // Sara04/09/2020
+  // @plscks perhaps a !scheduleraid function would be handy?
+  // Have it send reminders 24 hours, 10 hours, 4 hours, 30 minutes in advance?
+  // one day = 86400 seconds
+  // 10 hours = 36000 seconds
+  // 4 hours = 14400 seconds
+  // 30 minutes = 1800 seconds
+  // 15 minutes = 900 seconds
+  console.log('Checking for upcomming raids...');
+  const timeNow = Date.now();
+  const dbPull = await getRecord('active', 1, 'any');
+  if (dbPull === 'No upcoming raid scheduled') {
+    console.log(`${dbPull}`);
+  }
+  dbPull.forEach((item) => {
+    if (item['raiding_faction'] === 'H-Fam Gaming') {
+      var guild = client.guilds.cache.get('690617394539921560');
+      var alertChannel = '699739075585769592';
+      var role = guild.roles.cache.find(role => role.name === "RRF");
+    }
+    var leaderId = guild.members.cache.find(user => user.displayName === item['raid_leader']);
+    var raidDate = item['scheduled_date'];
+    var raidTimeBase = item['scheduled_time'];
+    var dateArray = raidDate.split('-');
+    var timeArray = raidTimeBase.split(':');
+    var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
+    if (raidTime < timeNow) {
+      console.log(`Canceling passed raid set for ${raidDate} ${raidTimeBase}, record number: ${item['record_no']}`);
+      cancelRaid(item['record_no']);
+    } else {
+      var raidTimeArray = timeReturn(timeNow, raidTime);
+      var seconds = raidTimeArray[0];
+      if (seconds >= 86380 && seconds <= 86420) {
+        console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+      } else if (seconds >= 35980 && seconds <= 36020) {
+        console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+      } else if (seconds >= 14380 && seconds <= 14420) {
+        console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 1} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+      } else if (seconds >= 1780 && seconds <= 1820) {
+        console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[3] + 1} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[3] + 1} minutes: ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+      } else if (seconds >= 880 && seconds <= 920) {
+        console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: NEXT TICK!! Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid NEXT TICK!! ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
+      }
+    }
+  });
+}
+////////////////////////////
+// RETURN TIME UNTIL RAID //
+////////////////////////////
+function timeReturn(timeNow, raidTime) {
+  const timeReturn = [];
+  // get total seconds between the times
+  var delta = Math.abs(raidTime - timeNow) / 1000;
+  timeReturn.push(delta);
+  // calculate (and subtract) whole days
+  var days = Math.floor(delta / 86400);
+  timeReturn.push(days);
+  delta -= days * 86400;
+  // calculate (and subtract) whole hours
+  var hours = Math.floor(delta / 3600) % 24;
+  timeReturn.push(hours);
+  delta -= hours * 3600;
+  // calculate (and subtract) whole minutes
+  var minutes = Math.floor(delta / 60) % 60;
+  timeReturn.push(minutes);
+  return timeReturn
+}
+//////////////////////////////////////
+// VARIFY DATE IS YYYY-MM-DD FORMAT //
+//////////////////////////////////////
+function isValidDate(dateString) {
+  if(!/^\d{4}-\d{1}|\d{2}-\d{1}|\d{2}$/.test(dateString))
+    return false
+
+  const parts = dateString.split("-");
+  const day = ('0' + parseInt(parts[2], 10)).slice(-2);
+  const month = ('0' + parseInt(parts[1], 10)).slice(-2);
+  const year = parseInt(parts[0], 10);
+
+  if(year < 1000 || year > 3000 || month == 0 || month > 12)
+    return false
+
+  const monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+  if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    monthLength[1] = 29;
+
+  if (day > 0 && day <= monthLength[month - 1]) {
+    const output = `${year}-${month}-${day}`;
+    return output
+  } else {
+    return false
+  }
+}
+/////////////////////////////////
+// VERIFY TIME IS HH:MM FORMAT //
+/////////////////////////////////
+function isValidTime(timeString) {
+  if(!/^\d{2}:\d{2}|\d{4}$/.test(timeString))
+    return false;
+
+  if (timeString.indexOf(':') > -1) {
+    var parts = timeString.split(":");
+    var hour = parts[0];
+    var minute = parts[1];
+  } else {
+    var hour = timeString.slice(0,2);
+    var minute = timeString.slice(2,4);
+  }
+  if (hour > 23 || minute > 59)
+    return false;
+
+  if (hour > -1 && minute > -1) {
+    const output = `${hour}:${minute}`;
+    return output
+  } else {
+    return false
+  }
+}
 ////////////////////////////
 // SORCERER'S MIGHT TIMER //
 ////////////////////////////

@@ -26,6 +26,7 @@
   "dependencies": {
     "blessed": "^0.1.81",
     "bufferutil": "^4.0.1",
+    "cron": "^1.8.2",
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",
     "inquirer": "^7.1.0",
