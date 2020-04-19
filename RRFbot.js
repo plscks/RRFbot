@@ -548,7 +548,7 @@ async function nextRaid(message, faction) {
     var alertChannel = '701456191368462336'; // test channel
   }
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
-    var usedChannel = message.channel.fetch();
+    var usedChannel = await message.channel.fetch();
     console.log(`usedChannel: ${usedChannel}`);
     console.log(JSON.stringify(usedChannel, null, 4));
   }
