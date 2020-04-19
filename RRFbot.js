@@ -494,7 +494,7 @@ client.on('message', message => {
       return
     } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
       const argLength = args.length;
-      if (argLength != 1 || ifNaN(args[0]) === true) {
+      if (argLength != 1 || isNaN(args[0]) === true) {
         message.reply('you can cancel a raid by record number "!cancelRaid [record number]"');
       } else {
         message.reply(`canceling raid with record number ${args[0]}`);
