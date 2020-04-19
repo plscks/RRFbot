@@ -27,10 +27,10 @@ def dataGrab():
     # New format as of 2020-03-24
     print(f'URL: {url}')
     # Legacy format - rolled back 2020-04-14
-    df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
+    # df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
     # New format as of 2020-04-13
     # Province_State	Country_Region	Last_Update	Lat	Long_	Confirmed	Deaths	Recovered	Active	Admin2	FIPS	Combined_Key	Incident_Rate	People_Tested	People_Hospitalized	UID	ISO3
-    #df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'County', 'FIPS', 'CombinedKeys', 'IncidentRate', 'NumberTested', 'NumberHospitalized', 'UID', 'ISO3'], skiprows=1)
+    df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'County', 'FIPS', 'CombinedKeys', 'IncidentRate', 'NumberTested', 'NumberHospitalized', 'UID', 'ISO3'], skiprows=1)
     return df
 
 def parseData(region, df):
