@@ -589,14 +589,14 @@ client.on('message', message => {
 /////////////////////
 async function nextRaid(message, faction) {
   if (faction === 'H-Fam Gaming') {
-    var alertChannel = '699739075585769592'; // test channel
-    //var alertChannel = '696854575541518406'; // Jeff's channel
+    //var alertChannel = '699739075585769592'; // test channel
+    var alertChannel = '696854575541518406'; // Jeff's channel
   } else if (faction === 'Ridleybank Resistance Front - Nexus Clash') {
-    var alertChannel = '545312880162111513'; // test channel
-    //var alertChannel = '481612600149540881'; // RRF - general
+    //var alertChannel = '545312880162111513'; // test channel
+    var alertChannel = '481612600149540881'; // RRF - general
   } else if (faction === 'University of Science Friction') {
-    var alertChannel = '701456191368462336'; // test channel
-    //var alertChannel = '564993020919808002'; // USF - the lab
+    //var alertChannel = '701456191368462336'; // test channel
+    var alertChannel = '564993020919808002'; // USF - the lab
   }
   if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
     var usedChannel = await message.channel.fetch();
@@ -747,13 +747,13 @@ async function tickCheck() {
       var role = guild.roles.cache.find(role => role.name === "RRF");
     } else if (item['raiding_faction'] === 'Ridleybank Resistance Front - Nexus Clash') {
       var guild = client.guilds.cache.get('481612600149540875');
-      var alertChannel = '545312880162111513'; // test channel
-      //var alertChannel = '481612600149540881'; // RRF - general
+      //var alertChannel = '545312880162111513'; // test channel
+      var alertChannel = '481612600149540881'; // RRF - general
       var role = guild.roles.cache.find(role => role.name === "RRF");
     } else if (item['raiding_faction'] === 'University of Science Friction') {
       var guild = client.guilds.cache.get('564993020919808000');
-      var alertChannel = '701456191368462336'; // test channel
-      //var alertChannel = '564993020919808002'; // USF - the lab
+      //var alertChannel = '701456191368462336'; // test channel
+      var alertChannel = '564993020919808002'; // USF - the lab
       var role = guild.roles.cache.find(role => role.name === "Scientists");
     }
     var leaderId = guild.members.cache.find(user => user.displayName === item['raid_leader']);
