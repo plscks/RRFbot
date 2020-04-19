@@ -550,7 +550,6 @@ async function nextRaid(message, faction) {
     console.log(`${dbPull}`);
     client.channels.cache.get(`${alertChannel}`).send(`${dbPull}`);
   }
-  let raidMessage = '';
   dbPull.forEach(async (item) => {
     var raidDate = item['scheduled_date'];
     var raidTimeBase = item['scheduled_time'];
@@ -558,7 +557,7 @@ async function nextRaid(message, faction) {
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     var raidTimeArray = await timeReturn(timeNow, raidTime);
-    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time ${item['raid_leader']} is raid leader: ${item['raid_message']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+    client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time ${item['raid_message']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
     console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
   });
 }
