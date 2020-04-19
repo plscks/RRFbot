@@ -480,7 +480,15 @@ client.on('message', message => {
       } else {
         const date = isValidDate(dateTest);
         const time = isValidTime(timeTest);
-        addRaid(date, time, raidMess, leader, faction, message);
+        const timeNow = Date.now();
+        var dateArray = date.split('-');
+        var timeArray = time.split(':');
+        var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
+        if (raidTime < timeNow) {
+          message.reply('please schedule raids for a UTC time and date greater than the current time and date!');
+        } else {
+          addRaid(date, time, raidMess, leader, faction, message);
+        }
       }
     } else {
       message.reply('you do not have permissions to use this command');
@@ -734,7 +742,8 @@ async function tickCheck() {
   dbPull.forEach((item) => {
     if (item['raiding_faction'] === 'H-Fam Gaming') {
       var guild = client.guilds.cache.get('690617394539921560');
-      var alertChannel = '699739075585769592'; // test channel
+      //var alertChannel = '699739075585769592'; // test channel
+      var alertChannel = '696854575541518406'; // Jeff's channel
       var role = guild.roles.cache.find(role => role.name === "RRF");
     } else if (item['raiding_faction'] === 'Ridleybank Resistance Front - Nexus Clash') {
       var guild = client.guilds.cache.get('481612600149540875');
