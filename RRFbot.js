@@ -634,6 +634,22 @@ async function nextRaid(message, faction) {
 ///////////////////
 // If there but active = 0 set to 1 and insert new message
 function addRaid(date, time, raidMess, leader, faction, message) {
+  if (faction === 'H-Fam Gaming') {
+    var guild = client.guilds.cache.get('690617394539921560');
+    //var alertChannel = '699739075585769592'; // test channel
+    var alertChannel = '696854575541518406'; // Jeff's channel
+    var role = guild.roles.cache.find(role => role.name === "RRF");
+  } else if (faction === 'Ridleybank Resistance Front - Nexus Clash') {
+    var guild = client.guilds.cache.get('481612600149540875');
+    //var alertChannel = '545312880162111513'; // test channel
+    var alertChannel = '481612600149540881'; // RRF - general
+    var role = guild.roles.cache.find(role => role.name === "RRF");
+  } else if (faction === 'University of Science Friction') {
+    var guild = client.guilds.cache.get('564993020919808000');
+    //var alertChannel = '701456191368462336'; // test channel
+    var alertChannel = '564993020919808002'; // USF - the lab
+    var role = guild.roles.cache.find(role => role.name === "Scientists");
+  }
   let sqlCHECK = `SELECT * from raid_schedule where scheduled_date = '${date}' AND scheduled_time = '${time}'`;
   if (raidMess === null) {
     let sqlINSERT = `INSERT INTO raid_schedule(raid_leader, raiding_faction, 	scheduled_date, scheduled_time) VALUES("${leader}", "${faction}", "${date}", "${time}")`
@@ -645,7 +661,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
         db.run(sqlINSERT);
         const data = await getLastInsert();
         const record_no = data[0]['last_insert_rowid()'];
-        message.channel.send(`${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+        message.channel.send(`${role} ${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
         console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
       } else {
         message.reply(`there is already a raid scheduled for ${date} at ${time}.`)
