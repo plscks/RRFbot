@@ -667,7 +667,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
     var alertChannel = '564993020919808002'; // USF - the lab
     var role = guild.roles.cache.find(role => role.name === "Scientists");
   }
-  let sqlCHECK = `SELECT * from raid_schedule where scheduled_date = '${date}' AND scheduled_time = '${time}'`;
+  let sqlCHECK = `SELECT * from raid_schedule where scheduled_date = '${date}' AND scheduled_time = '${time}' AND active = '1'`;
   if (raidMess === null) {
     let sqlINSERT = `INSERT INTO raid_schedule(raid_leader, raiding_faction, 	scheduled_date, scheduled_time) VALUES("${leader}", "${faction}", "${date}", "${time}")`
     db.get(sqlCHECK, async (err, rows) => {
