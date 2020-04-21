@@ -29,6 +29,7 @@
     "cron": "^1.8.2",
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",
+    "hashids": "^2.2.1",
     "inquirer": "^7.1.0",
     "neo-blessed": "^0.2.0",
     "node-dijkstra": "^2.5.0",
