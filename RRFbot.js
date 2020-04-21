@@ -637,7 +637,7 @@ async function nextRaid(message, faction) {
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     var raidTimeArray = await timeReturn(timeNow, raidTime);
-    if (alertChannel === '696854575541518406') {
+    if (alertChannel === '528780223898976273' || alertChannel = '612159579001847844') {
       client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}" record number ${item['record_no']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
       console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
     } else {
