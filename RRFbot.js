@@ -30,6 +30,8 @@ const client = new Discord.Client();
 const talkedRecently = new Set();
 const prefix = '!';
 const CronJob = require('cron').CronJob;
+const Hashids = require('hashids/cjs')
+const hashids = new Hashids()
 /////////////////////////
 // CONNECT TO DATABASE //
 /////////////////////////
@@ -637,8 +639,9 @@ async function nextRaid(message, faction) {
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     var raidTimeArray = await timeReturn(timeNow, raidTime);
+    var recordNum = hashids.encode(item['record_no']);
     if (alertChannel === '528780223898976273' || alertChannel === '612159579001847844') {
-      client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}" record number ${item['record_no']}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
+      client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}" record number ${recordNum}\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
       console.log(`scheduled raid: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader, ${item['raid_message']}`);
     } else {
       client.channels.cache.get(`${alertChannel}`).send(`scheduled raid: ${raidDate} ${raidTimeBase} game time : "${item['raid_message']}"\nThis is in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes.`);
@@ -677,7 +680,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
       if (rows === undefined) {
         db.run(sqlINSERT);
         const data = await getLastInsert();
-        const record_no = data[0]['last_insert_rowid()'];
+        const record_no = hashids.encode(data[0]['last_insert_rowid()']);
         message.channel.send(`${role} ${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
         console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
       } else {
@@ -694,7 +697,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
       if (rows === undefined) {
         db.run(sqlINSERT);
         const data = await getLastInsert();
-        const record_no = data[0]['last_insert_rowid()'];
+        const record_no = hashids.encode(data[0]['last_insert_rowid()']);
         message.channel.send(`${role} ${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
         console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
       } else {
@@ -753,7 +756,8 @@ function getLastInsert() {
 // CANCEL SCHEDULED RAID //
 ///////////////////////////
 function cancelRaid(record_no) {
-  const sql = `UPDATE "raid_schedule" SET active = 0 WHERE record_no = ${record_no}`;
+  var recordNum = hashids.decode(record_no);
+  const sql = `UPDATE "raid_schedule" SET active = 0 WHERE record_no = ${recordNum}`;
   db.run(sql);
 }
 //////////////////////////////
