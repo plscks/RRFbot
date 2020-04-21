@@ -1,5 +1,5 @@
 // RRFbot implementation in node.js using discord.js
-// No idehow this will go?
+// No idea how this will go?
 // Written by plscks mostly.
 // the pathfinding parts were mostly taken from the hypermap codebase and modified to work
 // new implementation of Dijkstra's done with node-dijkstra
@@ -16,9 +16,9 @@
 // [x] Change search rates results to one row
 // [x] Add Component help
 // [x] Add alchemy help
-// [x] Add crafting help
-// [x] Add path finding
-// [X] Add !raid or !RAID flag to alret @everyone
+// [X] Add crafting help
+// [X] Add path finding
+// [X] Add !raid or !RAID flag to alert @everyone
 //////////////////////
 // GLOBAL VAR SETUP //
 //////////////////////
@@ -31,7 +31,7 @@ const talkedRecently = new Set();
 const prefix = '!';
 const CronJob = require('cron').CronJob;
 const Hashids = require('hashids/cjs')
-const hashids = new Hashids()
+const hashids = new Hashids("Is this a test?");
 /////////////////////////
 // CONNECT TO DATABASE //
 /////////////////////////
@@ -539,17 +539,13 @@ client.on('message', message => {
     if (message.guild === undefined || message.guild === null) {
       message.channel.send({embed: {
         color: 3447003,
-        title: "Available Commands:",
+        title: "Commands available in DM:",
         fields: [
     			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
-          { name: "!sm [# OF MINUTES 0-65]", value: "Sets sorcerer's might timer will go off one minute beforehand and toss ping out to @Medic for healing. Only works in select channels.", inline: true},
           { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
   				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
   				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
           { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
-          { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
-          { name: "!addRaid", value: "Schedule a raid with: !addRaid [date] [time in UTC] [optional message]", inline: true},
-          { name: "!cancelRaid", value: "Cancel a raid by record number with: !cancelRaid [record number]", inline: true},
         ]
       }
     	});
@@ -809,16 +805,16 @@ async function tickCheck() {
       var seconds = raidTimeArray[0];
       if (seconds >= 86380 && seconds <= 86420) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 35980 && seconds <= 36020) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 14380 && seconds <= 14420) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3] + 2} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 1780 && seconds <= 1820) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[3] + 1} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
-        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[3] + 2} minutes: ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
+        client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[3]} minutes: ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
       } else if (seconds >= 880 && seconds <= 920) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: NEXT TICK!! Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
         client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid NEXT TICK!! ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);

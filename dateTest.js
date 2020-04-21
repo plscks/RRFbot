@@ -1,3 +1,6 @@
+const Hashids = require('hashids/cjs')
+const hashids = new Hashids("Is this a test?");
+
 function isValidDate(dateString) {
   if(!/^\d{4}-\d{1}|\d{2}-\d{1}|\d{2}$/.test(dateString))
     return false
@@ -29,6 +32,9 @@ const bad1Digit = '2020-1-43';
 const good1Digit = '2020-4-15';
 const goodDate = '2020-04-15';
 const badDate = '03/15/2020';
+const number = '101';
+const hash = hashids.encode(number);
+console.log(`number: ${number}   hash: ${hash}`);
 
 console.log(`good1Digit: ${good1Digit} valid? ${isValidDate(good1Digit)}`);
 console.log(`goodDate: ${goodDate} valid? ${isValidDate(goodDate)}`);
