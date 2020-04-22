@@ -678,7 +678,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
         const data = await getLastInsert();
         const record_no = hashids.encode(data[0]['last_insert_rowid()']);
         message.channel.send(`${role} ${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
-        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no} (${data[0]['last_insert_rowid()']})`);
       } else {
         message.reply(`there is already a raid scheduled for ${date} at ${time}.`)
         console.log(`There is already a raid scheduled for ${date} at ${time}.`);
@@ -695,7 +695,7 @@ function addRaid(date, time, raidMess, leader, faction, message) {
         const data = await getLastInsert();
         const record_no = hashids.encode(data[0]['last_insert_rowid()']);
         message.channel.send(`${role} ${leader} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
-        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no}`);
+        console.log(`${leader} in ${faction} scheduled a raid for ${date} ${time} with the message "${raidMess}" and a record number of ${record_no} (${data[0]['last_insert_rowid()']})`);
       } else {
         message.reply(`there is already a raid scheduled for ${date} at ${time}.`)
         console.log(`There is already a raid scheduled for ${date} at ${time}.`);
@@ -800,7 +800,8 @@ async function tickCheck() {
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
     if (raidTime < timeNow) {
       console.log(`Canceling passed raid set for ${raidDate} ${raidTimeBase}, record number: ${item['record_no']}`);
-      cancelRaid(item['record_no']);
+      var recordNum = hashids.encode(item['record_no']);
+      cancelRaid(recordNum);
     } else {
       var raidTimeArray = timeReturn(timeNow, raidTime);
       var seconds = raidTimeArray[0];
