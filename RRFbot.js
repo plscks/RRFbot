@@ -798,13 +798,16 @@ async function tickCheck() {
     var dateArray = raidDate.split('-');
     var timeArray = raidTimeBase.split(':');
     var raidTime = Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2], timeArray[0], timeArray[1]);
+    var lastClosestTick= Math.floor(raidTime / 900000) * 900000;
     if (raidTime < timeNow) {
       console.log(`Canceling passed raid set for ${raidDate} ${raidTimeBase}, record number: ${item['record_no']}`);
       var recordNum = hashids.encode(item['record_no']);
       cancelRaid(recordNum);
     } else {
       var raidTimeArray = timeReturn(timeNow, raidTime);
-      var seconds = raidTimeArray[0];
+      var tickRaidArray = timeReturn(timenow, lastClosestTick);
+      var seconds = tickRaidArray[0];
+      //var seconds = raidTimeArray[0];
       if (seconds >= 86380 && seconds <= 86420) {
         console.log(`Alerting for scheduled raid in ${item['raiding_faction']}: ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${item['raid_leader']} is raid leader: "${item['raid_message']}"`);
         client.channels.cache.get(`${alertChannel}`).send(`${role} Scheduled raid reminder: Raid in ${raidTimeArray[1]} days, ${raidTimeArray[2]} hours, ${raidTimeArray[3]} minutes. Set for ${raidDate} ${raidTimeBase} ${leaderId} is raid leader: "${item['raid_message']}"`);
