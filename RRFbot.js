@@ -754,6 +754,7 @@ function getLastInsert() {
 function cancelRaid(record_no) {
   var recordNum = hashids.decode(record_no);
   const sql = `UPDATE "raid_schedule" SET active = 0 WHERE record_no = ${recordNum}`;
+  console.log(`Cancel raid: ${sql}`);
   db.run(sql);
 }
 //////////////////////////////
