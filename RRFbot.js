@@ -805,7 +805,7 @@ async function tickCheck() {
       cancelRaid(recordNum);
     } else {
       var raidTimeArray = timeReturn(timeNow, raidTime);
-      var tickRaidArray = timeReturn(timenow, lastClosestTick);
+      var tickRaidArray = timeReturn(timeNow, lastClosestTick);
       var seconds = tickRaidArray[0];
       //var seconds = raidTimeArray[0];
       if (seconds >= 86380 && seconds <= 86420) {
