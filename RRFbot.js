@@ -537,7 +537,7 @@ client.on('message', message => {
   //////////////////////////
   } else if (command === 'utctime') {
     const utcArray = utcTime();
-    console.log(`Current UTC time was requested: ${utcArray[0]} ${utcArray[1]}`)
+    console.log(`Current UTC time was requested: ${utcArray[0]} ${utcArray[1]}`);
     message.channel.send(`The current UTC time is ${utcArray[0]} ${utcArray[1]}`);
 	///////////////////
 	// COMMANDS LIST //
