@@ -532,6 +532,9 @@ client.on('message', message => {
       message.reply('you do not have permissions to use this command');
       return
     }
+  } else if (command === 'utcTime') {
+    const utcArray = utcTime();
+    message.channel.send(`The current UTC time is ${utcArray[0]} ${utcArray[1]}`);
 	///////////////////
 	// COMMANDS LIST //
 	///////////////////
@@ -756,6 +759,14 @@ function cancelRaid(record_no) {
   const sql = `UPDATE "raid_schedule" SET active = 0 WHERE record_no = ${recordNum}`;
   console.log(`Cancel raid: ${sql}`);
   db.run(sql);
+}
+////////////////////
+// TIMEZONE STUFF //
+////////////////////
+function getTime() {
+  const utcTime = new Date().toISOString();
+  const timeDateArray = [utcTime.substring(0, 10), utcTime.substring(11, 19)];
+  return timeDateArray
 }
 //////////////////////////////
 // RAID REMINDER TICK CHECK //
