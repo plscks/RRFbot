@@ -532,8 +532,12 @@ client.on('message', message => {
       message.reply('you do not have permissions to use this command');
       return
     }
-  } else if (command === 'utcTime') {
+  //////////////////////////
+  // GET CURRENT UTC TIME //
+  //////////////////////////
+  } else if (command === 'utctime') {
     const utcArray = utcTime();
+    console.log(`Current UTC time was requested: ${utcArray[0]} ${utcArray[1]}`)
     message.channel.send(`The current UTC time is ${utcArray[0]} ${utcArray[1]}`);
 	///////////////////
 	// COMMANDS LIST //
@@ -544,11 +548,11 @@ client.on('message', message => {
         color: 3447003,
         title: "Commands available in DM:",
         fields: [
-    			{ name: "!greet", value: "An exceedingly simple and basic greetings message.", inline: true},
           { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
   				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
   				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
           { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+          { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
         ]
       }
     	});
@@ -566,6 +570,7 @@ client.on('message', message => {
           { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
           { name: "!addRaid", value: "Schedule a raid with: !addRaid [date] [time in UTC] [optional message]", inline: true},
           { name: "!cancelRaid", value: "Cancel a raid by record number with: !cancelRaid [record number]", inline: true},
+          { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
         ]
       }
     	});
@@ -581,6 +586,7 @@ client.on('message', message => {
   				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
           { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
           { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
+          { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
         ]
       }
     	});
@@ -595,6 +601,7 @@ client.on('message', message => {
   				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
   				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
           { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+          { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
         ]
       }
     	});
