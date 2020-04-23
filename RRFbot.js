@@ -544,6 +544,7 @@ client.on('message', message => {
 	///////////////////
   } else if (command === 'help') {
     if (message.guild === undefined || message.guild === null) {
+      console.log('undefined help requested.');
       message.channel.send({embed: {
         color: 3447003,
         title: "Commands available in DM:",
@@ -557,6 +558,7 @@ client.on('message', message => {
       }
     	});
     } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      console.log('Leader help requested.');
       message.channel.send({embed: {
         color: 3447003,
         title: "Available Commands:",
@@ -575,6 +577,7 @@ client.on('message', message => {
       }
     	});
     } else if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Scientists')) {
+      console.log('RRF help requested.');
     	message.channel.send({embed: {
         color: 3447003,
         title: "Available Commands:",
@@ -591,6 +594,7 @@ client.on('message', message => {
       }
     	});
     } else {
+      console.log('Else help requested.');
       message.channel.send({embed: {
         color: 3447003,
         title: "Available Commands:",
