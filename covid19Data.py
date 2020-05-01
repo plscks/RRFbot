@@ -7,6 +7,7 @@
 # [X]  Format data for input to I2C screen output
 # []   Need to put in function for getting the correct date as the first day of a month always rolls back to 00 instead of the last day last month
 import datetime
+from datetime import timedelta
 import pandas as pd
 import time
 import subprocess
@@ -20,7 +21,9 @@ import adafruit_ssd1306
 def dataGrab():
     ## need to include an if that will roll the month back and set to the last day of previous if it is the first.
     now = datetime.datetime.utcnow()
-    csvFormat = f'{now.month:02d}-{(now.day-1):02d}-{now.year}.csv'
+    dateChange = timedelta(days = 1)
+    fileDate = now - dateChange
+    csvFormat = f'{fileDate.month:02d}-{(fileDate.day):02d}-{fileDate.year}.csv'
     url = f'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{csvFormat}'
     # Legacy format
     # df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Confirmed', 'Deaths', 'Recovered', 'Latitude', 'Longitude'], skiprows=1)
