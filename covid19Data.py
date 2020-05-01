@@ -4,8 +4,8 @@
 # [X]  Pull data from https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data in .csv format
 # [X]  Parse data
 # [X]  Output data
-# []  Format data for input to I2C screen output
-#
+# [X]  Format data for input to I2C screen output
+# []   Need to put in function for getting the correct date as the first day of a month always rolls back to 00 instead of the last day last month
 import datetime
 import pandas as pd
 import time
