@@ -30,6 +30,6 @@
     "hashids": "^2.2.1",
     "node-dijkstra": "^2.5.0",
     "shelljs": "^0.8.3",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^4.1.1"
   }
 }
