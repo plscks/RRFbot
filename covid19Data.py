@@ -6,6 +6,7 @@
 # [X]  Output data
 # [X]  Format data for input to I2C screen output
 # []   Need to put in function for getting the correct date as the first day of a month always rolls back to 00 instead of the last day last month
+# sudo pip3 install adafruit-blinka pandas sqlite3 adafruit-circuitpython-ssd1306 Pillow
 import datetime
 from datetime import timedelta
 import pandas as pd
