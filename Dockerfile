@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM arm32v7/node:alpine
 RUN apk add --update \
   python \
   python-dev \
