@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/plscks/RRFbot#readme",
   "dependencies": {
+    "better-sqlite3": "^7.0.1",
     "cron": "^1.8.2",
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",

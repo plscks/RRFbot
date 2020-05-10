@@ -141,14 +141,17 @@ var myArgs = process.argv.slice(2);
 var flag = myArgs[0];
 if (flag === '-t') {
 	var token = myArgs[1];
-}
-else {
-	console.log('Usage: node RRFbot.js [FLAG]');
-	console.log('FLAGS:');
-	console.log('        --help    This message');
-	console.log('        -t        Use auth token "-t [TOKEN-NUMBER]"');
-	process.exit();
-}
+} else {
+    console.log('Usage: node RRFbot.js [FLAG]');
+  	console.log('FLAGS:');
+  	console.log('        --help    This message');
+  	console.log('        -t        Use auth token "-t [TOKEN-NUMBER]"');
+  	process.exit();
+  }
+///////////////////////
+// REMOTE TOKEN GRAB //
+///////////////////////
+
 //////////////////////////
 // BOT ONLINE AND READY //
 //////////////////////////
