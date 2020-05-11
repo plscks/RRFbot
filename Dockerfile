@@ -7,4 +7,4 @@ RUN npm install sqlite3 --build-from-source --sqlite=/usr
 RUN npm install
 COPY . ./
 RUN echo "TOKEN IS: $TOKEN"
-CMD [ "node",  "RRFbot.js", "-t", "${TOKEN}" ]
+CMD [ "node",  "--trace-warnings", "--unhandled-rejections=strict", "RRFbot.js", "-t", "${TOKEN}" ]
