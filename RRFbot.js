@@ -24,7 +24,7 @@
 //////////////////////
 const Discord = require('discord.js');
 const Graph = require('node-dijkstra')
-const shell = require('shelljs');
+//const shell = require('shelljs');
 const sqlite3 = require('sqlite3').verbose();
 const client = new Discord.Client();
 const talkedRecently = new Set();
@@ -373,6 +373,7 @@ client.on('message', message => {
 	/////////////////
 	// SELF UPDATE //
 	/////////////////
+/*
   } else if (command === 'update') {
   	if (message.author.id !== '407383313335189515') return;
     db.close((err) => {
@@ -392,6 +393,7 @@ client.on('message', message => {
   	setTimeout(() => {
   		updateBot();
   	}, 5000);
+    */
   //////////////////////
   // SHUTDOWN COMMAND //
   //////////////////////
@@ -1026,6 +1028,7 @@ function calc_sm_time(init_sm, init_minute) {
 //////////////////////////////////
 // SUPER SECRET BOT SELF UPDATE //
 //////////////////////////////////
+/*
 function updateBot() {
 	if (shell.exec('./update.sh').code !== 0) {
   	console.log('Failed to update and restart');
@@ -1035,6 +1038,7 @@ function updateBot() {
 		process.exit();
 	}
 }
+*/
 ///////////////////
 // COVID-19 ARGS //
 ///////////////////
