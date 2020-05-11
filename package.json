@@ -4,7 +4,7 @@
   "description": "RRF Discord bot",
   "main": "RRFbot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node RRFbot.js -t $TOKEN"
   },
   "repository": {
     "type": "git",
@@ -24,13 +24,11 @@
   },
   "homepage": "https://github.com/plscks/RRFbot#readme",
   "dependencies": {
-    "better-sqlite3": "^7.0.1",
     "cron": "^1.8.2",
     "discord.js": "github:discordjs/discord.js",
     "erlpack": "github:discordapp/erlpack",
     "hashids": "^2.2.1",
     "node-dijkstra": "^2.5.0",
-    "shelljs": "^0.8.3",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.2.0"
   }
 }
