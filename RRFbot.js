@@ -207,6 +207,10 @@ client.on('message', message => {
   // KID CHECK //
   ///////////////
   } else if (command.toLowerCase() === 'kidcheck') {
+    if (message.guild === undefined || message.guild === null) {
+      message.reply('You cannot use this function through DM!');
+      return
+    }
 	  if (message.guild.member('214148964847452161')) {
       if (talkedRecently.has(command.toLowerCase())) {
         message.reply('Kid has been checked on enough today (once per 12 hours)! Thank you for caring so much for him!');
