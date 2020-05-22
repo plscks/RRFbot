@@ -111,22 +111,22 @@ def databaseGrab():
     wwQuery = 'SELECT a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate'
     c.execute(wwQuery)
     worldRows = c.fetchall()
-    worldData[0] = worldRows[1]
-    worldData[1] = worldRows[2]
+    worldData[0] = worldRows[0][1]
+    worldData[1] = worldRows[0][2]
 
     print('~Grabbing US data.')
     usQuery = 'SELECT COUNT() AS count, a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered, last_updated, a.country AS country FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate AND (country like "US" OR province like "US")'
     c.execute(usQuery)
     usRows = c.fetchall()
-    usData[0] = usRows[2]
-    usData[1] = usRows[3]
+    usData[0] = usRows[0][2]
+    usData[1] = usRows[0][3]
 
     print('~Grabbing local data.')
     localQuery = 'SELECT COUNT() AS count, a.date, SUM(a.confirmed) AS confirmed, SUM(a.deaths) AS deaths, SUM(a.recovered) AS recovered, last_updated, a.country AS country FROM all_data AS a INNER JOIN (SELECT MAX(date) AS MaxDate FROM all_data) AS md WHERE a.date = md.MaxDate AND (country like "Illinois" OR province like "Illinois")'
     c.execute(localQuery)
     localRows = c.fetchall()
-    localData[0] = localRows[2]
-    localData[1] = localRows[3]
+    localData[0] = localRows[0][2]
+    localData[1] = localRows[0][3]
 
     conn.close()
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
