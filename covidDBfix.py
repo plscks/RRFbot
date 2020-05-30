@@ -12,13 +12,13 @@ import time
 import subprocess
 import sqlite3
 
-from board import SCL, SDA
-import busio
-from PIL import Image, ImageDraw, ImageFont
-import adafruit_ssd1306
+#from board import SCL, SDA
+#import busio
+#from PIL import Image, ImageDraw, ImageFont
+#import adafruit_ssd1306
 
-date = '2020-04-18'
-urlDate = '04-18-2020'
+date = '2020-05-30'
+urlDate = '05-29-2020'
 
 def dataGrab():
     ## need to include an if that will roll the month back and set to the last day of previous if it is the first.
@@ -31,7 +31,7 @@ def dataGrab():
     url = f'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{urlDate}.csv'
     print(f'URL: {url}')
     # Legacy format - rolled back 2020-04-14
-    df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys'], skiprows=1)
+    df = pd.read_csv(url,names=['FIPS', 'County', 'Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'CombinedKeys', 'IncidentRate', 'CaseFacilityRatio'], skiprows=1)
     # New format as of 2020-04-13
     # Province_State	Country_Region	Last_Update	Lat	Long_	Confirmed	Deaths	Recovered	Active	Admin2	FIPS	Combined_Key	Incident_Rate	People_Tested	People_Hospitalized	UID	ISO3
     # df = pd.read_csv(url,names=['Province', 'Country', 'Updated', 'Latitude', 'Longitude', 'Confirmed', 'Deaths', 'Recovered', 'Active', 'County', 'FIPS', 'CombinedKeys', 'IncidentRate', 'NumberTested', 'NumberHospitalized', 'UID', 'ISO3'], skiprows=1)
@@ -145,5 +145,5 @@ if __name__ == "__main__":
     usData = parseData('us', data)
     localData = parseData('local', data)
     output(worldData, usData, localData)
-    i2cOut(worldData, usData, localData)
+    #i2cOut(worldData, usData, localData)
     databasePush(data)
