@@ -17,7 +17,7 @@ import sqlite3
 #from PIL import Image, ImageDraw, ImageFont
 #import adafruit_ssd1306
 
-date = '2020-05-30'
+date = '2020-05-31'
 urlDate = '05-30-2020'
 
 def dataGrab():
