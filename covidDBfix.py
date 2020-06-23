@@ -17,8 +17,8 @@ import sqlite3
 #from PIL import Image, ImageDraw, ImageFont
 #import adafruit_ssd1306
 
-date = '2020-06-20'
-urlDate = '06-19-2020'
+date = '2020-06-23'
+urlDate = '06-22-2020'
 
 def dataGrab():
     ## need to include an if that will roll the month back and set to the last day of previous if it is the first.
