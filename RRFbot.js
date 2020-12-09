@@ -457,7 +457,8 @@ try {
         var userName = message.member.displayName;
       }
       console.log(`${userName} initiated !covid19 in ${guildId} with the arguments: ${args}`);
-      covid19Args(args, message);
+      message.reply('This command has been depreciated and removed, data is very old at this time. Stay safe out there!');
+      //covid19Args(args, message);
     ////////////////////
     // RAID SCHEDULER //
     ////////////////////
@@ -468,7 +469,7 @@ try {
       if (message.guild === undefined || message.guild === null) {
         message.reply('you cannot use this command in DM!');
         return
-      } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      } else if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
         const leader = message.member.displayName;
         const faction = message.guild.name;
         const argLength = args.length;
@@ -514,7 +515,7 @@ try {
       if (message.guild === undefined || message.guild === null) {
         message.reply('you cannot use this command in DM!');
         return
-      } else if (message.member.roles.cache.some(r => r.name === 'Leader') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
+      } else if (message.member.roles.cache.some(r => r.name === 'RRF') || message.member.roles.cache.some(r => r.name === 'Sr Scientist')) {
         const argLength = args.length;
         if (argLength != 1) {
           message.reply('you can cancel a raid by record number "!cancelRaid [record number]"');
@@ -562,7 +563,7 @@ try {
             { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
     				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
     				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
-            { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+            { name: "!covid19", value: "Depreciated and removed, data is very old at this time. Stay safe out there!", inline: true},
             { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
           ]
         }
@@ -578,7 +579,7 @@ try {
             { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
     				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
     				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
-            { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+            { name: "!covid19", value: "Depreciated and removed, data is very old at this time. Stay safe out there!", inline: true},
             { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
             { name: "!addRaid", value: "Schedule a raid with: !addRaid [date] [time in UTC] [optional message]", inline: true},
             { name: "!cancelRaid", value: "Cancel a raid by record number with: !cancelRaid [record number]", inline: true},
@@ -597,8 +598,10 @@ try {
             { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
     				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
     				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
-            { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+            { name: "!covid19", value: "Depreciated and removed, data is very old at this time. Stay safe out there!", inline: true},
             { name: "!nextRaid", value: "Give next scheduled raid information (only usable in certain channels).", inline: true},
+            { name: "!addRaid", value: "Schedule a raid with: !addRaid [date] [time in UTC] [optional message]", inline: true},
+            { name: "!cancelRaid", value: "Cancel a raid by record number with: !cancelRaid [record number]", inline: true},
             { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
           ]
         }
@@ -614,7 +617,7 @@ try {
             { name: "!items", value: "Shows usage. Searches game items and displays best locations to find input item and the search odds at those locations (rates account for location rate and NO OTHER bunuses or penalties).", inline: true},
     				{ name: "!map", value: "Shows uasge. This gives directions from a start point to an endpoint either by coordinates or by endpoint destination type. Gives directions in number of steps in cardinal direction to destination.", inline: true},
     				{ name: "!craft", value: "Shows usage. This shows the crafting recipes, ap expendeture, and xp gains of crafting items.", inline: true},
-            { name: "!covid19", value: "Shows COVID-19 data from Johns Hopkins, compiled from 14 different worldwide sources.", inline: true},
+            { name: "!covid19", value: "Depreciated and removed, data is very old at this time. Stay safe out there!", inline: true},
             { name: "!utcTime", value: "Gives current time in UTC (game time)", inline: true},
           ]
         }
